@@ -185,7 +185,7 @@ include_once("init.php");
 <?php
 /* Initialize App-Arena variable in js */
 $aaForJs = array(
-    "t" => $aa['locale'][$aa_locale_current],
+    "t" => $aa['locale'],
     "conf" => $aa['config'],
     "inst" => $aa['instance'],
     "fb" => false
@@ -245,28 +245,8 @@ if (isset($aaForJs['inst']['aa_app_secret'])) {
 </script>
 <?php } ?>
 
-
-<button id="admin_panel_new">New Admin Panel Button</button>
-
-<script src="js/components/jquery/jquery-1.7.1.min.js"></script>
 <!-- data-main attribute tells require.js to load scripts/main.js after require.js loads. -->
 <script data-main="js/main" src="js/require.js"></script>
 
-<script>
-    require(
-            [
-                'components/admin_panel/ui',
-                'components/flight/tools/debug/debug'
-            ],
-
-            function(apanel, debug) {
-                debug.enable(true);
-                //compose.mixin(registry, [advice.withAdvice, withLogging]);
-                /*require(['app/boot/page'], function(initialize) {
-                    initialize();
-                });*/
-            }
-    );
-</script>
 </body>
 </html>

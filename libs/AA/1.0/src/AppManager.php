@@ -31,7 +31,8 @@ class AA_AppManager {
 			'aa_app_id',
 			'aa_app_secret',
 			'aa_inst_id',
-			'fb_page_id'
+			'fb_page_id',
+            'locale'
 		);
 		
 		// Set soap parameters

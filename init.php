@@ -19,56 +19,13 @@ require_once ROOT_PATH . '/libs/AA/1.0/src/aa_helper.php';
 require_once ROOT_PATH . '/libs/AA/1.0/src/AppManager.php';
 require_once ROOT_PATH . '/libs/Zend/Translate.php';
 
-/**
- * Connect to App-Arena.com App-Manager and init session
- */
-$aa_inst_id = false;
-if (isset($_GET['aa_inst_id'])) $aa_inst_id = $_GET['aa_inst_id'];
-if (isset($_POST['aa_inst_id'])) $aa_inst_id = $_POST['aa_inst_id'];
-$appmanager = new AA_AppManager(array(
-    'aa_app_id' => $aa_app_id,
-    'aa_app_secret' => $aa_app_secret,
-    'aa_inst_id' => $aa_inst_id
-));
-
-/**
- * Start session and initialize App-Manager content
- */
-$aa_instance = $appmanager->getInstance();
-$aa_scope = 'aa_' . $aa_instance['aa_inst_id'];
-session_name($aa_scope);
-session_start();
+/* Try to init some basic variables */
 $aa = false;
-$aa =& $_SESSION;
-$aa['instance'] = $appmanager->getInstance();
-$aa['config'] = $appmanager->getConfig();
+$aa_inst_id = false;
+if ( isset($_GET['aa_inst_id']) ) $aa_inst_id = $_GET['aa_inst_id'];
+if ( isset($_POST['aa_inst_id']) ) $aa_inst_id = $_POST['aa_inst_id'];
 
-/**
- * Initialize the translation management (Session and Cookie)
- */
-$aa_locale_current = false;
-if (isset($aa['instance']['aa_inst_locale'])) {
-    $aa_locale_current = $aa['instance']['aa_inst_locale'];
-}
-if (isset($_COOKIE[$aa_scope . "_locale"])) {
-    $aa_locale_current = $_COOKIE[$aa_scope . "_locale"];
-}
-if ($aa_locale_current) {
-    $appmanager->setLocale($aa_locale_current);
-    $aa['locale'] = array();
-    $aa['locale'][$aa_locale_current] = $appmanager->getTranslation($aa_locale_current);
-    if (!isset($aa['locale'][$aa_locale_current])) {
-        $aa_locale = new Zend_Translate('array', $aa['locale'][0], $aa_locale_current);
-    } else {
-        $aa_locale = new Zend_Translate('array', $aa['locale'][$aa_locale_current], $aa_locale_current);
-    }
-    $aa_locale->setLocale($aa_locale_current);
-    $aa_translate->translate = $aa_locale;
-}
-
-/**
- * Initialize and set Facebook information in the session
- */
+/* Initialize and set Facebook information in the session */
 if (isset ($_REQUEST["signed_request"])) {
     $aa['fb'] = array();
     $fb_signed_request = parse_signed_request($_REQUEST["signed_request"]);
@@ -92,6 +49,52 @@ if (isset ($_REQUEST["signed_request"])) {
     }
     $aa['fb']['share_url'] = "https://apps.facebook.com/" . $aa['instance']['fb_app_url'] . "/libs/AA/fb_share.php?aa_inst_id=" . $aa['instance']['aa_inst_id'];
 }
+
+/* Initialize localization */
+$cur_locale = $aa_default_locale;
+if ( isset( $aa['fb']['signed_request']['app_data'] ) ) {
+    $app_data = json_decode( $aa['fb']['signed_request']['app_data'] , true);
+}
+if ( isset( $_GET['locale'] ) ) {
+    $cur_locale = $_GET['locale'];
+} else if ( isset( $app_data ) && isset( $app_data['locale'] ) ) {
+    $cur_locale = $app_data['locale'];
+} else if ( isset( $aa_inst_id ) && isset( $_COOKIE['aa_inst_locale_' . $aa_inst_id] ) ) {
+    $cur_locale = $_COOKIE['aa_inst_locale_' . $aa_inst_id];
+}
+
+/*  Connect to App-Arena.com App-Manager and init session */
+$appmanager = new AA_AppManager(array(
+    'aa_app_id' => $aa_app_id,
+    'aa_app_secret' => $aa_app_secret,
+    'aa_inst_id' => $aa_inst_id,
+    'locale' => $cur_locale
+));
+
+/* Start session and initialize App-Manager content */
+$aa_instance = $appmanager->getInstance();
+$aa_scope = 'aa_' . $aa_instance['aa_inst_id'];
+session_name($aa_scope);
+session_start();
+
+$fb_temp = $aa['fb'];
+$aa =& $_SESSION;
+$aa['instance'] = $appmanager->getInstance();
+$aa['config'] = $appmanager->getConfig();
+$aa['locale'] = $appmanager->getTranslation( $cur_locale );
+
+/* Setup the translation objects */
+$aa_locale = new Zend_Translate('array', $aa['locale'], $cur_locale );
+$aa_locale->setLocale( $cur_locale );
+global $aa_translate;
+$aa_translate->translate = $aa_locale;
+
+/* Catch error, in case there is no instance */
+if ( $aa['instance'] == "instance not activated" || $aa['instance'] == "instance not exist" ) {
+    include ('templates/error.php');
+    exit();
+}
+
 
 /**
  * Setup mysql database connection
