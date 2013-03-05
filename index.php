@@ -117,17 +117,35 @@ include_once("init.php");
 
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
-        <div class="container-fluid">
-            <nav>
-                <ul class="nav">
-                    <li><a onclick="aa_tmpl_load('index.phtml');"><?php __p("Home");?></a></li>
-                    <li><a onclick="aa_tmpl_load('localization.phtml');"><?php __p("localization");?></a></li>
-                    <li><a onclick="aa_tmpl_load('fb-demo.phtml');"><?php __p("FB");?></a></li>
-                    <li><a onclick="aa_tmpl_load('module_registration.phtml');"><?php __p("Register");?></a></li>
-                    <li><a onclick="aa_tmpl_load('form_validation.phtml');"><?php __p("Validation");?></a></li>
-                    <li><a onclick="aa_tmpl_load('db-demo.phtml');"><?php __p("DB");?></a></li>
-                </ul>
-            </nav>
+        <div class="container">
+            <ul class="nav">
+                <li><a onclick="aa_tmpl_load('index.phtml');"><?php __p("Home");?></a></li>
+                <li><a onclick="aa_tmpl_load('localization.phtml');"><?php __p("localization");?></a></li>
+                <li><a onclick="aa_tmpl_load('fb-demo.phtml');"><?php __p("FB");?></a></li>
+                <li><a onclick="aa_tmpl_load('module_registration.phtml');"><?php __p("Register");?></a></li>
+                <li><a onclick="aa_tmpl_load('form_validation.phtml');"><?php __p("Validation");?></a></li>
+                <li><a onclick="aa_tmpl_load('db-demo.phtml');"><?php __p("DB");?></a></li>
+            </ul>
+
+            <?php if ( is_array( $locales ) && count( $locales ) > 1 ) { ?>
+            <ul class="nav pull-right">
+                <li id="admin_locale_switch" class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <img src="img/locale/<?=$cur_locale;?>.png"/>
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <?php foreach( $locales as $locale ){ ?>
+                        <li>
+                            <a href='<?=$aa['instance']['fb_page_url']?>?sk=app_<?=$aa['instance']['fb_app_id']?>&app_data={"locale":"<?=$locale;?>"}' target="_top">
+                                <img src="img/locale/<?=$locale;?>.png"/>
+                            </a>
+                        </li>
+                        <?php } ?>
+                    </ul>
+                </li>
+            </ul>
+            <?php } ?>
         </div>
     </div>
 </div>

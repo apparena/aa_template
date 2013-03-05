@@ -82,12 +82,15 @@ $aa =& $_SESSION;
 $aa['instance'] = $appmanager->getInstance();
 $aa['config'] = $appmanager->getConfig();
 $aa['locale'] = $appmanager->getTranslation( $cur_locale );
+$aa['fb'] = $fb_temp;
 
 /* Setup the translation objects */
 $aa_locale = new Zend_Translate('array', $aa['locale'], $cur_locale );
 $aa_locale->setLocale( $cur_locale );
 global $aa_translate;
 $aa_translate->translate = $aa_locale;
+setcookie('aa_inst_locale_' . $aa_instance['aa_inst_id'], $cur_locale);
+$aa_locales = explode(',',$aa['config']['admin_locale_switch']['value']);
 
 /* Catch error, in case there is no instance */
 if ( $aa['instance'] == "instance not activated" || $aa['instance'] == "instance not exist" ) {
