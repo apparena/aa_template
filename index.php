@@ -127,7 +127,7 @@ include_once("init.php");
                 <li><a onclick="aa_tmpl_load('db-demo.phtml');"><?php __p("DB");?></a></li>
             </ul>
 
-            <?php if ( is_array( $locales ) && count( $locales ) > 1 ) { ?>
+            <?php if ( is_array( $aa_locales ) && count( $aa_locales ) > 1 ) { ?>
             <ul class="nav pull-right">
                 <li id="admin_locale_switch" class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -135,7 +135,7 @@ include_once("init.php");
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
-                        <?php foreach( $locales as $locale ){ ?>
+                        <?php foreach( $aa_locales as $locale ){ ?>
                         <li>
                             <a href='<?=$aa['instance']['fb_page_url']?>?sk=app_<?=$aa['instance']['fb_app_id']?>&app_data={"locale":"<?=$locale;?>"}' target="_top">
                                 <img src="img/locale/<?=$locale;?>.png"/>
