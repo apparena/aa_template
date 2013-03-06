@@ -90,11 +90,11 @@ if ( isset( $_REQUEST['signed_request'] ) ) {
         $aa['env']['base_url'] = $aa['instance']['page_tab_url'];
         $aa['env']['base'] = 'page';
     } else {
-        $aa['env']['base_url'] = "https://apps.facebook.com/" . $aa['instance']['fb_app_url'] . "/";
+        $aa['env']['base_url'] = "https://apps.facebook.com/" . $aa['instance']['fb_app_url'] . "/?aa_inst_id=" . $aa['instance']['aa_inst_id'];
         $aa['env']['base'] = 'canvas';
     }
 } else {
-    $aa['env']['base_url'] = $aa['instance']['fb_canvas_url'];
+    $aa['env']['base_url'] = $aa['instance']['fb_canvas_url'] . "?aa_inst_id=" . $aa['instance']['aa_inst_id'];
     $aa['env']['base'] = 'website';
 }
 
