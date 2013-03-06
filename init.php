@@ -84,6 +84,20 @@ $aa['config'] = $appmanager->getConfig();
 $aa['locale'] = $appmanager->getTranslation( $cur_locale );
 $aa['fb'] = $fb_temp;
 
+/* Collect environment information */
+if ( isset( $_REQUEST['signed_request'] ) ) {
+    if ( isset( $fb_signed_request['page'] ) ){
+        $aa['env']['base_url'] = $aa['instance']['page_tab_url'];
+        $aa['env']['base'] = 'page';
+    } else {
+        $aa['env']['base_url'] = "https://apps.facebook.com/" . $aa['instance']['fb_app_url'] . "/";
+        $aa['env']['base'] = 'canvas';
+    }
+} else {
+    $aa['env']['base_url'] = $aa['instance']['fb_canvas_url'];
+    $aa['env']['base'] = 'website';
+}
+
 /* Setup the translation objects */
 $aa_locale = new Zend_Translate('array', $aa['locale'], $cur_locale );
 $aa_locale->setLocale( $cur_locale );
