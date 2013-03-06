@@ -85,6 +85,8 @@ $aa['locale'] = $appmanager->getTranslation( $cur_locale );
 $aa['fb'] = $fb_temp;
 
 /* Collect environment information */
+require_once 'libs/Mobile_Detect.php';
+$detector = new Mobile_Detect;
 if ( isset( $_REQUEST['signed_request'] ) ) {
     if ( isset( $fb_signed_request['page'] ) ){
         $aa['env']['base_url'] = $aa['instance']['page_tab_url'];
@@ -96,6 +98,13 @@ if ( isset( $_REQUEST['signed_request'] ) ) {
 } else {
     $aa['env']['base_url'] = $aa['instance']['fb_canvas_url'] . "?aa_inst_id=" . $aa['instance']['aa_inst_id'];
     $aa['env']['base'] = 'website';
+}
+if ( $detector->isMobile() ) {
+    $aa['env']['device'] = 'mobile';
+} else if ( $detector->isTablet() ) {
+    $aa['env']['device'] = 'tablet';
+} else {
+    $aa['env']['device'] = 'desktop';
 }
 
 /* Setup the translation objects */
