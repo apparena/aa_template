@@ -106,6 +106,8 @@ if ( $detector->isMobile() ) {
 } else {
     $aa['env']['device'] = 'desktop';
 }
+// Add browser info to the env
+$aa['env']['browser'] = getBrowser();
 
 /* Setup the translation objects */
 $aa_locale = new Zend_Translate('array', $aa['locale'], $cur_locale );
