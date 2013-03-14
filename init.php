@@ -21,9 +21,14 @@ require_once ROOT_PATH . '/libs/Zend/Translate.php';
 
 /* Try to init some basic variables */
 $aa = false;
+
+// Try to get the instance id from GET-Parameter
 $aa_inst_id = false;
 if ( isset($_GET['aa_inst_id']) ) $aa_inst_id = $_GET['aa_inst_id'];
 if ( isset($_POST['aa_inst_id']) ) $aa_inst_id = $_POST['aa_inst_id'];
+// @todo Try to get instance ID from request_id
+// @todo Try to get instance ID from action_id
+// @todo Try to get instance ID from page_id/aa_model_id
 
 /* Initialize and set Facebook information in the session */
 if (isset ($_REQUEST["signed_request"])) {
@@ -47,7 +52,6 @@ if (isset ($_REQUEST["signed_request"])) {
     foreach ($fb_data as $k => $v) {
         $aa['fb'][$k] = $v;
     }
-    $aa['fb']['share_url'] = "https://apps.facebook.com/" . $aa['instance']['fb_app_url'] . "/libs/AA/fb_share.php?aa_inst_id=" . $aa['instance']['aa_inst_id'];
 }
 
 /* Initialize localization */
@@ -83,6 +87,7 @@ $aa['instance'] = $appmanager->getInstance();
 $aa['config'] = $appmanager->getConfig();
 $aa['locale'] = $appmanager->getTranslation( $cur_locale );
 $aa['fb'] = $fb_temp;
+$aa['fb']['share_url'] = "https://apps.facebook.com/" . $aa['instance']['fb_app_url'] . "/libs/AA/fb_share.php?aa_inst_id=" . $aa['instance']['aa_inst_id'];
 
 /* Collect environment information */
 require_once 'libs/Mobile_Detect.php';
