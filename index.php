@@ -32,8 +32,8 @@ include_once("init.php");
     <!--[if IE 7]>
     <link rel="stylesheet" href="css/font-awesome-ie7.min.css">
     <![endif]-->
-    <link rel="stylesheet" href="<?=$aa['config']['css']['src']?>"/>
-    <link rel="stylesheet" href="<?=$aa['config']['user_css']['src']?>"/>
+    <link rel="stylesheet" href="<?=$aa['config']['css_app']['src']?>"/>
+    <link rel="stylesheet" href="<?=$aa['config']['css_user']['src']?>"/>
 
     <?php if ($aa['config']['footer_branding']['value'] == 'banner') { ?>
     <!-- Google Publisher -->
@@ -70,7 +70,7 @@ include_once("init.php");
     to experience this site.</p><![endif]-->
 
 <!-- Show admin panel and admin intro information -->
-<?  if ( $aa['fb']['page']['admin'] ) {  ?>
+<?  if ( isset( $aa['fb']['page']['admin'] ) && $aa['fb']['page']['admin'] ) {  ?>
     <div class="admin_div">
         <? require_once dirname(__FILE__) . '/modules/admin_panel/admin_panel.php'; ?>
     </div>
