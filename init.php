@@ -105,10 +105,10 @@ if ( isset( $_REQUEST['signed_request'] ) ) {
     $aa['env']['base'] = 'website';
 }
 $aa['env']['device']['type'] = "desktop";
-if ( $device->isMobile() ) {
+if ( $detector->isMobile() ) {
     $aa['env']['device']['type'] = 'mobile';
 }
-if ( $device->isTablet() ) {
+if ( $detector->isTablet() ) {
     $aa['env']['device']['type'] = 'tablet';
 }
 // Add browser info to the env
