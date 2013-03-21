@@ -61,7 +61,7 @@ include_once("init.php");
     <?php } ?>
 </head>
 
-<body>
+<body id="<?=$aa['env']['device']['type']?>" class="<?=$aa['env']['device']['type']?>">
 <!-- Here starts the header -->
 <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you support IE 6.
      chromium.org/developers/how-tos/chrome-frame-getting-started -->
@@ -226,16 +226,19 @@ if (isset($aaForJs['inst']['aa_app_secret'])) {
 <span class="btn" onclick='jQuery("#_debug").toggle();'>Show debug info</span>
 <div id="_debug" style="display:none;">
     <h2>Debug information</h2>
+    <h3>$aa['env']</h3>
+    <pre><?php var_dump($aa['env']);?></pre>
     <h3>$aa['fb']</h3>
     <pre><?php var_dump($aa['fb']);?></pre>
     <h3>$aa['instance']</h3>
     <pre><?php var_dump($aa['instance']);?></pre>
+    <h3>$_COOKIE</h3>
+    <pre><?php var_dump($_COOKIE);?></pre>
     <h3>$aa['locale']</h3>
     <pre><?php var_dump($aa['locale']);?></pre>
     <h3>$aa['config']</h3>
     <pre><?php var_dump($aa['config']);?></pre>
-    <h3>$_COOKIE</h3>
-    <pre><?php var_dump($_COOKIE);?></pre>
+
 </div>
 <?php } ?>
 
