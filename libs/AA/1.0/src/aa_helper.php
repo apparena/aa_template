@@ -72,6 +72,7 @@ function __p()
 
 function getBrowser()
 {
+    $ub = "Other";
     $u_agent = $_SERVER['HTTP_USER_AGENT'];
     $bname = 'Unknown';
     $platform = 'Unknown';
@@ -136,7 +137,7 @@ function getBrowser()
         if (strripos($u_agent,"Version") < strripos($u_agent,$ub)){
             $version= $matches['version'][0];
         }
-        else {
+        elseif ( isset( $matches['version'][1] ) ) {
             $version= $matches['version'][1];
         }
     }
