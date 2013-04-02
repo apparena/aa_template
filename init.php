@@ -104,6 +104,7 @@ if ( isset( $_REQUEST['signed_request'] ) ) {
     $aa['env']['base_url'] = $aa['instance']['fb_canvas_url'] . "?aa_inst_id=" . $aa['instance']['aa_inst_id'];
     $aa['env']['base'] = 'website';
 }
+$aa['env']['device'] = array();
 $aa['env']['device']['type'] = "desktop";
 if ( $detector->isMobile() ) {
     $aa['env']['device']['type'] = 'mobile';

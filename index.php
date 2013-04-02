@@ -238,7 +238,6 @@ if (isset($aaForJs['inst']['aa_app_secret'])) {
     <pre><?php var_dump($aa['locale']);?></pre>
     <h3>$aa['config']</h3>
     <pre><?php var_dump($aa['config']);?></pre>
-
 </div>
 <?php } ?>
 
