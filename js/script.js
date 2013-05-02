@@ -169,8 +169,9 @@ function exists(obj) {
 
 /**
  * Initialize the auth module for user login in navbar.
+ * @param {Object} auth The auth module object.
  */
-function initAuth () {
+function initAuth ( auth ) {
 	
 	auth.init({
 		placement: {
