@@ -18,6 +18,9 @@ require.config({
         bootstrap:{
             deps:[ 'jquery' ]
         },
+        facebook:{
+            exports:'FB'
+        },
         script:{
             deps:[ 'jquery', 'facebook' ]
         },
@@ -31,7 +34,7 @@ require.config({
 // (the aliases are mapped in the require.config() above).
 require([
     'jquery',
-    'facebook',
+    'FB',
     'bootstrap',
     'script',
     'gapi',
