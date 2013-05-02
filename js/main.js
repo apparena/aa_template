@@ -18,9 +18,6 @@ require.config({
         bootstrap:{
             deps:[ 'jquery' ]
         },
-        facebook:{
-            exports:'FB'
-        },
         script:{
             deps:[ 'jquery', 'facebook' ]
         },
