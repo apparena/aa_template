@@ -78,6 +78,8 @@
 	require( [ 'jquery', 'gapi', 'auth' ], function ( $, gapi, auth ) {
 		
 		$(document).ready( function () {
+
+			aa.gplusFirstStart = true;
 			
 			// fade in / fade out
 			$( '#auth_module_login' ).on( 'mouseover', function () {
@@ -181,7 +183,7 @@
 			
 			if (authResult['access_token']) {
 
-				var userdata = {};
+				aa.userdata = {};
 				
 				// Successfully authorized
 				// Hide the sign-in button now that the user is authorized, for example:
@@ -198,14 +200,20 @@
 					gapi.client.oauth2.userinfo.get().execute( function( response ) {
 						// Shows user email
 						console.log( response );
-						$.extend( userdata, response );
+						$.extend( aa.userdata, response );
 						// use the plus client to get user data
 						gapi.client.load( 'plus', 'v1', function() {
 							gapi.client.plus.people.get({ 'userId' : 'me' }).execute( function( response ) {
+
 								// Shows other profile information
 								console.log( response );
-								$.extend( userdata, response );
-								finalLogin( userdata );
+								$.extend( aa.userdata, response );
+								if ( aa.gplusFirstStart == true ) {
+									aa.gplusFirstStart = false; // do not directly login the user via g+ if he is logged in in this browser
+								} else {
+									finalLogin( userdata );
+								}
+							
 							});
 						});
 					});
