@@ -237,7 +237,14 @@ if (isset($aaForJs['inst']['aa_app_secret'])) {
     <h3>$aa['locale']</h3>
     <pre><?php var_dump($aa['locale']);?></pre>
     <h3>$aa['config']</h3>
-    <pre><?php var_dump($aa['config']);?></pre>
+    <small>css was removed from config</small>
+    <pre><?php 
+    			$conf_temp = clone $aa['config'];
+    		    unset( $conf_temp['css_bootstrap'] );
+    		    unset( $conf_temp['css_app'] );
+    		    unset( $conf_temp['css_user'] );
+    		    var_dump( $conf_temp );
+		  ?></pre>
 </div>
 <?php } ?>
 
