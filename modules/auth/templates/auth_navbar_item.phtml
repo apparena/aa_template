@@ -258,8 +258,17 @@
 		 * user profile in the db...
 		 */
 		function finalLogin() {
-			//TODO:this will be a part of the module!
-			$( '#auth_module_login' ).html( 'profile' );
+			
+			//$( '#auth_module_login' ).html( 'profile' );
+
+			aa.auth.init({
+				placement: {
+					// "template[0]" will be mapped to "toElement[0]" and so on...
+					templates:  [ 'auth_navbar_profile' ],
+					toElements: [ '#menu_login' ]
+				},
+				debug: true
+			});
 			
 		}
 		
