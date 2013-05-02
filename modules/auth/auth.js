@@ -206,6 +206,12 @@ define(
 				// opens the twitter auth sign in popup
 				popup_window = window.open( 'modules/auth/twitter_auth.php?popup=true','twitter-login','height=500,width=600' ); // the twitter auth dialog is responsive and will fit itself to an appropriate size
 				
+			},
+			
+			facebook_popup: function () {
+				
+				
+				
 			}
 			
 		};

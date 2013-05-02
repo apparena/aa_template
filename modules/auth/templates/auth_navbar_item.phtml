@@ -30,7 +30,7 @@
 			oder login mit
 		</div>
 		
-		<button onclick="facebook_popup();" class="btn btn-primary btn-mini" style="height: 31px; margin-bottom: 30px;"><i class="icon-facebook icon-white icon-large">&nbsp;</i></button>
+		<button id="fb_btn" class="btn btn-primary btn-mini" style="height: 31px; margin-bottom: 30px;"><i class="icon-facebook icon-white icon-large">&nbsp;</i></button>
 		<button 
 			id="gplus_login"
 			class="g-signin"
@@ -42,7 +42,7 @@
 			data-cookiepolicy="single_host_origin"
 			data-width="iconOnly">
 		</button>
-		<button onclick="twitter_popup();" class="btn btn-info btn-mini" style="height: 31px; margin-bottom: 30px;"><i class="icon-twitter icon-white icon-large" style="margin-top: 10px;">&nbsp;</i></button>
+		<button id="twitter_btn" class="btn btn-info btn-mini" style="height: 31px; margin-bottom: 30px;"><i class="icon-twitter icon-white icon-large" style="margin-top: 10px;">&nbsp;</i></button>
 		
 	</div>
 	
@@ -78,6 +78,7 @@
 	require( [ 'jquery', 'auth' ], function ( $, auth ) {
 		
 		$(document).ready( function () {
+			
 			// fade in / fade out
 			$( '#auth_module_login' ).on( 'mouseover', function () {
 				
@@ -116,6 +117,7 @@
 				}
 				
 			});
+			// end fade in / fade out
 			
 			// bind enter listeners to the input fields to focus the next field on enter-key
 			$( '#email' ).on( 'keyup', function ( event ) {
@@ -153,10 +155,22 @@
 				auth.login( userData );
 				
 			});
+
+			// bind fb and twitter onclicks
+			$( '#fb_btn' ).on( 'click', function () {
+				
+				auth.facebook_poopup();
+				
+			});
+			$( '#twitter_btn' ).on( 'click', function () {
+				
+				auth.twitter_poopup();
+				
+			});
 			
 		});
 		
-		function gplusCallback ( authResult ) {
+		window.gplusCallback = function ( authResult ) {
 			
 			// the auto-rendered g+ sign in btn is surrounded by an extra div which is out of place...
 			$( '#gplus_login' ).parent().css( 'top', '12px' );
@@ -212,7 +226,7 @@
 		}
 */
 		
-		function twitter_popup_callback( response ) {
+		window.twitter_popup_callback = function ( response ) {
 			
 			// twitter popup sign in
 			console.log( 'twitter login callback fetched response' );
