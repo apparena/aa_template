@@ -38,13 +38,13 @@
 		$(document).ready( function () {
 			
 			// fade in / fade out
-			$( '#auth_module_login' ).on( 'mouseover', function () {
+			$( '#auth_module_profile' ).on( 'mouseover', function () {
 				
 				// the mouse is currently hovering over the <a>-login tag, so show the content...
-				if ( $( '#auth_module_login_content' ).is( ':visible' ) == false ) {
+				if ( $( '#auth_module_profile_content' ).is( ':visible' ) == false ) {
 					
 					// only fade the content in if it is not already showing
-					$( '#auth_module_login_content' ).fadeIn( 100, function () {
+					$( '#auth_module_profile_content' ).fadeIn( 100, function () {
 						
 						$( '#email' ).focus();
 						
@@ -54,23 +54,23 @@
 				
 			});
 			
-			$( '#auth_module_login' ).on( 'mouseout', function () {
+			$( '#auth_module_profile' ).on( 'mouseout', function () {
 				
-				if ( $( '#auth_module_login_content' ).is( ':hover' ) == false ) {
+				if ( $( '#auth_module_profile_content' ).is( ':hover' ) == false ) {
 					
 					// the mouse pointer left the <a>-login tag, but did not move down to the content area, so fadeout...
-					$( '#auth_module_login_content' ).fadeOut( 100 );
+					$( '#auth_module_profile_content' ).fadeOut( 100 );
 					
 				}
 			});
 			
-			$( '#auth_module_login_content' ).on( 'mouseout', function () {
+			$( '#auth_module_profile_content' ).on( 'mouseout', function () {
 				
 				// check if the mouse pointer was moved upwards to the <a>-login tag, do not hide if so...
-				if ( $( '#auth_module_login_content' ).is( ':hover' ) == false && $( '#auth_module_login' ).is( ':hover' ) == false ) {
+				if ( $( '#auth_module_profile_content' ).is( ':hover' ) == false && $( '#auth_module_profile' ).is( ':hover' ) == false ) {
 					
 					// if the mouse is not currently hovering over the content after hovering over the <a>-login tag hide the content...
-					$( '#auth_module_login_content' ).fadeOut( 100 );
+					$( '#auth_module_profile_content' ).fadeOut( 100 );
 					
 				}
 				
