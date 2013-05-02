@@ -6,7 +6,9 @@
 
 <script>
 	
-	$(document).ready( function () {
+	define(
+		[ 'jquery', 'gapi', 'facebook', 'auth' ], // required for this module
+		function ( $, gapi, FB, auth ) {
 		
 		$( '#reset_auth' ).on( 'click', function () {
 			
