@@ -5,6 +5,8 @@
  * So there shall be maybe 2 or 3 templates,
  * maybe one for the menubar, one for a sidebar
  * and an inline login or even a popup...
+ * If behavior is weird, turn on debug info in init-param:
+ * newSettings.debug = true.
  */
 define(
 	'auth', // module name
@@ -60,11 +62,11 @@ define(
 				
 				placement: {
 					// "template[0]" will be mapped to "toElement[0]" and so on...
-					templates: [ 'auth_navbar_item' ],
-					toElements: [ '#placeItHere' ]
+					templates: [ 'auth_navbar_item' ], // template(s) from modules/auth/templates
+					toElements: [ '#placeItHere' ] // element selector(s) to which the template(s) shall be rendered to
 				},
 				
-				debug: false
+				debug: false // console.log information about what is going on
 				
 			},
 			
