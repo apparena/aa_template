@@ -34,7 +34,7 @@ require.config({
 // (the aliases are mapped in the require.config() above).
 require([
     'jquery',
-    'FB',
+    'facebook',
     'bootstrap',
     'script',
     'gapi',

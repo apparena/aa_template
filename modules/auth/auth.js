@@ -10,8 +10,8 @@
  */
 define(
 	'auth', // module name
-	[ 'jquery', 'gapi', 'FB' ], // required for this module
-	function ( $ ) { // the required item passed in as an object once the required dependency has been loaded
+	[ 'jquery', 'gapi', 'facebook' ], // required for this module
+	function ( $, gapi, FB ) { // the required item passed in as an object once the required dependency has been loaded
 		
 		var TAG = 'modules.auth';
 		
