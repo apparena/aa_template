@@ -296,7 +296,8 @@ if (isset($aaForJs['inst']['aa_app_secret'])) {
 <?php } ?>
 
 <!-- data-main attribute tells require.js to load scripts/main.js after require.js loads. -->
-<script data-main="js/main" src="js/require.js"></script>
+<!--<script data-main="js/main" src="js/require.js"></script>-->
+<script data-main="js/main" src="js/require-dev.js"></script>
 
 </body>
 </html>
