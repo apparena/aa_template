@@ -75,7 +75,7 @@
 	
 	// require the auth module because we are binding a module function call to the btn_login-onclick listener...
 	// (without the auth module, a $(document).ready() function would have been enough...)
-	require( [ 'jquery', 'auth' ], function ( $, auth ) {
+	define( [ 'jquery', 'auth' ], function ( $, auth ) {
 		
 		$(document).ready( function () {
 			
