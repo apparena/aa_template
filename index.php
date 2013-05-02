@@ -69,6 +69,8 @@ include_once("init.php");
     different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a>
     to experience this site.</p><![endif]-->
 
+<div id="fb-root"></div>
+
 <!-- Show admin panel and admin intro information -->
 <?  if ( isset( $aa['fb']['page']['admin'] ) && $aa['fb']['page']['admin'] ) {  ?>
     <div class="admin_div">
