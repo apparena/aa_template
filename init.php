@@ -84,6 +84,7 @@ session_start();
 $fb_temp = $aa['fb'];
 $aa =& $_SESSION;
 $aa['instance'] = $appmanager->getInstance();
+$aa['instance']['page_tab_url'] = $aa['instance']['fb_page_url'] . "?sk=app_" . $aa['instance']['fb_app_id'];
 $aa['config'] = $appmanager->getConfig();
 $aa['locale'] = $appmanager->getTranslation( $cur_locale );
 $aa['fb'] = $fb_temp;
