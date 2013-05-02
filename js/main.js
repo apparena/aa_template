@@ -67,5 +67,7 @@ require([
     $('#terms-link').click(function () {
         aa_tmpl_load('terms.phtml');
     });
+    
+    aa.auth = auth;
 
 });

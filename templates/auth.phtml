@@ -6,13 +6,11 @@
 
 <script>
 	
-	define(
-		[ 'jquery', 'gapi', 'facebook', 'auth' ], // required for this module
-		function ( $, gapi, FB, auth ) {
+	$(document).ready( function () {
 		
 		$( '#reset_auth' ).on( 'click', function () {
 			
-			initAuth( auth );
+			initAuth();
 			
 		});
 		

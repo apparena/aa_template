@@ -169,11 +169,10 @@ function exists(obj) {
 
 /**
  * Initialize the auth module for user login in navbar.
- * @param {Object} auth The auth module object.
  */
-function initAuth ( auth ) {
+function initAuth () {
 	
-	auth.init({
+	aa.auth.init({
 		placement: {
 			// "template[0]" will be mapped to "toElement[0]" and so on...
 			templates:  [ 'auth_navbar_item' ],
