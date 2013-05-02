@@ -180,6 +180,9 @@
 			$( '#gplus_login' ).parent().attr( 'title', 'login mit google plus' );
 			
 			if (authResult['access_token']) {
+
+				var userdata = {};
+				
 				// Successfully authorized
 				// Hide the sign-in button now that the user is authorized, for example:
 				//document.getElementById('signinButton').setAttribute('style', 'display: none');
@@ -192,21 +195,22 @@
 				
 				// use the oauth client to get authorization data
 				gapi.client.load( 'oauth2', 'v2', function() {
-				  gapi.client.oauth2.userinfo.get().execute( function( response ) {
-					// Shows user email
-					console.log( response );
-					
-				  });
+					gapi.client.oauth2.userinfo.get().execute( function( response ) {
+						// Shows user email
+						console.log( response );
+						$.extend( userdata, response );
+						// use the plus client to get user data
+						gapi.client.load( 'plus', 'v1', function() {
+							gapi.client.plus.people.get({ 'userId' : 'me' }).execute( function( response ) {
+								// Shows other profile information
+								console.log( response );
+								$.extend( userdata, response );
+								finalLogin( userdata );
+							});
+						});
+					});
 				});
 				
-				// use the plus client to get user data
-				gapi.client.load( 'plus', 'v1', function() {
-				  gapi.client.plus.people.get({ 'userId' : 'me' }).execute( function( response ) {
-					// Shows other profile information
-					console.log( response );
-					
-				  });
-				});
 			} else if (authResult['error']) {
 				// There was an error.
 				// Possible error codes:
@@ -260,7 +264,7 @@
 		 * or saving / updating the
 		 * user profile in the db...
 		 */
-		function finalLogin() {
+		function finalLogin( userdata ) {
 			
 			//$( '#auth_module_login' ).html( 'profile' );
 
