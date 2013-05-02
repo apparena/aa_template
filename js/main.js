@@ -67,14 +67,5 @@ require([
     $('#terms-link').click(function () {
         aa_tmpl_load('terms.phtml');
     });
-    
-    auth.init({
-		placement: {
-			// "template[0]" will be mapped to "toElement[0]" and so on...
-			templates:  [ 'auth_navbar_item' ],
-			toElements: [ '#menu_login' ]
-		},
-		debug: true
-	});
 
 });
