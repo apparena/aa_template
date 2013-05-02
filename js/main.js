@@ -3,10 +3,12 @@ require.config({
     baseUrl:'js',
     urlArgs: "bust=" +  (new Date()).getTime(), // Be sure to comment this line before deploying app to live stage
     paths:{
-        jquery:'//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min',
-        bootstrap:'//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min',
-        facebook:'//connect.facebook.net/de_DE/all',
-        script:'script'
+        jquery:    '//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min',
+        bootstrap: '//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min',
+        facebook:  '//connect.facebook.net/de_DE/all',
+        script:    'script',
+        auth:      '../modules/auth/auth', // no need to shim...
+        gapi:      '//apis.google.com/js/client:plusone'
     },
     shim:{ // load required non AMD modules here...
         jquery:{
@@ -20,17 +22,30 @@ require.config({
         },
         script:{
             deps:[ 'jquery', 'facebook' ]
-        }
+        },
+        gapi: {
+			exports: 'gapi'
+		}
     }
 });
 
 // the main.js uses REQUIRE instead of define to set up the scripts (aliases) our app needs to run
 // (the aliases are mapped in the require.config() above).
 require([
+    'jquery',
     'facebook',
     'bootstrap',
-    'script'
-], function (FB, bootstrap, script) {
+    'script',
+    'gapi',
+    'auth'
+], function (
+	$,
+	FB,
+	bootstrap,
+	script,
+	gapi,
+	auth
+) {
 
     FB.init({
         appId:aa.inst.fb_app_id, // App ID
@@ -51,5 +66,14 @@ require([
     $('#terms-link').click(function () {
         aa_tmpl_load('terms.phtml');
     });
+    
+    auth.init({
+		placement: {
+			// "template[0]" will be mapped to "toElement[0]" and so on...
+			templates:  [ 'auth_navbar_item' ],
+			toElements: [ '#menu_login' ]
+		},
+		debug: true
+	});
 
 });

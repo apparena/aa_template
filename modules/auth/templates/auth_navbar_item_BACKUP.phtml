@@ -1,0 +1,235 @@
+<?php 
+	
+?>
+
+<a id="auth_module_login" href="#">login</a>
+
+<div id="auth_module_login_content" class="hide" style="z-index: 10; position: absolute; background-color: lightgray; border: 1px solid black; width: 210px; text-align: center; padding: 10px;">
+	
+	<div>
+		<b>login</b>
+		<hr />
+	</div>
+	<form class="form-inline">
+		<div>
+			<input type="text" id="email" name="email" class="input-small" placeholder="Email-Adresse" style="width: 180px;" />
+		</div>
+		<div>
+			<input type="password" id="password" name="password" class="input-small" placeholder="Passwort" style="width: 180px;" />
+		</div>
+		<div>
+			<button type="button" id="btn_login" name="btn_login" class="pull-right btn btn-mini">
+				login
+			</button>
+		</div>
+	</form>
+	
+	<div>
+		
+		<div style="padding-left: 34px;">
+			oder login mit
+		</div>
+		
+		<button onclick="facebook_popup();" class="btn btn-primary btn-mini" style="height: 31px; margin-bottom: 30px;"><i class="icon-facebook icon-white icon-large">&nbsp;</i></button>
+		<button 
+			id="gplus_login"
+			class="g-signin"
+			data-scope="https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/plus.login"
+			data-requestvisibleactions="http://schemas.google.com/AddActivity"
+			data-clientId="990596349199.apps.googleusercontent.com"
+			data-callback="gplusCallback"
+			data-theme="dark"
+			data-cookiepolicy="single_host_origin"
+			data-width="iconOnly">
+		</button>
+		<button onclick="twitter_popup();" class="btn btn-info btn-mini" style="height: 31px; margin-bottom: 30px;"><i class="icon-twitter icon-white icon-large" style="margin-top: 10px;">&nbsp;</i></button>
+		
+	</div>
+	
+	<hr style="margin: 0px;" />
+	
+	<div>
+		<a href="#">register</a>
+	</div>
+	
+	<div>
+		<a href="#">forgot password?</a>
+	</div>
+	
+</div>
+
+<script type="text/javascript">
+	<!-- load g+ js api asynchronously (will render buttons) -->
+	(function() {var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;po.src = 'https://apis.google.com/js/client:plusone.js?onload=gapiAsyncInit';var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);})();
+	
+	<!-- load fb js -->
+	(function(d, s, id) {var js, fjs = d.getElementsByTagName(s)[0];if (d.getElementById(id)) return;js = d.createElement(s); js.id = id;js.src = "//connect.facebook.net/de_DE/all.js#xfbml=1";fjs.parentNode.insertBefore(js, fjs);}(document, 'script', 'facebook-jssdk'));
+</script>
+
+<script>
+	
+	$(document).ready( function () {
+		
+		// fade in / fade out
+		$( '#auth_module_login' ).on( 'mouseover', function () {
+			
+			// the mouse is currently hovering over the <a>-login tag, so show the content...
+			if ( $( '#auth_module_login_content' ).is( ':visible' ) == false ) {
+				
+				// only fade the content in if it is not already showing
+				$( '#auth_module_login_content' ).fadeIn( 100 );
+				
+			}
+			
+		});
+		
+		$( '#auth_module_login' ).on( 'mouseout', function () {
+			
+			if ( $( '#auth_module_login_content' ).is( ':hover' ) == false ) {
+				
+				// the mouse pointer left the <a>-login tag, but did not move down to the content area, so fadeout...
+				$( '#auth_module_login_content' ).fadeOut( 100 );
+				
+			}
+		});
+		
+		$( '#auth_module_login_content' ).on( 'mouseout', function () {
+			
+			// check if the mouse pointer was moved upwards to the <a>-login tag, do not hide if so...
+			if ( $( '#auth_module_login_content' ).is( ':hover' ) == false && $( '#auth_module_login' ).is( ':hover' ) == false ) {
+				
+				// if the mouse is not currently hovering over the content after hovering over the <a>-login tag hide the content...
+				$( '#auth_module_login_content' ).fadeOut( 100 );
+				
+			}
+			
+		});
+		
+		// the login-button function
+		$( '#btn_login' ).on( 'click', function () {
+			
+			
+			
+		});
+		
+	});
+	
+	window.fbAsyncInit = function () {
+		
+		FB.init({
+			appId: '169227223237688', // App ID
+			status: true, // check login status
+			cookie: true, // enable cookies to allow the server to access the session
+			xfbml:  true  // parse XFBML
+		});
+		
+		FB.XFBML.parse();
+		
+	};
+	
+	function gplusCallback ( authResult ) {
+		
+		// the auto-rendered g+ sign in btn is surrounded by an extra div which is out of place...
+		$( '#gplus_login' ).parent().css( 'top', '12px' );
+		$( '#gplus_login' ).parent().attr( 'title', 'login mit google plus' );
+		
+		if (authResult['access_token']) {
+			// Successfully authorized
+			// Hide the sign-in button now that the user is authorized, for example:
+			//document.getElementById('signinButton').setAttribute('style', 'display: none');
+			console.log( 'success' );
+			console.log(authResult);
+			
+			// google recommends hiding the sign in button when there is a valid access token in the authResult
+			
+			gapi.auth.setToken(authResult); // Store the returned token.
+			
+			// use the oauth client to get authorization data
+			gapi.client.load( 'oauth2', 'v2', function() {
+			  gapi.client.oauth2.userinfo.get().execute( function( response ) {
+				// Shows user email
+				console.log( response );
+				$( '#responselog' ).append(
+					'<br />==========================================' +
+					'<h2>timestamp: ' + new Date() + '</h2>' +
+					'<h2>g+ oauth response:</h2>' +
+					JSON.stringify( response ).replace( /",/g, '",<br />').replace( /{/g, '{<br />' ).replace( /}/g, '<br />}' ) +
+					'<br />'
+				);
+			  })
+			});
+			
+			// use the plus client to get user data
+			gapi.client.load( 'plus', 'v1', function() {
+			  gapi.client.plus.people.get({ 'userId' : 'me' }).execute( function( response ) {
+				// Shows other profile information
+				console.log( response );
+				$( '#responselog' ).append(
+					'<h2>g+ plus response:</h2>' +
+					JSON.stringify( response ).replace( /",/g, '",<br />').replace( /{/g, '{<br />' ).replace( /}/g, '<br />}' ) +
+					'<br />'
+				);
+			  })
+			});
+		} else if (authResult['error']) {
+			// There was an error.
+			// Possible error codes:
+			//   "access_denied" - User denied access to your app
+			//   "immediate_failed" - Could not automatically log in the user
+			// console.log('There was an error: ' + authResult['error']);
+			console.log( 'error' );
+			console.log(authResult);
+			$( '#responselog' ).append(
+				'error-response: ' +
+				JSON.stringify( authResult ).replace( /",/g, '",<br />').replace( /{/g, '{<br />' ).replace( /}/g, '<br />}' ) +
+				'<br />'
+			);
+		}
+		
+	}
+	
+	function twitter_popup () {
+		
+		// opens the twitter auth sign in popup
+		popup_window = window.open( 'modules/auth/twitter_auth.php?popup=true','twitter-login','height=500,width=600' ); // the twitter auth dialog is responsive and will fit itself to an appropriate size
+		
+	}
+	
+	function twitter_popup_callback( response ) {
+		
+		// twitter popup sign in
+		console.log( 'twitter login callback fetched response' );
+		console.log( response );
+		
+		popup_window.close();
+		
+		if ( typeof( response ) == 'string' ) {
+			
+			if ( response == 'false' ) {
+				
+				console.log( 'oh my! the user canceled twitter login...' );
+				
+			} else {
+				
+				finalLogin( response );
+				
+			}
+			
+		}
+			
+	}
+	
+	/**
+	 * Do the final login stuff,
+	 * such as changing "login" to
+	 * "profile" with a logout fct,
+	 * or saving / updating the
+	 * user profile in the db...
+	 */
+	function finalLogin() {
+		
+		$( '#auth_module_login' ).html( 'profile' );
+		
+	}
+	
+</script>

@@ -122,6 +122,9 @@ include_once("init.php");
                 <li><a onclick="aa_tmpl_load('module_registration.phtml');"><?php __p("Register");?></a></li>
                 <li><a onclick="aa_tmpl_load('form_validation.phtml');"><?php __p("Validation");?></a></li>
                 <li><a onclick="aa_tmpl_load('db-demo.phtml');"><?php __p("DB");?></a></li>
+                <li title="FB, g+, twitter, noSocial user authorization"><a onclick="aa_tmpl_load('auth.phtml');"><?php __p("auth");?></a></li>
+                <li title="g+, twitter social features"><a onclick="aa_tmpl_load('social_demo.phtml');"><?php __p("social_demo");?></a></li>
+                <li id="menu_login"></li>
             </ul>
 
             <?php if ( is_array( $aa_locales ) && count( $aa_locales ) > 1 ) { ?>
