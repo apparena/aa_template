@@ -334,7 +334,9 @@ define(
 			
 			facebook_popup: function () {
 				
-				doLogin = false;
+				var doLogin = false;
+				
+				var that = this;
 				
 				FB.getLoginStatus( function( response ) {
 					
@@ -355,7 +357,7 @@ define(
 							aa.userdata = $.extend( aa.userdata, response.authResponse );
 							
 							//this.finalLogin( aa.userdata );
-							this.login( aa.userdata, 'fb' );
+							that.login( aa.userdata, 'fb' );
 							
 						});
 					    
@@ -389,7 +391,7 @@ define(
 									aa.userdata = $.extend( aa.userdata, response );
 									
 									//this.finalLogin( aa.userdata );
-									this.login( aa.userdata, 'fb' );
+									that.login( aa.userdata, 'fb' );
 									
 								});
 								
