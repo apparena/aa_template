@@ -306,7 +306,7 @@ define(
 				
 				//$( '#auth_module_login' ).html( 'profile' );
 
-				aa.auth.init({
+				this.auth.init({
 					placement: {
 						// "template[0]" will be mapped to "toElement[0]" and so on...
 						templates:  [ 'auth_navbar_profile' ],
