@@ -313,16 +313,17 @@ define(
 			twitter_popup_callback: function ( response ) {
 				
 				try {
-					
 					response = $.parseJSON( response );
-					
 				} catch ( e ) {}
 				
 				// twitter popup sign in
 				this.log( 'twitter_callback >> twitter login callback fetched response' );
 				this.log( response );
 				
-				this.popup_window.close();
+				try {
+					this.popup_window.close();
+				} catch ( e ) {}
+				
 				this.popup_window = null;
 				
 				if ( typeof( response ) == 'string' ) {
