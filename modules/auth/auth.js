@@ -18,12 +18,12 @@ define(
 		
 		var TAG = 'modules.auth';
 		
+		/**
+		 * Stores the twitter popup.
+		 */
+		var popup_window = null;
+		
 		var auth = {
-			
-			/**
-			 * Stores the twitter popup.
-			 */
-			popup_window: null,
 			
 			/**
 			 * Log something to the console.
@@ -306,7 +306,7 @@ define(
 			twitter_popup: function () {
 				
 				// opens the twitter auth sign in popup
-				this.popup_window = window.open( 'modules/auth/twitter_auth.php?popup=true','twitter-login','height=500,width=600' ); // the twitter auth dialog is responsive and will fit itself to an appropriate size
+				popup_window = window.open( 'modules/auth/twitter_auth.php?popup=true','twitter-login','height=500,width=600' ); // the twitter auth dialog is responsive and will fit itself to an appropriate size
 				
 			},
 			
@@ -321,10 +321,10 @@ define(
 				this.log( response );
 				
 				try {
-					this.popup_window.close();
+					popup_window.close();
 				} catch ( e ) {}
 				
-				this.popup_window = null;
+				popup_window = null;
 				
 				if ( typeof( response ) == 'string' ) {
 					
