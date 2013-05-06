@@ -1,12 +1,7 @@
 <?php 
 	
 	/**
-	 * This script has to check if the user
-	 * is already in the db. If so, it might
-	 * have to update the given credentials
-	 * into the user's data.
-	 * If it does not find the user, it has
-	 * to save him to the db.
+	 * Maybe we dont need an own script for registering...
 	 */
 	
 	include_once '../../config.php';

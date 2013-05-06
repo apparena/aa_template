@@ -53,7 +53,7 @@
         /* no signed request available. the user might come from fb_connect or form registration */
     }
 
-    if( $user === false ) {
+    if ( $user === false ) {
         if ( isset( $_POST[ 'user' ] ) ) {
     	    $user = $_POST[ 'user' ];
         } else {

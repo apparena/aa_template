@@ -17,6 +17,35 @@
 	if ( isset( $_POST[ 'userData' ] ) ) { $userdata = $_POST[ 'userData' ]; } else { echo json_encode( array( 'error' => 'missing user data' ) ); exit( 0 ); }
 	if ( isset( $_POST[ 'mode' ] ) ) { $mode = $_POST[ 'mode' ]; } else { echo json_encode( array( 'error' => 'missing mode' ) ); exit( 0 ); }
 	
+	switch( $mode ) {
+		
+		case 'fb':
+			
+			
+			
+			break;
+			
+		case 'gplus':
+			
+			
+			
+			break;
+			
+		case 'twitter':
+			
+			
+			
+			break;
+			
+		case 'email':
+		default:
+			
+			
+			
+			break;
+		
+	}
+	
 	echo json_encode( array( 'success' => 'yay!' ) );
 	
 ?>

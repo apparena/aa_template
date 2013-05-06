@@ -434,6 +434,8 @@ define(
 			
 			register: function () {
 				
+				var that = this;
+				
 				// remove old container if it is present
 				$( '#register_container' ).remove();
 				
@@ -508,20 +510,9 @@ define(
 							
 						}
 						
-						$.ajax({
-							url: 'modules/auth/register_user.php',
-							type: 'POST',
-							dataType: 'JSON',
-							data: {
-								userData: userdata
-							},
-							success: function ( response ) {
-								
-								that.log( 'login >> register callback says: ' + response.success, true );
-								that.finalLogin( response );
-								
-							}
-						});
+						aa.userdata = $.extend( aa.userdata, userdata );
+						
+						that.login( aa.userdata, 'email' );
 						
 					});
 					

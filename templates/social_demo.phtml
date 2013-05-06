@@ -131,14 +131,14 @@
 	function twitter () {
 		
 		// inline twitter sign in
-		top.location = 'twitter_auth.php';
+		top.location = '../modules/auth/twitter_auth.php';
 		
 	}
 	
 	function twitter_popup () {
 		
 		// opens the twitter auth sign in popup
-		popup_window = window.open( 'twitter_auth.php?popup=true','twitter-login','height=500,width=600' ); // the twitter auth dialog is responsive and will fit itself to an appropriate size
+		popup_window = window.open( '../modules/auth/twitter_auth.php?popup=true','twitter-login','height=500,width=600' ); // the twitter auth dialog is responsive and will fit itself to an appropriate size
 		
 	}
 	
