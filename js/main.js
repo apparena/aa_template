@@ -75,6 +75,9 @@ require([
      * HTML of the button (in an attribute), so it won't be
      * aware of our auth module, which is handled by requirejs.
      * 
+     * It is also used by the twitter callback file, which
+     * has no access to require.
+     * 
      * If you need to use the auth object anywhere, use the
      * require() method (like in the templates where the
      * module object is used) if you can!

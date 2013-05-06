@@ -39,8 +39,7 @@
 			//echo '<script>console.log(window.opener.twitter_popup_callback);</script>';
 			
 			//echo '<script>window.opener.twitter_popup_callback(\'' . json_encode( $user ) . '\');</script>'; // if the callback is in the window scope of the opening page
-			
-			echo '<script>require(["auth"],function(){auth.twitter_popup_callback(\'' . json_encode( $user ) . '\');});</script>';
+			echo '<script>window.opener.aa.auth.twitter_popup_callback(\'' . json_encode( $user ) . '\');</script>';
 			
 		}
 		
@@ -52,7 +51,7 @@
 		echo '<script>window.opener.twitter_popup_callback(\'false\');</script>';
 		
 		//echo '<script>window.opener.twitter_popup_callback(\'false\');</script>'; // if the callback is in the window scope of the opening page
-		echo '<script>require(["auth"],function(){aa.auth.twitter_popup_callback(\'false\');});</script>';
+		echo '<script>window.opener.aa.auth.twitter_popup_callback(\'false\');</script>';
 		
 	}
 	
