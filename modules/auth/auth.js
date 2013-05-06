@@ -343,7 +343,7 @@ define(
 				
 				//$( '#auth_module_login' ).html( 'profile' );
 
-				this.auth.init({
+				this.init({
 					placement: {
 						// "template[0]" will be mapped to "toElement[0]" and so on...
 						templates:  [ 'auth_navbar_profile' ],
