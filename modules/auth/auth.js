@@ -445,7 +445,7 @@ define(
 					
 					$( '#register_btn_login' ).on( 'click', function () {
 						
-						var password_repeat = $( 'register_password_repeat' ).val();
+						var password_repeat = $( '#register_password_repeat' ).val();
 						
 						var validation = false;
 						
