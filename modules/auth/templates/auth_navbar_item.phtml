@@ -49,11 +49,11 @@
 	<hr style="margin: 0px;" />
 	
 	<div>
-		<a href="#">register</a>
+		<a id="btn_register" class="btn btn-mini" href="#">register</a>
 	</div>
 	
 	<div>
-		<a href="#">forgot password?</a>
+		<a id="btn_forgot_pw" class="btn btn-mini" href="#">forgot password?</a>
 	</div>
 	
 </div>
@@ -192,6 +192,13 @@ console.log( aa.auth );
 
 			// render g+ login button manually
 			gapi.signin.go();
+
+			// init registration button
+			$( '#btn_register' ).on( 'click', function () {
+				
+				auth.register();
+				
+			});
 			
 		});
 		

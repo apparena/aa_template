@@ -352,6 +352,12 @@ define(
 					debug: true
 				});
 				
+			},
+			
+			register: function () {
+				
+				this.log( 'register function here!' );
+				
 			}
 			
 		};
