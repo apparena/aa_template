@@ -462,6 +462,10 @@ define(
 							
 							return false;
 							
+						} else {
+							
+							$( '#register_email_error' ).fadeOut( 300 );
+							
 						}
 						
 						if ( userdata.password.length < 6 ) {
@@ -471,6 +475,10 @@ define(
 							
 							return false;
 							
+						} else {
+							
+							$( '#register_password_error' ).fadeOut( 300 );
+							
 						}
 						
 						if ( userdata.password.length != password_repeat.length || userdata.password != password_repeat ) {
@@ -479,6 +487,10 @@ define(
 							$( '#register_password_repeat_error' ).fadeIn( 300 );
 							
 							return false;
+							
+						} else {
+							
+							$( '#register_password_repeat_error' ).fadeOut( 300 );
 							
 						}
 						
