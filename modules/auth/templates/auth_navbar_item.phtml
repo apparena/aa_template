@@ -31,6 +31,17 @@
 		</div>
 		
 		<button id="fb_btn" class="btn btn-primary btn-mini" style="height: 31px; margin-bottom: 30px;"><i class="icon-facebook icon-white icon-large">&nbsp;</i></button>
+		<button
+			id="gplus_login" 
+			class="g-signin" 
+			data-scope="https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/plus.login" 
+			data-requestvisibleactions="http://schemas.google.com/AddActivity" 
+			data-clientId="990596349199.apps.googleusercontent.com" 
+			data-callback="aa.auth.gplusCallback" 
+			data-theme="dark" 
+			data-cookiepolicy="single_host_origin" 
+			data-width="iconOnly">
+		</button>
 		<button id="twitter_btn" class="btn btn-info btn-mini" style="height: 31px; margin-bottom: 30px;"><i class="icon-twitter icon-white icon-large" style="margin-top: 10px;">&nbsp;</i></button>
 		
 	</div>
@@ -159,9 +170,8 @@
 				
 			});
 			
-			// just make sure its gone
-			$( '#gplus_login' ).remove();
-			
+/*
+			// DOES NOT WORK (because auth.something will not be known in the template when it is loaded to an element)!!
 			$( '#login_btn_container' ).append(
 				'<button ' +
 					'id="gplus_login" ' +
@@ -175,6 +185,7 @@
 					'data-width="iconOnly">' +
 				'</button>'
 			);
+*/
 			
 			// render g+ login button manually
 			gapi.signin.go();

@@ -88,7 +88,7 @@ define(
 				
 				if ( typeof( this.settings.placement.templates ) == 'undefined' || typeof( this.settings.placement.toElements ) == 'undefined' ) {
 					
-					this.log( 'init >> the templates array or the elements array is empty', true );
+					this.log( 'init >> the templates array or the elements array is empty (undefined)', true );
 					this.log( this.settings.placement );
 					return false;
 					
@@ -130,6 +130,10 @@ define(
 					
 				}
 				
+/*
+ * This was just for testing!
+ * FB initialization is done in main.js in the requirejs callback.
+ *
 				// init fb and render fb-buttons and other xfbml stuff
 				window.fbAsyncInit = function () {
 					
@@ -143,6 +147,7 @@ define(
 					FB.XFBML.parse();
 					
 				};
+*/
 				
 			},
 			

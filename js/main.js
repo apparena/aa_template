@@ -9,7 +9,7 @@ require.config({
         facebook:  '//connect.facebook.net/de_DE/all',
         script:    'script',
         auth:      '../modules/auth/auth', // no need to shim...
-        gapi:      '//apis.google.com/js/client:plusone'
+        gapi:      '//apis.google.com/js/client:plusone' // maybe check if we can use the ready callback, usually: "https://apis.google.com/js/client:plusone.js?onload=myCallback"
     },
     shim:{ // load required non AMD modules here...
         jquery:{
@@ -70,11 +70,14 @@ require([
     
     /*
      * This is just used in the navbar_item template to
-     * initialize a new auth menu item which displays the
-     * user's profile.
+     * use the gplus callback function from the auth module.
+     * The g+ signin callback method definition is part of the
+     * HTML of the button (in an attribute), so it won't be
+     * aware of our auth module, which is handled by requirejs.
+     * 
      * If you need to use the auth object anywhere, use the
      * require() method (like in the templates where the
-     * module object is used )!
+     * module object is used) if you can!
      */
     aa.auth = auth;
     
@@ -82,7 +85,7 @@ require([
     /*
      * Use the auth module to initialize the authorization panel as a menu item.
      * Each template will be shown in the according toElements array
-     * item. So if we use the auth_navbar_item template as the first
+     * item of the same index number. So if we use the auth_navbar_item template as the first
      * element in the templates array, the plugin will use this
      * template to render it to the first element (which contains a
      * common selector) of the toElements array.
