@@ -386,7 +386,16 @@ define(
 			
 			register: function () {
 				
-				this.log( 'register function here!' );
+				// remove old container if it is present
+				$( '#register_container' ).remove();
+				
+				$( 'body' ).append( '<div id="register_container"></div>' );
+				
+				$( '#register_container' ).load( 'modules/auth/templates/auth_register.phtml', function () {
+					
+					$( '#registration_modal' ).modal( 'show' );
+					
+				});
 				
 			}
 			
