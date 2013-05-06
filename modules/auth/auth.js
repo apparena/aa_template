@@ -208,9 +208,112 @@ define(
 				
 			},
 			
+			twitter_popup_callback: function ( response ) {
+				
+				// twitter popup sign in
+				console.log( 'twitter login callback fetched response' );
+				console.log( response );
+				
+				popup_window.close();
+				
+				if ( typeof( response ) == 'string' ) {
+					
+					if ( response == 'false' ) {
+						
+						console.log( 'oh my! the user canceled twitter login...' );
+						
+					} else {
+						
+						this.finalLogin( response );
+						
+					}
+					
+				}
+				
+			},
+			
 			facebook_popup: function () {
 				
 				
+				
+			},
+			
+			gplusCallback: function ( authResult ) {
+				
+				// the auto-rendered g+ sign in btn is surrounded by an extra div which is out of place...
+				$( '#gplus_login' ).parent().css( 'top', '12px' );
+				$( '#gplus_login' ).parent().attr( 'title', 'login mit google plus' );
+				
+				if (authResult['access_token']) {
+					
+					aa.userdata = {};
+					
+					// Successfully authorized
+					// Hide the sign-in button now that the user is authorized, for example:
+					//document.getElementById('signinButton').setAttribute('style', 'display: none');
+					console.log( 'success' );
+					console.log(authResult);
+					
+					// google recommends hiding the sign in button when there is a valid access token in the authResult
+					
+					gapi.auth.setToken(authResult); // Store the returned token.
+					
+					// use the oauth client to get authorization data
+					gapi.client.load( 'oauth2', 'v2', function() {
+						gapi.client.oauth2.userinfo.get().execute( function( response ) {
+							// Shows user email
+							console.log( response );
+							$.extend( aa.userdata, response );
+							// use the plus client to get user data
+							gapi.client.load( 'plus', 'v1', function() {
+								gapi.client.plus.people.get({ 'userId' : 'me' }).execute( function( response ) {
+									
+									// Shows other profile information
+									console.log( response );
+									$.extend( aa.userdata, response );
+									if ( aa.gplusFirstStart == true ) {
+										aa.gplusFirstStart = false; // do not directly login the user via g+ if he is logged in in this browser, gplus initializes directly and if the user is logged in it calls this function. also called by the user clicking the g+ login btn.
+									} else {
+										this.finalLogin( aa.userdata );
+									}
+									
+								});
+							});
+						});
+					});
+					
+				} else if (authResult['error']) {
+					// There was an error.
+					// Possible error codes:
+					//   "access_denied" - User denied access to your app
+					//   "immediate_failed" - Could not automatically log in the user
+					// console.log('There was an error: ' + authResult['error']);
+					console.log( 'error' );
+					console.log(authResult);
+					
+				}
+				
+			},
+			
+			/**
+			 * Do the final login stuff,
+			 * such as changing "login" to
+			 * "profile" with a logout fct,
+			 * or saving / updating the
+			 * user profile in the db...
+			 */
+			finalLogin: function ( userdata ) {
+				
+				//$( '#auth_module_login' ).html( 'profile' );
+
+				aa.auth.init({
+					placement: {
+						// "template[0]" will be mapped to "toElement[0]" and so on...
+						templates:  [ 'auth_navbar_profile' ],
+						toElements: [ '#menu_login' ]
+					},
+					debug: true
+				});
 				
 			}
 			
