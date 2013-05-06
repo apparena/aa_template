@@ -80,6 +80,7 @@ require([
      * module object is used) if you can!
      */
     aa.auth = auth;
+    aa.test = function(){console.log('test 12345');};
     
     
     /*
