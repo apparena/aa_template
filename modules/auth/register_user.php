@@ -1,0 +1,20 @@
+<?php 
+	
+	/**
+	 * This script has to check if the user
+	 * is already in the db. If so, it might
+	 * have to update the given credentials
+	 * into the user's data.
+	 * If it does not find the user, it has
+	 * to save him to the db.
+	 */
+	
+	include_once '../../config.php';
+	
+	$userdata = array();
+	
+	if ( isset( $_POST[ 'userData' ] ) ) { $userdata = $_POST[ 'userData' ]; } else { echo json_encode( array( 'error' => 'missing user data' ) ); exit( 0 ); }
+	
+	echo json_encode( array( 'success' => 'yay!' ) );
+	
+?>

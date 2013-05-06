@@ -508,6 +508,21 @@ define(
 							
 						}
 						
+						$.ajax({
+							url: 'modules/auth/register_user.php',
+							type: 'POST',
+							dataType: 'JSON',
+							data: {
+								userData: userdata
+							},
+							success: function ( response ) {
+								
+								that.log( 'login >> register callback says: ' + response.success, true );
+								that.finalLogin( response );
+								
+							}
+						});
+						
 					});
 					
 				});
