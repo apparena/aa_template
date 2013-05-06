@@ -443,6 +443,47 @@ define(
 					
 					$( '#registration_modal' ).modal( 'show' );
 					
+					$( '#register_btn_login' ).on( 'click', function () {
+						
+						var password_repeat = $( 'register_password_repeat' ).val();
+						
+						var userdata = {
+							email: $( '#register_email' ).val(),
+							password: $( '#register_password' ).val()
+						};
+						
+						// very simple validation here!
+						if ( userdata.email.length < 5 ||
+							 userdata.email.indexOf( '.' ) <= 0 ||
+							 userdata.email.indexOf( '@' ) <= 0 ) {
+							
+							// definitely invalid email ;)
+							$( '#register_email_error' ).fadeIn( 300 );
+							
+							return false;
+							
+						}
+						
+						if ( userdata.password.length < 6 ) {
+							
+							// password is way too short ;)
+							$( '#register_password_error' ).fadeIn( 300 );
+							
+							return false;
+							
+						}
+						
+						if ( userdata.password.length != password_repeat.length || userdata.password != password_repeat ) {
+							
+							// passwords do not match
+							$( '#register_password_repeat_error' ).fadeIn( 300 );
+							
+							return false;
+							
+						}
+						
+					});
+					
 				});
 				
 			}
