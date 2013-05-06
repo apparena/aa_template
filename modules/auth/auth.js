@@ -7,6 +7,9 @@
  * and an inline login or even a popup...
  * If behavior is weird, turn on debug info in init-param:
  * newSettings.debug = true.
+ * 
+ * @author: guntram pollock
+ * @date: 06.05.2013
  */
 define(
 	'auth', // module name
@@ -73,6 +76,18 @@ define(
 			// overwrite settings if set and show the ui element
 			init: function ( newSettings ) {
 				
+				// just copy the function scope for use in gapi stuff
+				var that = this;
+				
+				/*
+				 * !!IMPORTANT!!
+				 * I had to put the g+ callback function
+				 * to the window object because the
+				 * stupid gapi will not know the auth module
+				 * for some reason. Maybe this will get fixed
+				 * or we will be able to access the module
+				 * via the g+ api sometime...
+				 */
 				window.gplusCallback = function ( authResult ) {
 					
 					// the auto-rendered g+ sign in btn is surrounded by an extra div which is out of place...
@@ -85,9 +100,13 @@ define(
 						
 						// Successfully authorized
 						// Hide the sign-in button now that the user is authorized, for example:
-						//document.getElementById('signinButton').setAttribute('style', 'display: none');
-						console.log( 'success' );
-						console.log(authResult);
+						// document.getElementById('signinButton').setAttribute('style', 'display: none');
+						// Yeah, or do it with jquery and/or bootstrap ;)
+						// $('#gplus_login').fadeOut(200);
+						// $('#gplus_login').addClass('hide');
+						
+						that.log( 'g+ callback >> success' );
+						that.log( authResult );
 						
 						// google recommends hiding the sign in button when there is a valid access token in the authResult
 						
@@ -97,19 +116,20 @@ define(
 						gapi.client.load( 'oauth2', 'v2', function() {
 							gapi.client.oauth2.userinfo.get().execute( function( response ) {
 								// Shows user email
-								console.log( response );
+								that.log( response );
 								$.extend( aa.userdata, response );
 								// use the plus client to get user data
 								gapi.client.load( 'plus', 'v1', function() {
 									gapi.client.plus.people.get({ 'userId' : 'me' }).execute( function( response ) {
 										
 										// Shows other profile information
-										console.log( response );
+										that.log( response );
+										
 										$.extend( aa.userdata, response );
 										if ( aa.gplusFirstStart == true ) {
 											aa.gplusFirstStart = false; // do not directly login the user via g+ if he is logged in in this browser, gplus initializes directly and if the user is logged in it calls this function. also called by the user clicking the g+ login btn.
 										} else {
-											this.finalLogin( aa.userdata );
+											that.finalLogin( aa.userdata );
 										}
 										
 									});
@@ -117,14 +137,14 @@ define(
 							});
 						});
 						
-					} else if (authResult['error']) {
+					} else if ( authResult['error'] ) {
 						// There was an error.
 						// Possible error codes:
 						//   "access_denied" - User denied access to your app
 						//   "immediate_failed" - Could not automatically log in the user
 						// console.log('There was an error: ' + authResult['error']);
-						console.log( 'error' );
-						console.log(authResult);
+						that.log( 'g+ callback >> error', true );
+						that.log( authResult, true );
 						
 					}
 					
@@ -168,12 +188,20 @@ define(
 				}
 				
 				var templates = this.settings.placement.templates;
-				var elements = this.settings.placement.toElements;
+				var elements  = this.settings.placement.toElements;
 				
 				// load the templates to the elements.
 				// note that the indices have to be 0, 1, 2,... in templates and elements!
 				// each template is mapped to the element of the same index.
 				for ( var index in templates ) {
+					
+					if ( typeof( elements[ index] ) == 'undefined' ) {
+						
+						this.log( '!! init >> the index "' + index + '" is missing in the toElements array and will be skipped', true );
+						this.log( this.settings.placement, true );
+						continue;
+						
+					}
 					
 					try {
 						
@@ -181,6 +209,7 @@ define(
 						
 					} catch( e ) {
 						
+						this.log( '! init >> an error occured', true );
 						this.log( e, true );
 						
 					}
@@ -205,6 +234,9 @@ define(
 					
 				};
 */
+				
+				// just to make sure FB has parsed stuff...
+				FB.XFBML.parse();
 				
 			},
 			
@@ -273,8 +305,8 @@ define(
 			twitter_popup_callback: function ( response ) {
 				
 				// twitter popup sign in
-				console.log( 'twitter login callback fetched response' );
-				console.log( response );
+				this.log( 'twitter_callback >> twitter login callback fetched response' );
+				this.log( response );
 				
 				popup_window.close();
 				
@@ -282,7 +314,7 @@ define(
 					
 					if ( response == 'false' ) {
 						
-						console.log( 'oh my! the user canceled twitter login...' );
+						this.log( 'twitter_callback >> oh my! the user canceled twitter login...' );
 						
 					} else {
 						
