@@ -334,30 +334,76 @@ define(
 			
 			facebook_popup: function () {
 				
-				FB.login( function ( response ) {
+				doLogin = false;
+				
+				FB.getLoginStatus( function( response ) {
 					
-					if ( response.authResponse ) {
+					if ( response.status === 'connected' ) {
 						
-						//console.log('Welcome!  Fetching your information.... ');
-						
-						FB.api( '/me', function ( response ) {
+					    // the user is logged in and has authenticated your
+					    // app, and response.authResponse supplies
+					    // the user's ID, a valid access token, a signed
+					    // request, and the time the access token 
+					    // and signed request each expire
+					    var uid = response.authResponse.userID;
+					    var accessToken = response.authResponse.accessToken;
+					    
+					    FB.api( '/me', function ( response ) {
 							
 							//console.log('Good to see you, ' + response.name + '.');
 							
-							aa.userdata = $.extend( aa.userdata, response );
+							aa.userdata = $.extend( aa.userdata, response.authResponse );
 							
 							//this.finalLogin( aa.userdata );
 							this.login( aa.userdata, 'fb' );
 							
 						});
+					    
+					} else if ( response.status === 'not_authorized' ) {
 						
-					 } else {
-						 
-						 //console.log('User cancelled login or did not fully authorize.');
-						 
-						 
-					 }
-					 
+					    // the user is logged in to Facebook, 
+					    // but has not authenticated your app
+						doLogin = true;
+						
+					} else {
+						
+					    // the user isn't logged in to Facebook.
+						doLogin = true;
+						
+					}
+					
+					if ( doLogin == true ) {
+						
+						doLogin = false;
+						
+						FB.login( function ( response ) {
+							
+							if ( response.authResponse ) {
+								
+								//console.log('Welcome!  Fetching your information.... ');
+								
+								FB.api( '/me', function ( response ) {
+									
+									//console.log('Good to see you, ' + response.name + '.');
+									
+									aa.userdata = $.extend( aa.userdata, response );
+									
+									//this.finalLogin( aa.userdata );
+									this.login( aa.userdata, 'fb' );
+									
+								});
+								
+							 } else {
+								 
+								 //console.log('User cancelled login or did not fully authorize.');
+								 
+								 
+							 }
+							 
+						});
+						
+					}
+					
 				});
 				
 			},
