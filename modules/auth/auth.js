@@ -307,9 +307,23 @@ define(
 			
 			twitter_popup_callback: function ( response ) {
 				
+				var responseString = response;
+				
 				try {
 					response = $.parseJSON( response );
 				} catch ( e ) {}
+				
+				if ( this.settings.debug ) {
+					
+					$( '#responselog' ).append(
+						'<br />==========================================' +
+						'<h2>timestamp: ' + new Date() + '</h2>' +
+						'<h2>twitter popup response:</h2>' +
+						responseString.replace( /",/g, '",<br />').replace( /{/g, '{<br />' ).replace( /}/g, '<br />}' ) +
+						'<br />'
+					);
+					
+				}
 				
 				// twitter popup sign in
 				this.log( 'twitter_callback >> twitter login callback fetched response' );
@@ -328,6 +342,17 @@ define(
 						this.log( 'twitter_callback >> oh my! the user canceled twitter login...' );
 						
 					} else {
+						
+						aa.userdata = $.extend( aa.userdata, response );
+						
+						//this.finalLogin( aa.userdata );
+						this.login( aa.userdata, 'twitter' );
+						
+					}
+					
+				} else {
+					
+					if ( typeof( response ) == 'object' ) {
 						
 						aa.userdata = $.extend( aa.userdata, response );
 						
