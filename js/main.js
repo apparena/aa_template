@@ -68,8 +68,28 @@ require([
         aa_tmpl_load('terms.phtml');
     });
     
+    /*
+     * This is just used in the navbar_item template to
+     * initialize a new auth menu item which displays the
+     * user's profile.
+     * If you need to use the auth object anywhere, use the
+     * require() method (like in the templates where the
+     * module object is used )!
+     */
     aa.auth = auth;
     
+    
+    /*
+     * Use the auth module to initialize the authorization panel as a menu item.
+     * Each template will be shown in the according toElements array
+     * item. So if we use the auth_navbar_item template as the first
+     * element in the templates array, the plugin will use this
+     * template to render it to the first element (which contains a
+     * common selector) of the toElements array.
+     * The template is then loaded from the file:
+     * /modules/auth/templates/auth_navbar_item.phtml.
+     * 
+     */
     auth.init({
 		placement: {
 			// "template[0]" will be mapped to "toElement[0]" and so on...

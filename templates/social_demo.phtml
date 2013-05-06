@@ -22,18 +22,36 @@
 	<h2>Social</h2>
 	<table class="table">
 		<thead>
-			<tr><th>teile einen Link</th><th>folgen</th><th>Hashtag</th><th>Erwähnung</th></tr>
+			<tr><th></th></tr>
 		</thead>
 		<tbody>
 			<tr>
 				<td>
+					teile einen Link
+				</td>
+				<td>
 					<a href="https://twitter.com/share" class="twitter-share-button" data-via="GuntramPollock" data-lang="de">Twittern</a>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					folgen
 				</td>
 				<td>
 					<a href="https://twitter.com/GuntramPollock" class="twitter-follow-button" data-show-count="false" data-lang="de">@GuntramPollock folgen</a>
 				</td>
+			</tr>
+			<tr>
+				<td>
+					Hashtag
+				</td>
 				<td>
 					<a href="https://twitter.com/intent/tweet?button_hashtag=TwitterGeschichten" class="twitter-hashtag-button" data-lang="de" data-related="GuntramPollock">Tweet #TwitterGeschichten</a>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Erwähnung
 				</td>
 				<td>
 					<a href="https://twitter.com/intent/tweet?screen_name=GuntramPollock" class="twitter-mention-button" data-lang="de" data-related="GuntramPollock">Tweet to @GuntramPollock</a>
@@ -44,18 +62,36 @@
 	<br />
 	<table class="table">
 		<thead>
-			<tr><th>+1 like/comment/share</th><th>profile badge</th><th>page badge</th><th>comment/share (no +1)</th></tr>
+			<tr><th></th></tr>
 		</thead>
 		<tbody>
 			<tr>
 				<td>
+					+1 like/comment/share
+				</td>
+				<td>
 					<div class="g-plusone" data-annotation="inline" data-width="300"></div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					profile badge
 				</td>
 				<td>
 					<div class="g-plus" data-height="69" data-href="//plus.google.com/109156055769208294930" data-rel="author"></div>
 				</td>
+			</tr>
+			<tr>
+				<td>
+					page badge
+				</td>
 				<td>
 					<g:plus href="https://plus.google.com/108834261031675170830"></g:plus>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					comment/share (no +1)
 				</td>
 				<td>
 					<div class="g-plus" data-action="share"></div>
@@ -148,7 +184,7 @@
 					JSON.stringify( response ).replace( /",/g, '",<br />').replace( /{/g, '{<br />' ).replace( /}/g, '<br />}' ) +
 					'<br />'
 				);
-			  })
+			  });
 			});
 			
 			// use the plus client to get user data
@@ -161,7 +197,7 @@
 					JSON.stringify( response ).replace( /",/g, '",<br />').replace( /{/g, '{<br />' ).replace( /}/g, '<br />}' ) +
 					'<br />'
 				);
-			  })
+			  });
 			});
 		} else if (authResult['error']) {
 			// There was an error.
