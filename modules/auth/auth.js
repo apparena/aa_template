@@ -328,7 +328,7 @@ define(
 			
 			facebook_popup: function () {
 				
-				
+				this.log( 'fb function here!' );
 				
 			},
 			
