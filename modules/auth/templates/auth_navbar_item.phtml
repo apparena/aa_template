@@ -31,7 +31,7 @@
 		</div>
 		
 		<button id="fb_btn" class="btn btn-primary btn-mini" style="height: 31px; margin-bottom: 30px;"><i class="icon-facebook icon-white icon-large">&nbsp;</i></button>
-		<button
+		<button 
 			id="gplus_login" 
 			class="g-signin" 
 			data-scope="https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/plus.login" 
@@ -186,7 +186,10 @@
 				'</button>'
 			);
 */
-			
+
+console.log( 'navbar template >> auth module:' );
+console.log( aa.auth );
+
 			// render g+ login button manually
 			gapi.signin.go();
 			
