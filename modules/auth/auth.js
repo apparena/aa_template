@@ -21,6 +21,11 @@ define(
 		var auth = {
 			
 			/**
+			 * Stores the twitter popup.
+			 */
+			popup_window: null,
+			
+			/**
 			 * Log something to the console.
 			 * Only works if settings.debug is set to true.
 			 * @param {String} msg The message to display.
@@ -51,7 +56,7 @@ define(
 						
 					} else {
 						
-						console.log( TAG + '.' );
+						console.log( TAG );
 						console.log( msg );
 						
 					}
@@ -301,17 +306,24 @@ define(
 			twitter_popup: function () {
 				
 				// opens the twitter auth sign in popup
-				popup_window = window.open( 'modules/auth/twitter_auth.php?popup=true','twitter-login','height=500,width=600' ); // the twitter auth dialog is responsive and will fit itself to an appropriate size
+				this.popup_window = window.open( 'modules/auth/twitter_auth.php?popup=true','twitter-login','height=500,width=600' ); // the twitter auth dialog is responsive and will fit itself to an appropriate size
 				
 			},
 			
 			twitter_popup_callback: function ( response ) {
 				
+				try {
+					
+					response = $.parseJSON( response );
+					
+				} catch ( e ) {}
+				
 				// twitter popup sign in
 				this.log( 'twitter_callback >> twitter login callback fetched response' );
 				this.log( response );
 				
-				popup_window.close();
+				this.popup_window.close();
+				this.popup_window = null;
 				
 				if ( typeof( response ) == 'string' ) {
 					
