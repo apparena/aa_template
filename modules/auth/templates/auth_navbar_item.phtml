@@ -154,7 +154,7 @@
 				userData.email = $( '#email' ).val();
 				userData.password = $( '#password' ).val();
 				
-				auth.login( userData );
+				auth.login( userData, 'email' ); // other modes are fb, gplus, twitter
 				
 			});
 			

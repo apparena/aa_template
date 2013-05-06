@@ -46,12 +46,12 @@ define(
 					
 					if ( typeof( msg ) != 'object' ) {
 						
-						// a styled console log msg
-						console.log( '%c ' + TAG + ' >> ' + msg + ' ', style );
+						// a styled console log msg -> "modules.auth.login >> some message"
+						console.log( '%c ' + TAG + '.' + msg + ' ', style );
 						
 					} else {
 						
-						console.log( TAG + ' >>' );
+						console.log( TAG + '.' );
 						console.log( msg );
 						
 					}
@@ -117,7 +117,7 @@ define(
 							gapi.client.oauth2.userinfo.get().execute( function( response ) {
 								// Shows user email
 								that.log( response );
-								$.extend( aa.userdata, response );
+								aa.userdata = $.extend( aa.userdata, response );
 								// use the plus client to get user data
 								gapi.client.load( 'plus', 'v1', function() {
 									gapi.client.plus.people.get({ 'userId' : 'me' }).execute( function( response ) {
@@ -125,11 +125,15 @@ define(
 										// Shows other profile information
 										that.log( response );
 										
-										$.extend( aa.userdata, response );
+										aa.userdata = $.extend( aa.userdata, response );
+										
 										if ( aa.gplusFirstStart == true ) {
 											aa.gplusFirstStart = false; // do not directly login the user via g+ if he is logged in in this browser, gplus initializes directly and if the user is logged in it calls this function. also called by the user clicking the g+ login btn.
 										} else {
-											that.finalLogin( aa.userdata );
+											
+											//that.finalLogin( aa.userdata );
+											that.login( aa.userdata, 'gplus' );
+											
 										}
 										
 									});
@@ -284,8 +288,7 @@ define(
 					success: function ( response ) {
 						
 						that.log( 'login >> login callback says: ' + response.success, true );
-						
-						
+						that.finalLogin( response );
 						
 					}
 				});
@@ -318,7 +321,10 @@ define(
 						
 					} else {
 						
-						this.finalLogin( response );
+						aa.userdata = $.extend( aa.userdata, response );
+						
+						//this.finalLogin( aa.userdata );
+						this.login( aa.userdata, 'twitter' );
 						
 					}
 					
@@ -328,7 +334,31 @@ define(
 			
 			facebook_popup: function () {
 				
-				this.log( 'fb function here!' );
+				FB.login( function ( response ) {
+					
+					if ( response.authResponse ) {
+						
+						//console.log('Welcome!  Fetching your information.... ');
+						
+						FB.api( '/me', function ( response ) {
+							
+							//console.log('Good to see you, ' + response.name + '.');
+							
+							aa.userdata = $.extend( aa.userdata, response );
+							
+							//this.finalLogin( aa.userdata );
+							this.login( aa.userdata, 'fb' );
+							
+						});
+						
+					 } else {
+						 
+						 //console.log('User cancelled login or did not fully authorize.');
+						 
+						 
+					 }
+					 
+				});
 				
 			},
 			
