@@ -37,7 +37,10 @@
 			echo '<script>window.close();</script>';
 */
 			//echo '<script>console.log(window.opener.twitter_popup_callback);</script>';
-			echo '<script>window.opener.twitter_popup_callback(\'' . json_encode( $user ) . '\');</script>';
+			
+			//echo '<script>window.opener.twitter_popup_callback(\'' . json_encode( $user ) . '\');</script>'; // if the callback is in the window scope of the opening page
+			echo '<script>aa.auth.twitter_popup_callback(\'' . json_encode( $user ) . '\');</script>';
+			
 		}
 		
 	} else {
@@ -46,6 +49,9 @@
 		
 		echo 'you did not login';
 		echo '<script>window.opener.twitter_popup_callback(\'false\');</script>';
+		
+		//echo '<script>window.opener.twitter_popup_callback(\'false\');</script>'; // if the callback is in the window scope of the opening page
+		echo '<script>aa.auth.twitter_popup_callback(\'false\');</script>';
 		
 	}
 	
