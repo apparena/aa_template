@@ -447,6 +447,8 @@ define(
 						
 						var password_repeat = $( 'register_password_repeat' ).val();
 						
+						var validation = false;
+						
 						var userdata = {
 							email: $( '#register_email' ).val(),
 							password: $( '#register_password' ).val()
@@ -460,11 +462,13 @@ define(
 							// definitely invalid email ;)
 							$( '#register_email_error' ).fadeIn( 300 );
 							
-							return false;
+							validation = false;
 							
 						} else {
 							
 							$( '#register_email_error' ).fadeOut( 300 );
+							
+							validation = true;
 							
 						}
 						
@@ -473,11 +477,13 @@ define(
 							// password is way too short ;)
 							$( '#register_password_error' ).fadeIn( 300 );
 							
-							return false;
+							validation = false;
 							
 						} else {
 							
 							$( '#register_password_error' ).fadeOut( 300 );
+							
+							validation = true;
 							
 						}
 						
@@ -486,11 +492,19 @@ define(
 							// passwords do not match
 							$( '#register_password_repeat_error' ).fadeIn( 300 );
 							
-							return false;
+							validation = false;
 							
 						} else {
 							
 							$( '#register_password_repeat_error' ).fadeOut( 300 );
+							
+							validation = true;
+							
+						}
+						
+						if ( validation == false ) {
+							
+							return false;
 							
 						}
 						
