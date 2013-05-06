@@ -18,11 +18,6 @@ define(
 		
 		var TAG = 'modules.auth';
 		
-		/**
-		 * Stores the twitter popup.
-		 */
-		var popup_window = null;
-		
 		var auth = {
 			
 			/**
