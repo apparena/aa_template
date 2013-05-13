@@ -285,7 +285,7 @@ define(
 				var that = this;
 				
 				$.ajax({
-					url: 'modules/auth/login_user.php',
+					url: 'modules/auth/login_user.php?aa_inst_id=' + aa.inst.aa_inst_id,
 					type: 'POST',
 					dataType: 'JSON',
 					data: {
@@ -519,7 +519,8 @@ define(
 						    validation      = false,
 						    userdata        = {
 								email: $( '#register_email' ).val(),
-								password: $( '#register_password' ).val()
+								password: $( '#register_password' ).val(),
+								gender: $( '#register_gender' ).val()
 							}; // these fields have to be in the registration template!!
 						
 						// VERY simple validation here!
@@ -609,7 +610,7 @@ define(
 				var that = this;
 				
 				$.ajax({
-					url: 'modules/auth/register_user.php',
+					url: 'modules/auth/register_user.php?aa_inst_id=' + aa.inst.aa_inst_id,
 					type: 'POST',
 					dataType: 'JSON',
 					data: {
