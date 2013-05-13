@@ -512,8 +512,9 @@ define(
 						    validation      = false,
 						    userdata        = {
 								email: $( '#register_email' ).val(),
-								password: $( '#register_password' ).val()
-							};
+								password: $( '#register_password' ).val(),
+								username: $( '#register_username' ).val()
+							}; // these fields have to be in the registration template!!
 						
 						// VERY simple validation here!
 						if ( userdata.email.length < 5 ||
@@ -563,7 +564,7 @@ define(
 							
 						}
 						
-						if ( userdata.password.length < 3 ) {
+						if ( userdata.username.length < 3 ) {
 							
 							// username is way too short ;)
 							$( '#register_username_error' ).fadeIn( 300 );
