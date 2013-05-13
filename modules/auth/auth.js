@@ -508,7 +508,7 @@ define(
 					
 					$( '#registration_modal' ).modal( 'show' );
 					
-					$( '#register_btn_login' ).on( 'click', function () {
+					$( '#register_btn_register' ).on( 'click', function () {
 						
 						var password_repeat = $( '#register_password_repeat' ).val(),
 						    validation      = false,
