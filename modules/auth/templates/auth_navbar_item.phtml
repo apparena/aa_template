@@ -1,9 +1,17 @@
 <?php 
 	
+	/**
+	 * This is a template for a menu like login look
+	 * of the login module.
+	 */
+	include_once '../../../config.php'; // the g+ app id is stored there
+	
 ?>
 
+<!-- twitter bootstrap like menu element, usually surrounded by a <li>-tag -->
 <a id="auth_module_login" href="#">login</a>
 
+<!-- the login popdown will show when the user hovers over the a tag -->
 <div id="auth_module_login_content" class="hide" style="z-index: 10; position: absolute; background-color: lightgray; border: 1px solid black; width: 210px; text-align: center; padding: 10px;">
 	
 	<div>
@@ -36,7 +44,7 @@
 			class="g-signin" 
 			data-scope="https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/plus.login" 
 			data-requestvisibleactions="http://schemas.google.com/AddActivity" 
-			data-clientId="990596349199.apps.googleusercontent.com" 
+			data-clientId="<?php echo $gplus_client_id; ?>" 
 			data-callback="gplusCallback" 
 			data-theme="dark" 
 			data-cookiepolicy="single_host_origin" 

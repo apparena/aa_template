@@ -29,5 +29,5 @@ $twitter_consumer_key = "2WnBPqfOf0vaGPJsMFG6fw";
 $twitter_consumer_secret = "mygq0bS2LQfUn6jLiujZ8VWOqXCBKtxHtXgnGnrMc";
 // this url will be called after the user accepts or declines the login
 $twitter_callback_url = "https://www.app-arena.com/app/aa_template/dev/modules/auth/twitter_auth_callback.php";
-https://www.app-arena.com/app/aa_template/dev/
+
 ?>

@@ -16,9 +16,8 @@ define(
 	[ 'jquery', 'gapi', 'facebook' ], // required for this module
 	function ( $, gapi, FB ) { // the required item passed in as an object once the required dependency has been loaded
 		
-		var TAG = 'modules.auth';
-		
-		var auth = {
+		var TAG = 'modules.auth',
+		    auth = {
 			
 			/**
 			 * Log something to the console.
@@ -51,6 +50,11 @@ define(
 						
 					} else {
 						
+						/*
+						 * if msg is an object we want to log it isolated,
+						 * because it will be expandable (e.g. in the
+						 * chrome console)
+						 */
 						console.log( TAG );
 						console.log( msg );
 						
@@ -73,10 +77,14 @@ define(
 				
 			},
 			
-			// overwrite settings if set and show the ui element
+			/**
+			 * Overwrite settings if set and
+			 * initialize the ui elements.
+			 * @param {Object} newSettings The settings which will override the default settings.
+			 */
 			init: function ( newSettings ) {
 				
-				// just copy the function scope for use in gapi stuff
+				// just copy the function scope for use in child functions here in the init (which have different "this"-scopes!)
 				var that = this;
 				
 				/*
@@ -92,7 +100,7 @@ define(
 					
 					// the auto-rendered g+ sign in btn is surrounded by an extra div which is out of place...
 					$( '#gplus_login' ).parent().css( 'top', '12px' );
-					$( '#gplus_login' ).parent().attr( 'title', 'login mit google plus' );
+					//$( '#gplus_login' ).parent().attr( 'title', 'login mit google plus' ); // does not work...
 					
 					if (authResult['access_token']) {
 						
@@ -101,11 +109,11 @@ define(
 						// Successfully authorized
 						// Hide the sign-in button now that the user is authorized, for example:
 						// document.getElementById('signinButton').setAttribute('style', 'display: none');
-						// Yeah, or do it with jquery and/or bootstrap ;)
-						// $('#gplus_login').fadeOut(200);
-						// $('#gplus_login').addClass('hide');
+						// Well, thanx for the good idea google, but you can also do it with jquery and/or bootstrap ;)
+						// $( '#gplus_login' ).fadeOut( 200 );
+						// $( '#gplus_login' ).addClass( 'hide' );
 						
-						that.log( 'g+ callback >> success' );
+						that.log( 'g+ callback >> success' ); // use the outer "this"-scope to console.log stuff if debug is on
 						that.log( authResult );
 						
 						// google recommends hiding the sign in button when there is a valid access token in the authResult
@@ -114,12 +122,16 @@ define(
 						
 						// use the oauth client to get authorization data
 						gapi.client.load( 'oauth2', 'v2', function() {
+							
 							gapi.client.oauth2.userinfo.get().execute( function( response ) {
+								
 								// Shows user email
 								that.log( response );
 								aa.userdata = $.extend( aa.userdata, response );
 								// use the plus client to get user data
 								gapi.client.load( 'plus', 'v1', function() {
+									
+									// this corresponds to the FB.api( '/me', ... -call
 									gapi.client.plus.people.get({ 'userId' : 'me' }).execute( function( response ) {
 										
 										// Shows other profile information
@@ -128,25 +140,34 @@ define(
 										aa.userdata = $.extend( aa.userdata, response );
 										
 										if ( aa.gplusFirstStart == true ) {
-											aa.gplusFirstStart = false; // do not directly login the user via g+ if he is logged in in this browser, gplus initializes directly and if the user is logged in it calls this function. also called by the user clicking the g+ login btn.
+											
+											/*
+											 * do not directly login the user via g+ if he is logged in with this browser, 
+											 * gplus initializes directly and if the user is logged in it calls this function. 
+											 * also called by the user clicking the g+ login btn.
+											 */
+											aa.gplusFirstStart = false;
+											
 										} else {
 											
-											//that.finalLogin( aa.userdata );
 											that.login( aa.userdata, 'gplus' );
 											
 										}
 										
-									});
-								});
-							});
-						});
+									}); // end get "me" call
+									
+								}); // end plus v1 call
+								
+							}); // end gapi userinfo call
+							
+						}); // end gapi oauth2 call
 						
 					} else if ( authResult['error'] ) {
+						
 						// There was an error.
 						// Possible error codes:
 						//   "access_denied" - User denied access to your app
 						//   "immediate_failed" - Could not automatically log in the user
-						// console.log('There was an error: ' + authResult['error']);
 						that.log( 'g+ callback >> error', true );
 						that.log( authResult, true );
 						
@@ -160,7 +181,7 @@ define(
 					
 				} else {
 					
-					this.log( 'init >> no settings object found! use one like that:', true );
+					this.log( 'init >> no valid settings object found! use one like that:', true );
 					this.log( this.settings );
 					
 					return false;
@@ -191,8 +212,8 @@ define(
 					
 				}
 				
-				var templates = this.settings.placement.templates;
-				var elements  = this.settings.placement.toElements;
+				var templates = this.settings.placement.templates,
+				    elements  = this.settings.placement.toElements;
 				
 				// load the templates to the elements.
 				// note that the indices have to be 0, 1, 2,... in templates and elements!
@@ -203,7 +224,7 @@ define(
 						
 						this.log( '!! init >> the index "' + index + '" is missing in the toElements array and will be skipped', true );
 						this.log( this.settings.placement, true );
-						continue;
+						continue; // skip this step of the loop
 						
 					}
 					
@@ -220,40 +241,23 @@ define(
 					
 				}
 				
-/*
- * This was just for testing!
- * FB initialization is done in main.js in the requirejs callback.
- *
-				// init fb and render fb-buttons and other xfbml stuff
-				window.fbAsyncInit = function () {
-					
-					FB.init({
-						appId: '169227223237688', // App ID
-						status: true, // check login status
-						cookie: true, // enable cookies to allow the server to access the session
-						xfbml:  true  // parse XFBML
-					});
-					
-					FB.XFBML.parse();
-					
-				};
-*/
-				
-				// just to make sure FB has parsed stuff...
+				// just to make sure FB has parsed stuff... (i know it wont if we dont call this ;) )
 				FB.XFBML.parse();
 				
 			},
 			
-			// functions are also possible :)
+			/**
+			 * Just a little test function displaying
+			 * the config and showing a red error msg...
+			 */
 			test: function () {
 				
+				this.settings.debug = true;
 				this.log( 'test >> auth module test function' );
-				
 				this.log( 'test >> current config:' );
-				
 				this.log( this.settings );
-				
 				this.log( 'test >> ERROR TEST', true );
+				this.settings.debug = false;
 				
 			},
 			
@@ -268,6 +272,8 @@ define(
 				if ( typeof( mode ) == 'undefined' || mode.length <= 0 ) {
 					
 					mode = 'email';
+					
+					this.log( 'login >> mode not set, so "email" will be used' );
 					
 				}
 				
@@ -305,6 +311,13 @@ define(
 				
 			},
 			
+			/**
+			 * This will be explicitly called by the
+			 * twitter callback file "twitter_auth_callback.php".
+			 * This file is set in the config.php of this project.
+			 * (Do not mind the url set in the twitter app settings?!)
+			 * @param {Object} response Some user data received from twitter.
+			 */
 			twitter_popup_callback: function ( response ) {
 				
 				var responseString = response;
@@ -315,6 +328,7 @@ define(
 				
 				if ( this.settings.debug ) {
 					
+					// display the object in a little bit more readable way in html...
 					$( '#responselog' ).append(
 						'<br />==========================================' +
 						'<h2>timestamp: ' + new Date() + '</h2>' +
@@ -325,7 +339,6 @@ define(
 					
 				}
 				
-				// twitter popup sign in
 				this.log( 'twitter_callback >> twitter login callback fetched response' );
 				this.log( response );
 				
@@ -345,7 +358,6 @@ define(
 						
 						aa.userdata = $.extend( aa.userdata, response );
 						
-						//this.finalLogin( aa.userdata );
 						this.login( aa.userdata, 'twitter' );
 						
 					}
@@ -356,8 +368,12 @@ define(
 						
 						aa.userdata = $.extend( aa.userdata, response );
 						
-						//this.finalLogin( aa.userdata );
 						this.login( aa.userdata, 'twitter' );
+						
+					} else {
+						
+						that.log( 'twitter_callback >> something went wrong', true );
+						that.log( response );
 						
 					}
 					
@@ -365,11 +381,17 @@ define(
 				
 			},
 			
+			/**
+			 * Check the FB login status and
+			 * fetch user data if the user is
+			 * logged in with this browser.
+			 * If the user is not logged in,
+			 * he will be prompted to do so.
+			 */
 			facebook_popup: function () {
 				
-				var doLogin = false;
-				
-				var that = this;
+				var doLogin = false,
+				    that    = this;
 				
 				FB.getLoginStatus( function( response ) {
 					
@@ -380,8 +402,8 @@ define(
 					    // the user's ID, a valid access token, a signed
 					    // request, and the time the access token 
 					    // and signed request each expire
-					    var uid = response.authResponse.userID;
-					    var accessToken = response.authResponse.accessToken;
+					    var uid         = response.authResponse.userID,
+					        accessToken = response.authResponse.accessToken;
 					    
 					    FB.api( '/me', function ( response ) {
 							
@@ -389,7 +411,6 @@ define(
 							
 							aa.userdata = $.extend( aa.userdata, response.authResponse );
 							
-							//this.finalLogin( aa.userdata );
 							that.login( aa.userdata, 'fb' );
 							
 						});
@@ -423,7 +444,6 @@ define(
 									
 									aa.userdata = $.extend( aa.userdata, response );
 									
-									//this.finalLogin( aa.userdata );
 									that.login( aa.userdata, 'fb' );
 									
 								});
@@ -435,36 +455,43 @@ define(
 								 
 							 }
 							 
-						});
+						}); // end login call
 						
 					}
 					
-				});
+				}); // end getLoginStatus call
 				
 			},
 			
 			/**
 			 * Do the final login stuff,
-			 * such as changing "login" to
+			 * such as changing the "login"
+			 * item in the menu to
 			 * "profile" with a logout fct,
 			 * or saving / updating the
 			 * user profile in the db...
 			 */
 			finalLogin: function ( userdata ) {
 				
-				//$( '#auth_module_login' ).html( 'profile' );
-
+				// re init everything
 				this.init({
 					placement: {
 						// "template[0]" will be mapped to "toElement[0]" and so on...
 						templates:  [ 'auth_navbar_profile' ],
 						toElements: [ '#menu_login' ]
 					},
-					debug: true
+					debug: this.settings.debug
 				});
 				
 			},
 			
+			/**
+			 * Open a twitter bootstrap modal for the user to
+			 * register using a very simple form.
+			 * (Only email, username and password
+			 * are required...
+			 * maybe leave out the username?!)
+			 */
 			register: function () {
 				
 				var that = this;
@@ -474,22 +501,21 @@ define(
 				
 				$( 'body' ).append( '<div id="register_container"></div>' );
 				
+				// load the registration template for the modal
 				$( '#register_container' ).load( 'modules/auth/templates/auth_register.phtml', function () {
 					
 					$( '#registration_modal' ).modal( 'show' );
 					
 					$( '#register_btn_login' ).on( 'click', function () {
 						
-						var password_repeat = $( '#register_password_repeat' ).val();
+						var password_repeat = $( '#register_password_repeat' ).val(),
+						    validation      = false,
+						    userdata        = {
+								email: $( '#register_email' ).val(),
+								password: $( '#register_password' ).val()
+							};
 						
-						var validation = false;
-						
-						var userdata = {
-							email: $( '#register_email' ).val(),
-							password: $( '#register_password' ).val()
-						};
-						
-						// very simple validation here!
+						// VERY simple validation here!
 						if ( userdata.email.length < 5 ||
 							 userdata.email.indexOf( '.' ) <= 0 ||
 							 userdata.email.indexOf( '@' ) <= 0 ) {
@@ -532,6 +558,21 @@ define(
 						} else {
 							
 							$( '#register_password_repeat_error' ).fadeOut( 300 );
+							
+							validation = true;
+							
+						}
+						
+						if ( userdata.password.length < 3 ) {
+							
+							// username is way too short ;)
+							$( '#register_username_error' ).fadeIn( 300 );
+							
+							validation = false;
+							
+						} else {
+							
+							$( '#register_username_error' ).fadeOut( 300 );
 							
 							validation = true;
 							
