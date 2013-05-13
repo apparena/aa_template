@@ -128,7 +128,7 @@ define(
 								// Shows user email
 								that.log( response );
 								//aa.userdata = $.extend( aa.userdata, response );
-								aa.userdata = userdata;
+								aa.userdata = response;
 								// use the plus client to get user data
 								gapi.client.load( 'plus', 'v1', function() {
 									
@@ -577,7 +577,7 @@ define(
 						}
 						
 						//aa.userdata = $.extend( aa.userdata, userdata );
-						aa.userdata = response;
+						aa.userdata = userdata;
 						
 						that.registerUser( aa.userdata, 'email' );
 						
