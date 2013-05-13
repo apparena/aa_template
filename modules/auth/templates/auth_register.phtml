@@ -12,7 +12,18 @@
 		
 		<form class="form-horizontal">
 			<div class="control-group">
-			 	<label class="control-label" for="register_email">Username</label>
+				<span class="add-on"><i class="icon-user">&nbsp;</i>
+					<label class="control-label" for="register_gender">Geschlecht</label>
+				</span>
+				<div class="controls">
+	                <select name="register_gender" id="register_gender">
+	                    <option value="male">männlich</option>
+	                    <option value="female">weiblich</option>
+	                </select>
+                </div>
+            </div>
+			<div class="control-group">
+			 	<label class="control-label" for="register_username">Username</label>
 				<div class="controls">
 					<input type="text" id="register_username" name="register_username" class="input-small" placeholder="Username" style="width: 180px;" />
 					<div id="register_username_error" class="alert alert-error hide">Bitte gib einen Namen ein</div>
