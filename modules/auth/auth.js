@@ -293,8 +293,10 @@ define(
 					},
 					success: function ( response ) {
 						
-						that.log( 'login >> login callback says: ' + response.success, true );
-						that.finalLogin( response );
+						if ( typeof( response.success ) != 'undefined' ) {
+							that.log( 'login >> login callback says: ' + response.success, true );
+							that.finalLogin( response );
+						}
 						
 					}
 				});
@@ -587,10 +589,53 @@ define(
 						
 						aa.userdata = $.extend( aa.userdata, userdata );
 						
-						that.login( aa.userdata, 'email' );
+						that.registerUser( aa.userdata, 'email' );
 						
 					});
 					
+				});
+				
+			},
+			
+			/**
+			 * 
+			 * @param {Object} userData An object wrapping the user's data, e.g. an email/password-pair or the g+-id.
+			 * @param {String} mode The mode which will be distinguished by the login ajax script.
+			 */
+			registerUser: function ( userData, mode ) {
+				
+				if ( typeof( mode ) == 'undefined' || mode.length <= 0 ) {
+					
+					mode = 'email';
+					
+					this.log( 'registerUser >> mode not set, so "email" will be used' );
+					
+				}
+				
+				this.log( 'registerUser >> fetched userdata:', true );
+				
+				this.log( userData );
+				
+				var that = this;
+				
+				$.ajax({
+					url: 'modules/auth/register_user.php',
+					type: 'POST',
+					dataType: 'JSON',
+					data: {
+						userData: userData,
+						mode: mode
+					},
+					success: function ( response ) {
+						
+						
+						
+						if ( typeof( response.success ) != 'undefined' ) {
+							that.log( 'registerUser >> register callback says: ' + response.success, true );
+							that.finalLogin( response );
+						}
+						
+					}
 				});
 				
 			}
