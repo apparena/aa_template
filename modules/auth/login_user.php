@@ -95,13 +95,6 @@
 				
 			}
 			
-			// insert the user
-			$query = "INSERT INTO `user_data_email` SET `email` = '" . $userdata[ 'email' ] . "', `password` = '" . $userdata[ 'password' ] . "', `gender` = '" . $userdata[ 'gender' ] . "'";
-			mysql_query( $query );
-			
-			$query = "INSERT INTO `user_data` SET `email` = '" . $userdata[ 'email' ] . "', `aa_inst_id` = " . $aa_inst_id . ", `ip` = '" . get_client_ip() . "'";
-			mysql_query( $query );
-			
 			break;
 		
 	}
