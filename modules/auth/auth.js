@@ -127,7 +127,8 @@ define(
 								
 								// Shows user email
 								that.log( response );
-								aa.userdata = $.extend( aa.userdata, response );
+								//aa.userdata = $.extend( aa.userdata, response );
+								aa.userdata = userdata;
 								// use the plus client to get user data
 								gapi.client.load( 'plus', 'v1', function() {
 									
@@ -358,7 +359,8 @@ define(
 						
 					} else {
 						
-						aa.userdata = $.extend( aa.userdata, response );
+						//aa.userdata = $.extend( aa.userdata, response );
+						aa.userdata = response;
 						
 						this.login( aa.userdata, 'twitter' );
 						
@@ -368,7 +370,8 @@ define(
 					
 					if ( typeof( response ) == 'object' ) {
 						
-						aa.userdata = $.extend( aa.userdata, response );
+						//aa.userdata = $.extend( aa.userdata, response );
+						aa.userdata = response;
 						
 						this.login( aa.userdata, 'twitter' );
 						
@@ -411,7 +414,8 @@ define(
 							
 							//console.log('Good to see you, ' + response.name + '.');
 							
-							aa.userdata = $.extend( aa.userdata, response.authResponse );
+							//aa.userdata = $.extend( aa.userdata, response.authResponse );
+					    	aa.userdata = response.authResponse;
 							
 							that.login( aa.userdata, 'fb' );
 							
@@ -444,7 +448,8 @@ define(
 									
 									//console.log('Good to see you, ' + response.name + '.');
 									
-									aa.userdata = $.extend( aa.userdata, response );
+									//aa.userdata = $.extend( aa.userdata, response );
+									aa.userdata = response;
 									
 									that.login( aa.userdata, 'fb' );
 									
@@ -571,7 +576,8 @@ define(
 							
 						}
 						
-						aa.userdata = $.extend( aa.userdata, userdata );
+						//aa.userdata = $.extend( aa.userdata, userdata );
+						aa.userdata = response;
 						
 						that.registerUser( aa.userdata, 'email' );
 						
