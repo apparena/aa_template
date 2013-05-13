@@ -11,6 +11,10 @@
 	
 	include_once '../../config.php';
 	
+	include_once '../../init.php';
+	
+	include_once 'check_database.php';
+	
 	$userdata = array();
 	$mode = 'email';
 	
