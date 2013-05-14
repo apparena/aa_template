@@ -17,7 +17,7 @@
 	
 	$response = array();
 	
-	if ( isset( $_POST[ 'userData' ] ) ) { $userdata = $_POST[ 'userData' ]; } else { echo json_encode( array( 'error' => 'missing user data' ) ); exit( 0 ); }
+	if ( isset( $_POST[ 'userData' ] ) ) { $userdata = $_POST[ 'userData' ]; } else { if ( !isset( $_POST[ 'mode' ] ) || $_POST[ 'mode' ] != 'check' ) { echo json_encode( array( 'error' => 'missing user data' ) ); exit( 0 ); } }
 	if ( isset( $_POST[ 'mode' ] ) ) { $mode = $_POST[ 'mode' ]; } else { echo json_encode( array( 'error' => 'missing mode' ) ); exit( 0 ); }
 	
 	switch( $mode ) {
