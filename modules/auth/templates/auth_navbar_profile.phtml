@@ -110,24 +110,7 @@
 			// the logout-button function
 			$( '#btn_logout' ).on( 'click', function () {
 				
-				$.ajax({
-					url: 'modules/auth/logout_user.php?aa_inst_id=' + aa.inst.aa_inst_id,
-					type: 'POST',
-					dataType: 'JSON',
-					data: {},
-					success: function ( response ) {
-						
-						auth.init({
-							placement: {
-								// "template[0]" will be mapped to "toElement[0]" and so on...
-								templates:  [ 'auth_navbar_item' ],
-								toElements: [ '#menu_login' ]
-							},
-							debug: true
-						});
-						
-					}
-				});
+				auth.logout();
 				
 			});
 			
