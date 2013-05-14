@@ -106,7 +106,63 @@
 			
 			unset( $_SESSION[ 'userlogin_' . $aa_inst_id ] );
 			
+			if ( !isset( $userdata[ 'id' ] ) ) { echo json_encode( array( 'error' => 'missing facebook id' ) ); exit( 0 ); }
 			
+			$savedata = array();
+			
+			$savedata[ 'display_name' ] = '';
+			
+			if ( isset( $userdata[ 'result' ][ 'displayName' ] ) ) {
+				$savedata[ 'display_name' ] = mysql_real_escape_string( $userdata[ 'result' ][ 'displayName' ] );
+				unset( $userdata[ 'result' ][ 'displayName' ] );
+				unset( $userdata[ 'displayName' ] );
+			} else {
+				if ( isset( $userdata[ 'result' ][ 'name' ][ 'givenName' ] ) ) {
+					$savedata[ 'display_name' ] = mysql_real_escape_string( $userdata[ 'result' ][ 'name' ][ 'givenName' ] ) .
+					( isset( $userdata[ 'result' ][ 'name' ][ 'familyName' ] ) ? ' ' . mysql_real_escape_string( $userdata[ 'result' ][ 'name' ][ 'familyName' ] ) : '' );
+					unset( $userdata[ 'result' ][ 'name' ][ 'givenName' ] );
+					unset( $userdata[ 'name' ][ 'givenName' ] );
+					if ( isset( $userdata[ 'result' ][ 'name' ][ 'familyName' ] ) ) {
+						unset( $userdata[ 'result' ][ 'name' ][ 'familyName' ] );
+						unset( $userdata[ 'name' ][ 'familyName' ] );
+					}
+				}
+			}
+			
+			$savedata[ 'gplus_id' ] = 0;
+			
+			if ( isset( $userdata[ 'id' ] ) ) {
+				$savedata[ 'gplus_id' ] = $userdata[ 'id' ];
+				unset( $userdata[ 'id' ] );
+			}
+			
+			$savedata[ 'email' ] = '';
+			
+			if ( isset( $userdata[ 'email' ] ) ) {
+				$savedata[ 'email' ] = mysql_real_escape_string( $userdata[ 'email' ] );
+				unset( $userdata[ 'email' ] );
+			}
+			
+			$savedata[ 'profile_image_url' ] = '';
+			
+			if ( isset( $userdata[ 'result' ][ 'image' ][ 'url' ] ) ) {
+				$savedata[ 'profile_image_url' ] = mysql_real_escape_string( $userdata[ 'result' ][ 'image' ][ 'url' ] );
+				unset( $userdata[ 'result' ][ 'image' ][ 'url' ] );
+				unset( $userdata[ 'image' ][ 'url' ] );
+			}
+			
+			$savedata[ 'gender' ] = '';
+			
+			if ( isset( $userdata[ 'result' ][ 'gender' ] ) ) {
+				$savedata[ 'result' ][ 'gender' ] = mysql_real_escape_string( $userdata[ 'result' ][ 'gender' ] );
+				unset( $userdata[ 'result' ][ 'gender' ] );
+				unset( $userdata[ 'gender' ] );
+			}
+			
+			// put all the rest into the additional data field
+			$savedata[ 'data' ] = $userdata;
+			
+			saveUser( 'user_data_gplus', $savedata );
 			
 			break;
 			
