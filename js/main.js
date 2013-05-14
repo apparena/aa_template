@@ -4,8 +4,8 @@ require.config({
     //urlArgs: "bust=" +  (new Date()).getTime(), // Be sure to comment this line before deploying app to live stage
     waitSeconds: 30, // increase load timeout for modules, default is something like 7-10 secs...
     paths:{
-        //jquery:    '//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min',
-    	jquery:    '//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery',
+        jquery:    '//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min',
+    	//jquery:    '//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery', // for debugging
         bootstrap: '//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min',
         facebook:  '//connect.facebook.net/de_DE/all',
         script:    'script',

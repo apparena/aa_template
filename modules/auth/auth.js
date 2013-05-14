@@ -536,7 +536,7 @@ define(
 				$( 'body' ).append( '<div id="register_container"></div>' );
 				
 				// load the registration template for the modal
-				$( '#register_container' ).load( 'modules/auth/templates/auth_register.phtml', function () {
+				$( '#register_container' ).get( 'modules/auth/templates/auth_register.phtml', function () {
 					
 					$( '#registration_modal' ).modal( 'show' );
 					
