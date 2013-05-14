@@ -12,6 +12,8 @@
 	include_once '../../init.php';
 	include_once 'check_database.php';
 	
+	unset( $_SESSION[ 'userlogin' ] );
+	
 	$userdata = array();
 	$mode = '';
 	
@@ -98,6 +100,8 @@
 			break;
 		
 	}
+	
+	$_SESSION[ 'userlogin_' . $aa_inst_id ] = $response;
 	
 	echo json_encode( $response );
 	exit( 0 );

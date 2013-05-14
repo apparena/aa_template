@@ -1,5 +1,9 @@
 <?php 
 	
+	$aa_inst_id = 0;
+	
+if ( isset( $_GET[ 'aa_inst_id' ] ) ) { $aa_inst_id = $_GET[ 'aa_inst_id' ]; } else { echo json_encode( array( 'error' => 'missing instance id' ) ); exit( 0 ); }
+	
 ?>
 
 <a id="auth_module_profile" href="#">profile</a>
@@ -7,25 +11,46 @@
 <div id="auth_module_profile_content" class="hide" style="z-index: 10; position: absolute; background-color: lightgray; border: 1px solid black; width: 210px; text-align: center; padding: 10px;">
 	
 	<div>
-		<b>profile</b>
+		<b>Profil</b>
 		<hr />
 	</div>
 	<form class="form-inline">
 		<div>
-			username
+			Eingelogged als:
+			<span>
+				<?php 
+					
+					$username = 'error';
+					if ( isset( $_SESSION[ 'userlogin_' . $aa_inst_id ] ) ) {
+						if ( isset( $_SESSION[ 'userlogin_' . $aa_inst_id ][ 'userinstance' ][ 'email' ] ) &&
+							 strlen( $_SESSION[ 'userlogin_' . $aa_inst_id ][ 'userinstance' ][ 'email' ] ) > 0 ) {
+							$username = $_SESSION[ 'userlogin_' . $aa_inst_id ][ 'userinstance' ][ 'email' ];
+						} else {
+							if ( isset( $_SESSION[ 'userlogin_' . $aa_inst_id ][ 'userdata' ][ 'display_name' ] ) &&
+							 	 strlen( $_SESSION[ 'userlogin_' . $aa_inst_id ][ 'userdata' ][ 'display_name' ] ) > 0 ) {
+								$username = $_SESSION[ 'userlogin_' . $aa_inst_id ][ 'userdata' ][ 'display_name' ];
+							}
+						}
+					}
+					echo $username;
+					
+				?>
+			</span>
 		</div>
 		<div>
 			<button type="button" id="btn_logout" name="btn_logout" class="pull-right btn btn-mini btn-danger" style="margin-top: -20px;">
-				logout
+				Logout
 			</button>
 		</div>
 	</form>
 	
 	<hr style="margin: 0px;" />
 	
+<!--
 	<div>
 		connected networks:
 	</div>
+-->
 	
 </div>
 
@@ -81,14 +106,23 @@
 			// the logout-button function
 			$( '#btn_logout' ).on( 'click', function () {
 				
-				//TODO: log the user out
-				auth.init({
-					placement: {
-						// "template[0]" will be mapped to "toElement[0]" and so on...
-						templates:  [ 'auth_navbar_item' ],
-						toElements: [ '#menu_login' ]
-					},
-					debug: true
+				$.ajax({
+					url: 'modules/auth/logout_user.php?aa_inst_id=' + aa.inst.aa_inst_id,
+					type: 'POST',
+					dataType: 'JSON',
+					data: {},
+					success: function ( response ) {
+						
+						auth.init({
+							placement: {
+								// "template[0]" will be mapped to "toElement[0]" and so on...
+								templates:  [ 'auth_navbar_item' ],
+								toElements: [ '#menu_login' ]
+							},
+							debug: true
+						});
+						
+					}
 				});
 				
 			});

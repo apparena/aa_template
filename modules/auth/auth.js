@@ -231,7 +231,7 @@ define(
 					
 					try {
 						
-						$( elements[ index ] ).load( 'modules/auth/templates/' + templates[ index ] + '.phtml' );
+						$( elements[ index ] ).load( 'modules/auth/templates/' + templates[ index ] + '.phtml?aa_inst_id=' + aa.inst.aa_inst_id );
 						
 					} catch( e ) {
 						
