@@ -536,84 +536,95 @@ define(
 				$( 'body' ).append( '<div id="register_container"></div>' );
 				
 				// load the registration template for the modal
-				$( '#register_container' ).get( 'modules/auth/templates/auth_register.phtml', function () {
-					
-					$( '#registration_modal' ).modal( 'show' );
-					
-					$( '#register_btn_register' ).on( 'click', function () {
+				$.ajax({
+					url: 'modules/auth/templates/auth_register.phtml',
+					type: 'GET',
+					success: function ( response ) {
 						
-						var password_repeat = $( '#register_password_repeat' ).val(),
-						    validation      = false,
-						    userdata        = {
-								email: $( '#register_email' ).val(),
-								password: $( '#register_password' ).val(),
-								gender: $( '#register_gender' ).val()
-							}; // these fields have to be in the registration template!!
+						$( '#register_container' ).html( response );
 						
-						// VERY simple validation here!
-						if ( userdata.email.length < 5 ||
-							 userdata.email.indexOf( '.' ) <= 0 ||
-							 userdata.email.indexOf( '@' ) <= 0 ) {
-							
-							// definitely invalid email ;)
-							$( '#register_email_error' ).fadeIn( 300 );
-							
-							validation = false;
-							
-						} else {
-							
-							$( '#register_email_error' ).fadeOut( 300 );
-							
-							validation = true;
-							
-						}
+						$( '#registration_modal' ).modal( 'show' );
 						
-						if ( userdata.password.length < 6 ) {
+						$( '#register_btn_register' ).on( 'click', function () {
 							
-							// password is way too short ;)
-							$( '#register_password_error' ).fadeIn( 300 );
+							var password_repeat = $( '#register_password_repeat' ).val(),
+							    validation      = false,
+							    userdata        = {
+									email: $( '#register_email' ).val(),
+									password: $( '#register_password' ).val(),
+									gender: $( '#register_gender' ).val()
+								}; // these fields have to be in the registration template!!
 							
-							validation = false;
+							// VERY simple validation here!
+							if ( userdata.email.length < 5 ||
+								 userdata.email.indexOf( '.' ) <= 0 ||
+								 userdata.email.indexOf( '@' ) <= 0 ) {
+								
+								// definitely invalid email ;)
+								$( '#register_email_error' ).fadeIn( 300 );
+								
+								validation = false;
+								
+							} else {
+								
+								$( '#register_email_error' ).fadeOut( 300 );
+								
+								validation = true;
+								
+							}
 							
-						} else {
+							if ( userdata.password.length < 6 ) {
+								
+								// password is way too short ;)
+								$( '#register_password_error' ).fadeIn( 300 );
+								
+								validation = false;
+								
+							} else {
+								
+								$( '#register_password_error' ).fadeOut( 300 );
+								
+								validation = true;
+								
+							}
 							
-							$( '#register_password_error' ).fadeOut( 300 );
+							if ( userdata.password.length != password_repeat.length || userdata.password != password_repeat ) {
+								
+								// passwords do not match
+								$( '#register_password_repeat_error' ).fadeIn( 300 );
+								
+								validation = false;
+								
+							} else {
+								
+								$( '#register_password_repeat_error' ).fadeOut( 300 );
+								
+								validation = true;
+								
+							}
 							
-							validation = true;
+							if ( validation == false ) {
+								
+								return false;
+								
+							}
 							
-						}
+							//aa.userdata = $.extend( aa.userdata, userdata );
+							aa.userdata = userdata;
+							
+							that.registerUser( aa.userdata, 'email' );
+							
+						});
 						
-						if ( userdata.password.length != password_repeat.length || userdata.password != password_repeat ) {
-							
-							// passwords do not match
-							$( '#register_password_repeat_error' ).fadeIn( 300 );
-							
-							validation = false;
-							
-						} else {
-							
-							$( '#register_password_repeat_error' ).fadeOut( 300 );
-							
-							validation = true;
-							
-						}
+						$( '#register_email' ).focus();
 						
-						if ( validation == false ) {
-							
-							return false;
-							
-						}
-						
-						//aa.userdata = $.extend( aa.userdata, userdata );
-						aa.userdata = userdata;
-						
-						that.registerUser( aa.userdata, 'email' );
-						
-					});
-					
-					$( '#register_email' ).focus();
-					
+					}
 				});
+//				$( '#register_container' ).get( 'modules/auth/templates/auth_register.phtml', function () {
+//					
+//					
+//					
+//				});
 				
 			},
 			
