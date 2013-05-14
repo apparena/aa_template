@@ -89,7 +89,7 @@
 			$savedata[ 'profile_image_url' ] = '';
 			
 			if ( isset( $userdata[ 'profile_image_url' ] ) ) {
-				$savedata[ 'profile_image_url' ] = ''; //TODO: build profile img url
+				$savedata[ 'profile_image_url' ] = 'https://graph.facebook.com/' . $savedata[ 'fb_id' ] . '/picture?type=square';
 			}
 			
 			$savedata[ 'gender' ] = '';
@@ -209,8 +209,6 @@
 						
 						$query = "INSERT INTO `user_data_fb` SET `fb_id` = '" . $data[ 'fb_id' ] . "', `email` = '" . $data[ 'email' ] . "', `display_name` = '" . $data[ 'display_name' ] . "', `profile_image_url` = '" . $data[ 'profile_image_url' ] . "', `gender` = '" . $data[ 'gender' ] . "', `data` = '" . mysql_real_escape_string( json_encode( $data[ 'data' ] ) ) . "'";
 						mysql_query( $query );
-						
-$response['debug'] = $query;
 						
 						$response[ 'userdata' ] = $data;
 						
