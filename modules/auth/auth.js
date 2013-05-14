@@ -268,7 +268,7 @@ define(
 			 */
 			checkLoginStatus: function () {
 				
-				this.login( null, 'check' );
+				this.login( {}, 'check' );
 				
 			},
 			
