@@ -22,6 +22,10 @@
 			
 			<div id="user_image">
 				<?php 
+				
+print_r( $_SESSION[ 'userlogin_' . $aa_inst_id ][ 'userdata' ] );
+exit(0);
+				
 					if ( isset( $_SESSION[ 'userlogin_' . $aa_inst_id ] ) ) {
 						if ( isset( $_SESSION[ 'userlogin_' . $aa_inst_id ][ 'userdata' ][ 'profile_img_url' ] ) &&
 							 strlen( $_SESSION[ 'userlogin_' . $aa_inst_id ][ 'userdata' ][ 'profile_img_url' ] ) > 0 ) {

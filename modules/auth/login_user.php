@@ -200,8 +200,6 @@
 				$query = "SELECT * FROM `user_data_fb` WHERE `fb_id` = '" . $data[ 'fb_id' ] . "'";
 				$result = mysql_query( $query );
 				
-$response[ 'debug_1' ] = $query;
-				
 				if ( $result ) {
 					if ( mysql_num_rows( $result ) <= 0 ) {
 						
@@ -211,9 +209,7 @@ $response[ 'debug_1' ] = $query;
 						$response[ 'userdata' ] = $data;
 						
 					} else {
-						
-$response['debug_2'] = true;
-						
+											
 						$response[ 'userdata' ] = mysql_fetch_assoc( $result );
 						
 					}
