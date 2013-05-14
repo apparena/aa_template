@@ -43,7 +43,7 @@
 			$params = array(
 			    'screen_name' => $user->screen_name
 			);
-			$reply = $cb->users_show($params);
+			$reply = $cb->users_show($user->screen_name);
 			
 print_r( $reply );
 exit( 0 );
