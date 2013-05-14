@@ -90,7 +90,7 @@ define(
 				// just copy the function scope for use in child functions here in the init (which have different "this"-scopes!)
 				var that = this;
 				
-				if ( typeof( checkStatus ) == 'undefined' || doNotCheckStatus == null ){
+				if ( typeof( checkStatus ) == 'undefined' || checkStatus == null ){
 					
 					checkStatus = false;
 					
