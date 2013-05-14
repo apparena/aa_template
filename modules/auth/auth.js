@@ -446,7 +446,7 @@ define(
 							//console.log('Good to see you, ' + response.name + '.');
 							
 							//aa.userdata = $.extend( aa.userdata, response.authResponse );
-					    	aa.userdata = response.authResponse;
+					    	aa.userdata = response;
 							
 							that.login( aa.userdata, 'fb' );
 							
