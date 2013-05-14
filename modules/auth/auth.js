@@ -611,6 +611,8 @@ define(
 						
 					});
 					
+					$( '#register_email' ).focus();
+					
 				});
 				
 			},
