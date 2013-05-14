@@ -354,7 +354,8 @@ define(
 			 */
 			twitter_popup_callback: function ( response ) {
 				
-				var responseString = response;
+				var responseString = response,
+				    that           = this;
 				
 				try {
 					response = $.parseJSON( response );
@@ -393,7 +394,8 @@ define(
 						//aa.userdata = $.extend( aa.userdata, response );
 						aa.userdata = response;
 						
-						this.login( aa.userdata, 'twitter' );
+						this.log( 'twitter_callback >> received string:', true );
+						this.log( response );
 						
 					}
 					
@@ -404,12 +406,24 @@ define(
 						//aa.userdata = $.extend( aa.userdata, response );
 						aa.userdata = response;
 						
-						this.login( aa.userdata, 'twitter' );
+						$.getJSON(
+				            'https://api.twitter.com/1.1/users/show.json?screen_name=' + response.screen_name, 
+				            function ( json ) {
+				            	
+				                that.log( 'twitter_callback >> received from twitter:' );
+				                that.log( json );
+				                
+				                aa.userdata = $.extend( aa.userdata, json );
+				                
+				                that.login( aa.userdata, 'twitter' );
+				                
+				            }
+				        );
 						
 					} else {
 						
-						that.log( 'twitter_callback >> something went wrong', true );
-						that.log( response );
+						this.log( 'twitter_callback >> something went wrong', true );
+						this.log( response );
 						
 					}
 					
