@@ -207,7 +207,7 @@
 				if ( $result ) {
 					if ( mysql_num_rows( $result ) <= 0 ) {
 						
-						$query = "INSERT INTO `user_data_fb` SET `fb_id` = '" . $data[ 'fb_id' ] . "', `email` = '" . $data[ 'email' ] . "', `display_name` = '" . $data[ 'display_name' ] . "', `profile_image_url` = '" . $data[ 'profile_image_url' ] . "', `gender` = '" . $data[ 'gender' ] . "', `data` = '" . json_encode( $data[ 'data' ] ) . "'";
+						$query = "INSERT INTO `user_data_fb` SET `fb_id` = '" . $data[ 'fb_id' ] . "', `email` = '" . $data[ 'email' ] . "', `display_name` = '" . $data[ 'display_name' ] . "', `profile_image_url` = '" . $data[ 'profile_image_url' ] . "', `gender` = '" . $data[ 'gender' ] . "', `data` = '" . mysql_real_escape_string( json_encode( $data[ 'data' ] ) ) . "'";
 						mysql_query( $query );
 						
 $response['debug'] = $query;
