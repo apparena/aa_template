@@ -90,9 +90,9 @@ define(
 				// just copy the function scope for use in child functions here in the init (which have different "this"-scopes!)
 				var that = this;
 				
-				if ( typeof( doNotCheckStatus ) == 'undefined' || doNotCheckStatus == null ){
+				if ( typeof( checkStatus ) == 'undefined' || doNotCheckStatus == null ){
 					
-					doNotCheckStatus = false;
+					checkStatus = false;
 					
 				}
 				
@@ -256,7 +256,7 @@ define(
 				
 				if ( checkStatus == true ) {
 					
-					this.checkStatus();
+					this.checkLoginStatus();
 					
 				}
 				
@@ -266,7 +266,7 @@ define(
 			 * Check if the user is currently logged
 			 * in and show the profile stuff.
 			 */
-			checkStatus: function () {
+			checkLoginStatus: function () {
 				
 				this.login( null, 'check' );
 				
