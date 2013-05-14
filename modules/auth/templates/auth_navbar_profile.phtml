@@ -24,8 +24,6 @@
 					
 					$username = 'error';
 					
-print_r( $_SESSION[ 'userlogin_' . $aa_inst_id ] );
-					
 					if ( isset( $_SESSION[ 'userlogin_' . $aa_inst_id ] ) ) {
 						if ( isset( $_SESSION[ 'userlogin_' . $aa_inst_id ][ 'userinstance' ][ 'email' ] ) &&
 							 strlen( $_SESSION[ 'userlogin_' . $aa_inst_id ][ 'userinstance' ][ 'email' ] ) > 0 ) {
