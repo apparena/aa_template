@@ -289,9 +289,15 @@ define(
 			
 			/**
 			 * No matter coming from where (email, fb, g+, twitter),
-			 * call the login ajax script from here.
+			 * call the login ajax script from here. Each of the modes
+			 * will save the user data into the session var.
 			 * @param {Object} userData An object wrapping the user's data, e.g. an email/password-pair or the g+-id.
 			 * @param {String} mode The mode which will be distinguished by the login ajax script.
+			 * 						Valid modes are: 'check' (check for logged in user),
+			 * 										 'email' (log in the user via email address and password),
+			 * 										 'fb' (log the user in via facebook id and data),
+			 * 										 'gplus' (login via google plus and data),
+			 * 										 'twitter' (login via twitter and data).
 			 */
 			login: function ( userData, mode ) {
 				
