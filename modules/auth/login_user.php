@@ -103,6 +103,8 @@
 	
 	$_SESSION[ 'userlogin_' . $aa_inst_id ] = $response;
 	
+	session_commit();
+	
 	$response[ 'success' ] = true;
 	
 	echo json_encode( $response );
