@@ -2,7 +2,9 @@
 	
 	$aa_inst_id = 0;
 	
-if ( isset( $_GET[ 'aa_inst_id' ] ) ) { $aa_inst_id = $_GET[ 'aa_inst_id' ]; } else { echo json_encode( array( 'error' => 'missing instance id' ) ); exit( 0 ); }
+	if ( isset( $_GET[ 'aa_inst_id' ] ) ) { $aa_inst_id = $_GET[ 'aa_inst_id' ]; } else { echo json_encode( array( 'error' => 'missing instance id' ) ); exit( 0 ); }
+	
+	session_start();
 	
 ?>
 
@@ -22,7 +24,7 @@ if ( isset( $_GET[ 'aa_inst_id' ] ) ) { $aa_inst_id = $_GET[ 'aa_inst_id' ]; } e
 					
 					$username = 'error';
 					
-print_r ( $_SESSION[ 'userlogin_' . $aa_inst_id ] );
+print_r( $_SESSION[ 'userlogin_' . $aa_inst_id ] );
 					
 					if ( isset( $_SESSION[ 'userlogin_' . $aa_inst_id ] ) ) {
 						if ( isset( $_SESSION[ 'userlogin_' . $aa_inst_id ][ 'userinstance' ][ 'email' ] ) &&
