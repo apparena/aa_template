@@ -86,11 +86,7 @@
 				unset( $userdata[ 'email' ] );
 			}
 			
-			$savedata[ 'profile_image_url' ] = '';
-			
-			if ( isset( $userdata[ 'profile_image_url' ] ) ) {
-				$savedata[ 'profile_image_url' ] = 'https://graph.facebook.com/' . $savedata[ 'fb_id' ] . '/picture?type=square';
-			}
+			$savedata[ 'profile_image_url' ] = 'https://graph.facebook.com/' . $savedata[ 'fb_id' ] . '/picture?type=square';
 			
 			$savedata[ 'gender' ] = '';
 				
