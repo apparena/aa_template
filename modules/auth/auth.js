@@ -406,19 +406,20 @@ define(
 						//aa.userdata = $.extend( aa.userdata, response );
 						aa.userdata = response;
 						
-						$.getJSON(
-				            'https://api.twitter.com/1.1/users/show.json?screen_name=' + response.screen_name, 
-				            function ( json ) {
-				            	
+						$.ajax({
+						    url: 'https://api.twitter.com/1.1/users/show.json?screen_name=' + response.screen_name,
+						    dataType: 'jsonp',
+						    success: function ( data ) {
+						    	
 				                that.log( 'twitter_callback >> received from twitter:' );
-				                that.log( json );
+				                that.log( data );
 				                
-				                aa.userdata = $.extend( aa.userdata, json );
+				                aa.userdata = $.extend( aa.userdata, data );
 				                
 				                that.login( aa.userdata, 'twitter' );
 				                
-				            }
-				        );
+						    }
+						});
 						
 					} else {
 						
