@@ -480,6 +480,8 @@ define(
 			 */
 			finalLogin: function ( userdata ) {
 				
+				aa[ 'userlogin_' + aa.inst.aa_inst_id ] = userdata;
+				
 				// re init everything
 				this.init({
 					placement: {
