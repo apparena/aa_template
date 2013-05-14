@@ -103,8 +103,6 @@
 	
 	$_SESSION[ 'userlogin_' . $aa_inst_id ] = $response;
 	
-print_r( $_SESSION[ 'userlogin_' . $aa_inst_id ] );
-	
 	$response[ 'success' ] = true;
 	
 	echo json_encode( $response );
