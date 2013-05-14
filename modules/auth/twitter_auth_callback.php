@@ -41,7 +41,7 @@
 			//echo '<script>window.opener.twitter_popup_callback(\'' . json_encode( $user ) . '\');</script>'; // if the callback is in the window scope of the opening page
 			
 			$params = array(
-			    'screen_name' => $user[ 'screen_name' ]
+			    'screen_name' => $user->screen_name
 			);
 			$reply = $cb->users_show($params);
 			
