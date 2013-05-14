@@ -52,7 +52,58 @@
 			/* only unset for a new login! */
 			unset( $_SESSION[ 'userlogin_' . $aa_inst_id ] );
 			
+			if ( !isset( $userdata[ 'id' ] ) ) { echo json_encode( array( 'error' => 'missing facebook id' ) ); exit( 0 ); }
 			
+			$savedata = array();
+			
+			$savedata[ 'display_name' ] = '';
+			
+			if ( isset( $userdata[ 'name' ] ) ) {
+				$savedata[ 'display_name' ] = mysql_real_escape_string( $userdata[ 'name' ] );
+				unset( $userdata[ 'name' ] );
+			} else {
+				if ( isset( $userdata[ 'first_name' ] ) ) {
+					$savedata[ 'display_name' ] = mysql_real_escape_string( $userdata[ 'first_name' ] ) .
+								( isset( $userdata[ 'last_name' ] ) ? ' ' . mysql_real_escape_string( $userdata[ 'last_name' ] ) : '' );
+					unset( $userdata[ 'first_name' ] );
+					if ( isset( $userdata[ 'last_name' ] ) ) {
+						unset( $userdata[ 'last_name' ] );
+					}
+				}
+			}
+			
+			$savedata[ 'fb_id' ] = 0;
+			
+			if ( isset( $userdata[ 'id' ] ) ) {
+				$savedata[ 'fb_id' ] = $userdata[ 'id' ];
+				unset( $userdata[ 'id' ] );
+			}
+			
+			$savedata[ 'email' ] = '';
+			
+			if ( isset( $userdata[ 'email' ] ) ) {
+				$savedata[ 'email' ] = mysql_real_escape_string( $userdata[ 'email' ] );
+				unset( $userdata[ 'email' ] );
+			}
+			
+			$savedata[ 'profile_image_url' ] = '';
+			
+			if ( isset( $userdata[ 'profile_image_url' ] ) ) {
+				$savedata[ 'profile_image_url' ] = mysql_real_escape_string( $userdata[ 'profile_image_url' ] );
+				unset( $userdata[ 'profile_image_url' ] );
+			}
+			
+			$savedata[ 'gender' ] = '';
+				
+			if ( isset( $userdata[ 'gender' ] ) ) {
+				$savedata[ 'gender' ] = mysql_real_escape_string( $userdata[ 'gender' ] );
+				unset( $userdata[ 'gender' ] );
+			}
+			
+			// put all the rest into the additional data field
+			$savedata[ 'data' ] = $userdata;
+			
+			saveUser( 'user_data_fb', $savedata );
 			
 			break;
 			
@@ -139,5 +190,180 @@
 	
 	echo json_encode( $response );
 	exit( 0 );
+	
+	function saveUser( $table, $data ) {
+		
+		global $db_raw,
+			   $aa,
+			   $aa_inst_id,
+			   $response;
+		
+		switch( $table ) {
+			
+			case 'user_data_fb':
+				
+				$query = "SELECT * FROM `user_data_fb` WHERE `fb_id` = '" . $data[ 'fb_id' ] . "'";
+				$result = mysql_query( $query );
+				
+				if ( $result ) {
+					if ( mysql_num_rows( $result ) <= 0 ) {
+						
+						$query = "INSERT INTO `user_data_fb` SET `fb_id` = '" . $data[ 'fb_id' ] . "', `email` = '" . $data[ 'email' ] . "', `display_name` = '" . $data[ 'display_name' ] . "', `profile_image_url` = '" . $data[ 'profile_image_url' ] . "', `gender` = '" . $data[ 'gender' ] . "', `data` = '" . json_encode( $data[ 'data' ] ) . "'";
+						mysql_query( $query );
+						
+						$response[ 'userdata' ] = $data;
+						
+					} else {
+						
+						$response[ 'userdata' ] = mysql_fetch_assoc( $result );
+						
+					}
+					
+					mysql_free_result( $result );
+				}
+				
+				$query = "SELECT * FROM `user_data` WHERE `fb_id` = '" . $data[ 'fb_id' ] . "' AND `aa_inst_id` = " . $aa_inst_id;
+				
+				$result = mysql_query( $query );
+				
+				if ( $result ) {
+					
+					if ( mysql_num_rows( $result ) <= 0 ) {
+						
+						$query = "INSERT INTO `user_data` SET `aa_inst_id` = " . $aa_inst_id . ", `fb_id` = '" . $data[ 'fb_id' ] . "', `ip` = '" . get_client_ip() . "'";
+						mysql_query( $query );
+						
+						$query = "SELECT * FROM `user_data` WHERE `fb_id` = '" . $data[ 'fb_id' ] . "' AND `aa_inst_id` = " . $aa_inst_id;
+						$result2 = mysql_query( $query );
+						if ( $result2 ) {
+							if ( mysql_num_rows( $result2 ) > 0 ) {
+								$response[ 'userinstance' ] = mysql_fetch_assoc( $result2 );
+							}
+							mysql_free_result( $result2 );
+						}
+						
+					} else {
+						
+						$response[ 'userinstance' ] = mysql_fetch_assoc( $result );
+						
+					}
+					
+					mysql_free_result( $result );
+					
+				}
+				
+				break;
+				
+			case 'user_data_gplus':
+				
+				$query = "SELECT * FROM `user_data_gplus` WHERE `gplus_id` = '" . $data[ 'gplus_id' ] . "'";
+				$result = mysql_query( $query );
+				
+				if ( $result ) {
+					if ( mysql_num_rows( $result ) <= 0 ) {
+						
+						$query = "INSERT INTO `user_data_gplus` SET `gplus_id` = '" . $data[ 'gplus_id' ] . "', `email` = '" . $data[ 'email' ] . "', `display_name` = '" . $data[ 'display_name' ] . "', `profile_image_url` = '" . $data[ 'profile_image_url' ] . "', `gender` = '" . $data[ 'gender' ] . "', `data` = '" . json_encode( $data[ 'data' ] ) . "'";
+						mysql_query( $query );
+						
+						$response[ 'userdata' ] = $data;
+						
+					} else {
+						
+						$response[ 'userdata' ] = mysql_fetch_assoc( $result );
+						
+					}
+					
+					mysql_free_result( $result );
+				}
+				
+				$query = "SELECT * FROM `user_data` WHERE `gplus_id` = '" . $data[ 'gplus_id' ] . "' AND `aa_inst_id` = " . $aa_inst_id;
+				
+				$result = mysql_query( $query );
+				
+				if ( $result ) {
+					
+					if ( mysql_num_rows( $result ) <= 0 ) {
+						
+						$query = "INSERT INTO `user_data` SET `aa_inst_id` = " . $aa_inst_id . ", `gplus_id` = '" . $data[ 'gplus_id' ] . "', `ip` = '" . get_client_ip() . "'";
+						mysql_query( $query );
+						
+						$query = "SELECT * FROM `user_data` WHERE `gplus_id` = '" . $data[ 'gplus_id' ] . "' AND `aa_inst_id` = " . $aa_inst_id;
+						$result2 = mysql_query( $query );
+						if ( $result2 ) {
+							if ( mysql_num_rows( $result2 ) > 0 ) {
+								$response[ 'userinstance' ] = mysql_fetch_assoc( $result2 );
+							}
+							mysql_free_result( $result2 );
+						}
+						
+					} else {
+						
+						$response[ 'userinstance' ] = mysql_fetch_assoc( $result );
+						
+					}
+					
+					mysql_free_result( $result );
+					
+				}
+				
+				break;
+				
+			case 'user_data_twitter':
+				
+				$query = "SELECT * FROM `user_data_twitter` WHERE `twitter_id` = '" . $data[ 'twitter_id' ] . "'";
+				$result = mysql_query( $query );
+				
+				if ( $result ) {
+					if ( mysql_num_rows( $result ) <= 0 ) {
+						
+						$query = "INSERT INTO `user_data_twitter` SET `twitter_id` = '" . $data[ 'twitter_id' ] . "', `email` = '" . $data[ 'email' ] . "', `display_name` = '" . $data[ 'display_name' ] . "', `profile_image_url` = '" . $data[ 'profile_image_url' ] . "', `data` = '" . json_encode( $data[ 'data' ] ) . "'";
+						mysql_query( $query );
+						
+						$response[ 'userdata' ] = $data;
+						
+					} else {
+						
+						$response[ 'userdata' ] = mysql_fetch_assoc( $result );
+						
+					}
+					
+					mysql_free_result( $result );
+				}
+				
+				$query = "SELECT * FROM `user_data` WHERE `twitter_id` = '" . $data[ 'twitter_id' ] . "' AND `aa_inst_id` = " . $aa_inst_id;
+				
+				$result = mysql_query( $query );
+				
+				if ( $result ) {
+					
+					if ( mysql_num_rows( $result ) <= 0 ) {
+						
+						$query = "INSERT INTO `user_data` SET `aa_inst_id` = " . $aa_inst_id . ", `twitter_id` = '" . $data[ 'twitter_id' ] . "', `ip` = '" . get_client_ip() . "'";
+						mysql_query( $query );
+						
+						$query = "SELECT * FROM `user_data` WHERE `twitter_id` = '" . $data[ 'twitter_id' ] . "' AND `aa_inst_id` = " . $aa_inst_id;
+						$result2 = mysql_query( $query );
+						if ( $result2 ) {
+							if ( mysql_num_rows( $result2 ) > 0 ) {
+								$response[ 'userinstance' ] = mysql_fetch_assoc( $result2 );
+							}
+							mysql_free_result( $result2 );
+						}
+						
+					} else {
+						
+						$response[ 'userinstance' ] = mysql_fetch_assoc( $result );
+						
+					}
+					
+					mysql_free_result( $result );
+					
+				}
+				
+				break;
+			
+		}
+		
+	}
 	
 ?>
