@@ -101,6 +101,8 @@
 		
 	}
 	
+	session_start();
+	
 	$_SESSION[ 'userlogin_' . $aa_inst_id ] = $response;
 	
 	$response[ 'success' ] = true;
