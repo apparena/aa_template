@@ -12,8 +12,6 @@
 	include_once '../../init.php';
 	include_once 'check_database.php';
 	
-	unset( $_SESSION[ 'userlogin' ] );
-	
 	$userdata = array();
 	$mode = '';
 	
@@ -24,7 +22,35 @@
 	
 	switch( $mode ) {
 		
+		/* check for a valid login in the session */
+		case 'check':
+			
+			/* no unsetting here... */
+			
+			if ( isset( $_SESSION[ 'userlogin_' . $aa_inst_id ] ) &&
+				 isset( $_SESSION[ 'userlogin_' . $aa_inst_id ][ 'userinstance' ] ) &&
+				 isset( $_SESSION[ 'userlogin_' . $aa_inst_id ][ 'userdata' ] ) ) {
+				
+				$response[ 'userdata' ] = $_SESSION[ 'userlogin_' . $aa_inst_id ][ 'userdata' ];
+				$response[ 'userinstance' ] = $_SESSION[ 'userlogin_' . $aa_inst_id ][ 'userinstance' ];
+			 	$response[ 'success' ] = true;
+			 	
+			 	echo json_encode( $response );
+			 	exit( 0 );
+				
+			} else {
+				
+				echo json_encode( array( 'error' => 'no login detected' ) );
+				exit( 0 );
+				
+			}
+			
+			break;
+			
 		case 'fb':
+			
+			/* only unset for a new login! */
+			unset( $_SESSION[ 'userlogin_' . $aa_inst_id ] );
 			
 			
 			
@@ -32,11 +58,15 @@
 			
 		case 'gplus':
 			
+			unset( $_SESSION[ 'userlogin_' . $aa_inst_id ] );
+			
 			
 			
 			break;
 			
 		case 'twitter':
+			
+			unset( $_SESSION[ 'userlogin_' . $aa_inst_id ] );
 			
 			
 			
@@ -44,6 +74,8 @@
 			
 		case 'email':
 		default:
+			
+			unset( $_SESSION[ 'userlogin_' . $aa_inst_id ] );
 			
 			$userdata[ 'email' ] = mysql_real_escape_string( $userdata[ 'email' ] );
 			$userdata[ 'password' ] = mysql_real_escape_string( $userdata[ 'password' ] );

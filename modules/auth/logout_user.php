@@ -8,4 +8,6 @@
 	
 	unset( $_SESSION[ 'userlogin_' . $aa_inst_id ] );
 	
+	echo json_encode( array( 'success' => true ) );
+	
 ?>

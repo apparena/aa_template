@@ -69,13 +69,7 @@ require([
     });
     
     /*
-     * This is just used in the navbar_item template to
-     * use the gplus callback function from the auth module.
-     * The g+ signin callback method definition is part of the
-     * HTML of the button (in an attribute), so it won't be
-     * aware of our auth module, which is handled by requirejs.
-     * 
-     * It is also used by the twitter callback file, which
+     * This is just used by the twitter callback file, which
      * has no access to require.
      * 
      * If you need to use the auth object anywhere, use the
@@ -83,7 +77,6 @@ require([
      * module object is used) if you can!
      */
     aa.auth = auth;
-    aa.test = function(){console.log('test 12345');};
     
     
     /*
@@ -96,6 +89,8 @@ require([
      * The template is then loaded from the file:
      * /modules/auth/templates/auth_navbar_item.phtml.
      * 
+     * The second parameter tells the init function to check if the user is
+     * currently logged in on first init. If so, the profile will be shown.
      */
     auth.init({
 		placement: {
@@ -104,6 +99,6 @@ require([
 			toElements: [ '#menu_login' ]
 		},
 		debug: true
-	});
+	}, true );
 
 });

@@ -81,11 +81,20 @@ define(
 			 * Overwrite settings if set and
 			 * initialize the ui elements.
 			 * @param {Object} newSettings The settings which will override the default settings.
+			 * @param {Boolean} doNotCheckStatus If the init function shall check for the user's
+			 * 									 loginstatus and show the profile if the user is
+			 * 									 logged in.
 			 */
-			init: function ( newSettings ) {
+			init: function ( newSettings, doNotCheckStatus ) {
 				
 				// just copy the function scope for use in child functions here in the init (which have different "this"-scopes!)
 				var that = this;
+				
+				if ( typeof( doNotCheckStatus ) == 'undefined' || doNotCheckStatus == null ){
+					
+					doNotCheckStatus = false;
+					
+				}
 				
 				/*
 				 * !!IMPORTANT!!
@@ -244,6 +253,22 @@ define(
 				
 				// just to make sure FB has parsed stuff... (i know it wont if we dont call this ;) )
 				FB.XFBML.parse();
+				
+				if ( doNotCheckStatus == false ) {
+					
+					this.checkStatus();
+					
+				}
+				
+			},
+			
+			/**
+			 * Check if the user is currently logged
+			 * in and show the profile stuff.
+			 */
+			checkStatus: function () {
+				
+				this.login( null, 'check' );
 				
 			},
 			

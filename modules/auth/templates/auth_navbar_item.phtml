@@ -66,19 +66,6 @@
 	
 </div>
 
-<!-- load g+ js api asynchronously (will render buttons and note the onload callback in the url!) -->
-<script type="text/javascript">
-/*
-	(function() {var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;po.src = 'https://apis.google.com/js/client:plusone.js?onload=gapiAsyncInit';var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);})();
-*/
-</script>
-<!-- load fb js -->
-<script type="text/javascript">
-/*
-	(function(d, s, id) {var js, fjs = d.getElementsByTagName(s)[0];if (d.getElementById(id)) return;js = d.createElement(s); js.id = id;js.src = "//connect.facebook.net/de_DE/all.js#xfbml=1";fjs.parentNode.insertBefore(js, fjs);}(document, 'script', 'facebook-jssdk'));
-*/
-</script>
-
 <script>
 	
 	// require the auth module because we are binding a module function call to the btn_login-onclick listener...
@@ -177,23 +164,6 @@
 				auth.twitter_popup();
 				
 			});
-			
-/*
-			// DOES NOT WORK (because auth.something will not be known in the template when it is loaded to an element)!!
-			$( '#login_btn_container' ).append(
-				'<button ' +
-					'id="gplus_login" ' +
-					'class="g-signin" ' +
-					'data-scope="https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/plus.login" ' +
-					'data-requestvisibleactions="http://schemas.google.com/AddActivity" ' +
-					'data-clientId="990596349199.apps.googleusercontent.com" ' +
-					'data-callback="auth.gplusCallback" ' +
-					'data-theme="dark" ' +
-					'data-cookiepolicy="single_host_origin" ' +
-					'data-width="iconOnly">' +
-				'</button>'
-			);
-*/
 
 			// render g+ login button manually
 			gapi.signin.go();
@@ -208,122 +178,5 @@
 		});
 		
 	});
-
-/*
-	window.gplusCallback = function ( authResult ) {
-		
-		// the auto-rendered g+ sign in btn is surrounded by an extra div which is out of place...
-		$( '#gplus_login' ).parent().css( 'top', '12px' );
-		$( '#gplus_login' ).parent().attr( 'title', 'login mit google plus' );
-		
-		if (authResult['access_token']) {
-			
-			aa.userdata = {};
-			
-			// Successfully authorized
-			// Hide the sign-in button now that the user is authorized, for example:
-			//document.getElementById('signinButton').setAttribute('style', 'display: none');
-			console.log( 'success' );
-			console.log(authResult);
-			
-			// google recommends hiding the sign in button when there is a valid access token in the authResult
-			
-			gapi.auth.setToken(authResult); // Store the returned token.
-			
-			// use the oauth client to get authorization data
-			gapi.client.load( 'oauth2', 'v2', function() {
-				gapi.client.oauth2.userinfo.get().execute( function( response ) {
-					// Shows user email
-					console.log( response );
-					$.extend( aa.userdata, response );
-					// use the plus client to get user data
-					gapi.client.load( 'plus', 'v1', function() {
-						gapi.client.plus.people.get({ 'userId' : 'me' }).execute( function( response ) {
-							
-							// Shows other profile information
-							console.log( response );
-							$.extend( aa.userdata, response );
-							if ( aa.gplusFirstStart == true ) {
-								aa.gplusFirstStart = false; // do not directly login the user via g+ if he is logged in in this browser, gplus initializes directly and if the user is logged in it calls this function. also called by the user clicking the g+ login btn.
-							} else {
-								finalLogin( aa.userdata );
-							}
-							
-						});
-					});
-				});
-			});
-			
-		} else if (authResult['error']) {
-			// There was an error.
-			// Possible error codes:
-			//   "access_denied" - User denied access to your app
-			//   "immediate_failed" - Could not automatically log in the user
-			// console.log('There was an error: ' + authResult['error']);
-			console.log( 'error' );
-			console.log(authResult);
-			
-		}
-		
-	};
-*/
-	
-/*
-		function twitter_popup () {
-			
-			// opens the twitter auth sign in popup
-			popup_window = window.open( 'modules/auth/twitter_auth.php?popup=true','twitter-login','height=500,width=600' ); // the twitter auth dialog is responsive and will fit itself to an appropriate size
-			
-		}
-*/
-
-/*
-	window.twitter_popup_callback = function ( response ) {
-		
-		// twitter popup sign in
-		console.log( 'twitter login callback fetched response' );
-		console.log( response );
-		
-		popup_window.close();
-		
-		if ( typeof( response ) == 'string' ) {
-			
-			if ( response == 'false' ) {
-				
-				console.log( 'oh my! the user canceled twitter login...' );
-				
-			} else {
-				
-				finalLogin( response );
-				
-			}
-			
-		}
-		
-	};
-*/
-	
-	/**
-	 * Do the final login stuff,
-	 * such as changing "login" to
-	 * "profile" with a logout fct,
-	 * or saving / updating the
-	 * user profile in the db...
-	 *//*
-	function finalLogin( userdata ) {
-		
-		//$( '#auth_module_login' ).html( 'profile' );
-
-		aa.auth.init({
-			placement: {
-				// "template[0]" will be mapped to "toElement[0]" and so on...
-				templates:  [ 'auth_navbar_profile' ],
-				toElements: [ '#menu_login' ]
-			},
-			debug: true
-		});
-		
-	}
-*/
 	
 </script>
