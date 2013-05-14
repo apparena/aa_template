@@ -23,7 +23,7 @@
 		
 		//$test = $cb->account_verifyCredentials( array( 'request_token' =>  ) )
 		
-		var_dump( $user );
+// 		var_dump( $user );
 		
 		if ( isset( $_GET[ 'popup' ] ) && $_GET[ 'popup' ] == 'true' ) {
 /*
