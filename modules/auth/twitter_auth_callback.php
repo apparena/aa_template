@@ -39,6 +39,15 @@
 			//echo '<script>console.log(window.opener.twitter_popup_callback);</script>';
 			
 			//echo '<script>window.opener.twitter_popup_callback(\'' . json_encode( $user ) . '\');</script>'; // if the callback is in the window scope of the opening page
+			
+			$params = array(
+			    'screen_name' => $user[ 'screen_name' ]
+			);
+			$reply = $cb->users_show($params);
+			
+print_r( $reply );
+exit( 0 );
+			
 			echo '<script>window.opener.aa.auth.twitter_popup_callback(\'' . json_encode( $user ) . '\');</script>';
 			
 		}
