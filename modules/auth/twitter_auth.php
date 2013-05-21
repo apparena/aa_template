@@ -25,6 +25,11 @@
 	$auth_url = $cb = Codebird::getInstance();
 	
 	session_start();
+	
+	// first invalidate old token (so we do not have to save the token in the database)
+	$reply = $cb->oauth2_invalidateToken();
+	
+print_r( $reply );
 
 	if (! isset($_GET['oauth_verifier'])) {
 		// gets a request token
