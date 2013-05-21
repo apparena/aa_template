@@ -37,9 +37,17 @@
 
 		$reply = $cb->users_show( array( 'screen_name' => $username ) );
 
-// print_r( $reply );
+print_r( $reply );
 
 // echo "<br />check4<br />";
+		
+		
+		//TODO:save twitter credentials to db!!
+		/*
+		 * the obj looks like this:
+		 * stdClass Object ( [id] => 1130718230 [id_str] => 1130718230 [name] => Guntram Pollock [screen_name] => GuntramPollock [location] => [description] => [url] => [entities] => stdClass Object ( [description] => stdClass Object ( [urls] => Array ( ) ) ) [protected] => [followers_count] => 0 [friends_count] => 4 [listed_count] => 0 [created_at] => Tue Jan 29 10:55:01 +0000 2013 [favourites_count] => 0 [utc_offset] => [time_zone] => [geo_enabled] => [verified] => [statuses_count] => 9 [lang] => de [status] => stdClass Object ( [created_at] => Mon Apr 29 10:48:23 +0000 2013 [id] => 328823070557097984 [id_str] => 328823070557097984 [text] => @GuntramPollock wtf!! [source] => Tweet Button [truncated] => [in_reply_to_status_id] => [in_reply_to_status_id_str] => [in_reply_to_user_id] => 1130718230 [in_reply_to_user_id_str] => 1130718230 [in_reply_to_screen_name] => GuntramPollock [geo] => [coordinates] => [place] => [contributors] => [retweet_count] => 0 [favorite_count] => 0 [entities] => stdClass Object ( [hashtags] => Array ( ) [symbols] => Array ( ) [urls] => Array ( ) [user_mentions] => Array ( [0] => stdClass Object ( [screen_name] => GuntramPollock [name] => Guntram Pollock [id] => 1130718230 [id_str] => 1130718230 [indices] => Array ( [0] => 0 [1] => 15 ) ) ) ) [favorited] => [retweeted] => [lang] => nl ) [contributors_enabled] => [is_translator] => [profile_background_color] => C0DEED [profile_background_image_url] => http://a0.twimg.com/images/themes/theme1/bg.png [profile_background_image_url_https] => https://si0.twimg.com/images/themes/theme1/bg.png [profile_background_tile] => [profile_image_url] => http://a0.twimg.com/sticky/default_profile_images/default_profile_5_normal.png [profile_image_url_https] => https://si0.twimg.com/sticky/default_profile_images/default_profile_5_normal.png [profile_link_color] => 0084B4 [profile_sidebar_border_color] => C0DEED [profile_sidebar_fill_color] => DDEEF6 [profile_text_color] => 333333 [profile_use_background_image] => 1 [default_profile] => 1 [default_profile_image] => 1 [following] => [follow_request_sent] => [notifications] => [httpstatus] => 200 )
+		 */
+		
 		
 		if ( isset( $_GET[ 'popup' ] ) && $_GET[ 'popup' ] == 'true' ) {
 			
