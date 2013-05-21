@@ -22,14 +22,24 @@
 		$cb->setToken($_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
 		//$cb->setToken( $twitter_access_token, $twitter_access_token_secret );
 		
-echo "check1";
+echo "check1<br />";
 		
 		$user = $cb->oauth_accessToken( array( 'oauth_verifier' => $_GET[ 'oauth_verifier' ] ) );
 		
+$username = $user->screen_name;
+		
+echo "<br />check2<br />";
+		
+		$cb->setToken( $user->oauth_token, $user->oauth_token_secret );
+		
 print_r( $user );
 		
-echo "<br />check2";
-		
+echo "<br />check3<br />";
+
+$cb->users_show( $username );
+
+echo "<br />check4<br />";
+
 		//$test = $cb->account_verifyCredentials( array( 'request_token' =>  ) )
 		
 // 		var_dump( $user );
@@ -49,13 +59,13 @@ echo "<br />check2";
 			
 			//echo '<script>window.opener.twitter_popup_callback(\'' . json_encode( $user ) . '\');</script>'; // if the callback is in the window scope of the opening page
 			
-			$params = array(
-			    'screen_name' => $user->screen_name
-			);
+// 			$params = array(
+// 			    'screen_name' => $user->screen_name
+// 			);
 			//$reply = $cb->users_show($user->screen_name);
-			$reply = $cb->users_show($params);
+// 			$reply = $cb->users_show($params);
 			
-print_r( $reply );
+// print_r( $reply );
 exit( 0 );
 			
 			echo '<script>window.opener.aa.auth.twitter_popup_callback(\'' . json_encode( $user ) . '\');</script>';
