@@ -22,7 +22,11 @@
 		$cb->setToken($_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
 		//$cb->setToken( $twitter_access_token, $twitter_access_token_secret );
 		
+echo "check1";
+		
 		$user = $cb->oauth_accessToken( array( 'oauth_verifier' => $_GET[ 'oauth_verifier' ] ) );
+		
+echo "<br />check2";
 		
 		//$test = $cb->account_verifyCredentials( array( 'request_token' =>  ) )
 		
@@ -46,7 +50,8 @@
 			$params = array(
 			    'screen_name' => $user->screen_name
 			);
-			$reply = $cb->users_show($user->screen_name);
+			//$reply = $cb->users_show($user->screen_name);
+			$reply = $cb->users_show($params);
 			
 print_r( $reply );
 exit( 0 );
