@@ -26,6 +26,8 @@ echo "check1";
 		
 		$user = $cb->oauth_accessToken( array( 'oauth_verifier' => $_GET[ 'oauth_verifier' ] ) );
 		
+print_r( $user );
+		
 echo "<br />check2";
 		
 		//$test = $cb->account_verifyCredentials( array( 'request_token' =>  ) )
