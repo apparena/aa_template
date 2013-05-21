@@ -30,6 +30,7 @@
 	$reply = $cb->oauth2_invalidateToken();
 	
 print_r( $reply );
+exit(0);
 
 	if (! isset($_GET['oauth_verifier'])) {
 		// gets a request token
