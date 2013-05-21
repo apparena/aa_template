@@ -36,7 +36,7 @@ print_r( $user );
 		
 echo "<br />check3<br />";
 
-$reply = $cb->users_show( $username );
+$reply = $cb->users_show( array( 'screen_name' => $username ) );
 
 print_r( $reply );
 
