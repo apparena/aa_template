@@ -75,7 +75,6 @@
 	$query =
 		"CREATE TABLE IF NOT EXISTS `user_data_twitter` (
 		  `twitter_id` varchar(20) NOT NULL COMMENT 'the users twitter id',
-		  `email` varchar(128) NOT NULL COMMENT 'the users twitter email address',
 		  `display_name` varchar(64) NOT NULL COMMENT 'the users twitter screenName',
 		  `profile_image_url` varchar(128) NOT NULL COMMENT 'the users twitter image url',
 		  `data` blob NOT NULL COMMENT 'any additional data from the users twitter account',
