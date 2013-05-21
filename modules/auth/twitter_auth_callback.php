@@ -1,5 +1,7 @@
 <?php 
 	
+	include_once '../../config.php';
+	
 	include_once "codebird.php";
 	
 	$CONSUMER_KEY = '2WnBPqfOf0vaGPJsMFG6fw';
