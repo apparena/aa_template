@@ -36,7 +36,9 @@ print_r( $user );
 		
 echo "<br />check3<br />";
 
-$cb->users_show( $username );
+$reply = $cb->users_show( $username );
+
+print_r( $reply );
 
 echo "<br />check4<br />";
 
