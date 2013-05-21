@@ -25,8 +25,15 @@ $fb_app_secret = "cb11ea19d870420d6df37795cec44606";
 // client id for web applications, needed by the sign in button
 $gplus_client_id = "990596349199.apps.googleusercontent.com";
 
+// twitter oauth settings (twitter uses oauth 1.1 (or 1.0?!...whatever) instead of 2.0 with google+ or facebook)
 $twitter_consumer_key = "2WnBPqfOf0vaGPJsMFG6fw";
 $twitter_consumer_secret = "mygq0bS2LQfUn6jLiujZ8VWOqXCBKtxHtXgnGnrMc";
+// twitter also has a static access token/secret pair (retrieving an access token via codebird might
+// result in a 401: Invalid or expired token [code] => 89):
+// (see https://dev.twitter.com/discussions/15626)
+$twitter_access_token = "1130718230-Fvvm8VAHrWWZmPz1pkJaLAEQDTs2coIuEvOSeUs";
+$twitter_access_token_secret = "mnNbCOcFvQhoqNwDjc2yILImwAv9ep7uThvzqOogk";
+
 // this url will be called after the user accepts or declines the login
 $twitter_callback_url = "https://www.app-arena.com/app/aa_template/dev/modules/auth/twitter_auth_callback.php";
 

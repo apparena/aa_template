@@ -17,7 +17,8 @@
 		$_SESSION['oauth_token'] = $_GET[ 'oauth_token' ];
 		$_SESSION['oauth_verifier'] = $_GET[ 'oauth_verifier' ];
 		
-		$cb->setToken($_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
+		//$cb->setToken($_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
+		$cb->setToken( $twitter_access_token, $twitter_access_token_secret );
 		
 		$user = $cb->oauth_accessToken( array( 'oauth_verifier' => $_GET[ 'oauth_verifier' ] ) );
 		
