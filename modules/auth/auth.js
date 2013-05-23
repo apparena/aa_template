@@ -563,8 +563,6 @@ define(
 			 */
 			finalLogin: function ( userdata ) {
 				
-				
-				
 				aa[ 'userlogin_' + aa.inst.aa_inst_id ] = userdata;
 				
 				// re init everything
@@ -720,12 +718,13 @@ define(
 					success: function ( response ) {
 						
 						if ( typeof( response.success ) != 'undefined' ) {
+							$( '#register_modal_error' ).fadeOut( 300 );
 							that.log( 'registerUser >> register callback says: ' + response.success, true );
 							$( '#register_container' ).remove();
 							that.finalLogin( response );
 						} else {
 							
-							$( '#register_modal_error' ).html( response.error );
+							$( '#register_modal_error' ).html( response.error ).fadeIn( 300 );
 							
 						}
 						
