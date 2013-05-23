@@ -52,12 +52,10 @@
 		if ( isset( $_GET[ 'popup' ] ) && $_GET[ 'popup' ] == 'true' ) {
 			
 // exit( 0 );
-
-			$reply = mysql_real_escape_string( $reply );
 			
 			// $user only contains the id and the screen name (and the token stuff and an http response code)...
 			// $reply contains the user's data
-			echo '<script>window.opener.aa.auth.twitter_popup_callback(\'' . json_encode( $reply ) . '\');</script>';
+			echo '<script>window.opener.aa.auth.twitter_popup_callback(\'' . mysql_real_escape_string( json_encode( $reply ) ) . '\');</script>';
 			
 		}
 		
