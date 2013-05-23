@@ -406,7 +406,7 @@ define(
 						//aa.userdata = $.extend( aa.userdata, response );
 						aa.userdata = response;
 						
-						that.login( aa.userdata, 'twitter' );
+						this.login( aa.userdata, 'twitter' );
 						
 /*
 						$.ajax({
