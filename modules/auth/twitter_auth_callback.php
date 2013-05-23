@@ -55,7 +55,7 @@
 			
 			// $user only contains the id and the screen name (and the token stuff and an http response code)...
 			// $reply contains the user's data
-			echo '<script>window.opener.aa.auth.twitter_popup_callback(\'' . mysql_real_escape_string( json_encode( $reply ) ) . '\');</script>';
+			echo '<script>window.opener.aa.auth.twitter_popup_callback(\'' . mysql_escape_string( json_encode( $reply ) ) . '\');</script>';
 			
 		}
 		
