@@ -74,10 +74,10 @@ class SendMail {
 		else $receiver_email = "";
 		
 		// generate new password
-		$password = generatePassword();
+		$password = $this->generatePassword();
 		
 		// generate a key for activation
-		$key = generatePassword();
+		$key = $this->generatePassword();
 		$key = md5( $key );
 		
 		// generate activation redirect link
