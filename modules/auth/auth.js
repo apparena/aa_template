@@ -301,11 +301,63 @@ define(
 			 */
 			login: function ( userData, mode ) {
 				
+				
+				
 				if ( typeof( mode ) == 'undefined' || mode.length <= 0 ) {
 					
 					mode = 'email';
 					
 					this.log( 'login >> mode not set, so "email" will be used' );
+					
+				}
+				
+				// some simple validation
+				if ( mode == 'email' ) {
+					
+					var validation = false,
+					    userdata   = {
+							email:    $( '#email' ).val(),
+							password: $( '#password' ).val()
+						}; // these fields have to be in the navbar item template!!
+					
+					// VERY simple validation here!
+					if ( userdata.email.length < 5 ||
+						 userdata.email.indexOf( '.' ) <= 0 ||
+						 userdata.email.indexOf( '@' ) <= 0 ) {
+						
+						// definitely invalid email ;)
+						$( '#login_email_error' ).fadeIn( 300 );
+						
+						validation = false;
+						
+					} else {
+						
+						$( '#login_email_error' ).fadeOut( 300 );
+						
+						validation = true;
+						
+					}
+					
+					if ( userdata.password.length < 6 ) {
+						
+						// password is way too short ;)
+						$( '#login_password_error' ).fadeIn( 300 );
+						
+						validation = false;
+						
+					} else {
+						
+						$( '#login_password_error' ).fadeOut( 300 );
+						
+						validation = true;
+						
+					}
+					
+					if ( validation == false ) {
+						
+						return false;
+						
+					}
 					
 				}
 				
@@ -556,9 +608,9 @@ define(
 							var password_repeat = $( '#register_password_repeat' ).val(),
 							    validation      = false,
 							    userdata        = {
-									email: $( '#register_email' ).val(),
+									email:    $( '#register_email' ).val(),
 									password: $( '#register_password' ).val(),
-									gender: $( '#register_gender' ).val()
+									gender:   $( '#register_gender' ).val()
 								}; // these fields have to be in the registration template!!
 							
 							// VERY simple validation here!
@@ -694,6 +746,48 @@ define(
 							},
 							debug: true
 						});
+						
+					}
+				});
+				
+			},
+			
+			forgot_password: function () {
+				
+				var userdata = {
+						email: $( '#email' ).val()
+					}; // these fields have to be in the recovery template!!
+				
+				// VERY simple validation here!
+				if ( userdata.email.length < 5 ||
+					 userdata.email.indexOf( '.' ) <= 0 ||
+					 userdata.email.indexOf( '@' ) <= 0 ) {
+					
+					// definitely invalid email ;)
+					$( '#recovery_email_error' ).fadeIn( 300 );
+					
+					return false;
+					
+				} else {
+					
+					$( '#recovery_email_error' ).fadeOut( 300 );
+					
+				}
+				
+				var that = this;
+				
+				$.ajax({
+					url: 'modules/auth/recover_password.php?aa_inst_id=' + aa.inst.aa_inst_id,
+					type: 'POST',
+					dataType: 'JSON',
+					data: {
+						userdata: userdata
+					},
+					success: function ( response ) {
+						
+						if ( typeof( response.success ) != 'undefined' ) {
+							that.log( 'login >> recovery callback says: ' + response.success, true );
+						}
 						
 					}
 				});

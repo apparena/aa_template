@@ -21,9 +21,11 @@
 	<form class="form-inline">
 		<div>
 			<input type="text" id="email" name="email" class="input-small" placeholder="E-Mail-Adresse" style="width: 180px;" />
+			<div id="login_email_error" class="alert alert-error hide">Bitte überprüfe die E-Mail Adresse</div>
 		</div>
 		<div>
 			<input type="password" id="password" name="password" class="input-small" placeholder="Passwort" style="width: 180px;" />
+			<div id="login_password_error" class="alert alert-error hide">Bitte überprüfe das Passwort (mindestens 6 Zeichen)</div>
 		</div>
 		<div>
 			<button type="button" id="btn_login" name="btn_login" class="pull-right btn btn-mini">
@@ -60,11 +62,9 @@
 		<a id="btn_register" class="btn btn-mini" href="#">Registrieren</a>
 	</div>
 	
-<!--
 	<div>
-		<a id="btn_forgot_pw" class="btn btn-mini" href="#">forgot password?</a>
+		<a id="btn_forgot_pw" class="btn btn-mini" href="#">Passwort vergessen?</a>
 	</div>
--->
 	
 </div>
 
@@ -174,6 +174,13 @@
 			$( '#btn_register' ).on( 'click', function () {
 				
 				auth.register();
+				
+			});
+
+			// init password recovery button
+			$( '#btn_forgot_pw' ).on( 'click', function () {
+				
+				auth.forgot_password();
 				
 			});
 			
