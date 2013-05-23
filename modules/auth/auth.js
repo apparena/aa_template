@@ -722,7 +722,8 @@ define(
 							that.log( 'registerUser >> register callback says: ' + response.success, true );
 							$( '#registration_modal' ).modal( 'hide' );
 							$( '#register_container' ).remove();
-							that.finalLogin( response );
+							//that.finalLogin( response );
+							that.login( userData );
 						} else {
 							
 							$( '#register_modal_error' ).html( response.error ).fadeIn( 300 );
