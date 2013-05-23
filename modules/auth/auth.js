@@ -758,11 +758,34 @@ define(
 				
 			},
 			
+			showRecoveryModal: function () {
+				
+				var that = this;
+				
+				// remove old container if it is present
+				$( '#recovery_container' ).remove();
+				
+				$( 'body' ).append( '<div id="recovery_container"></div>' );
+				
+				// load the registration template for the modal
+				$.ajax({
+					url: 'modules/auth/templates/auth_password_recovery.phtml',
+					type: 'GET',
+					success: function ( response ) {
+						
+						$( '#recovery_container' ).html( response );
+						$( '#auth_modal_password_recovery' ).modal( 'show' );
+						
+					}
+				});
+				
+			},
+			
 			forgot_password: function () {
 				
 				var userdata = {
-						email: $( '#email' ).val()
-					}; // these fields have to be in the recovery template!!
+					email: $( '#email' ).val()
+				}; // these fields have to be in the recovery template!!
 				
 				// VERY simple validation here!
 				if ( userdata.email.length < 5 ||
@@ -792,7 +815,17 @@ define(
 					success: function ( response ) {
 						
 						if ( typeof( response.success ) != 'undefined' ) {
+							
 							that.log( 'login >> recovery callback says: ' + response.success, true );
+							
+							$( '#auth_modal_password_recovery' ).modal( 'hide' );
+							$( '#recovery_container' ).remove();
+							
+						} else {
+							
+							$( '#recovery_general_error' ).html( response.error );
+							$( '#recovery_general_error' ).fadeIn( 300 );
+							
 						}
 						
 					}
