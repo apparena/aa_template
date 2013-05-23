@@ -720,6 +720,7 @@ define(
 						if ( typeof( response.success ) != 'undefined' ) {
 							$( '#register_modal_error' ).fadeOut( 300 );
 							that.log( 'registerUser >> register callback says: ' + response.success, true );
+							$( '#registration_modal' ).modal( 'hide' );
 							$( '#register_container' ).remove();
 							that.finalLogin( response );
 						} else {
