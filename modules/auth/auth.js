@@ -108,7 +108,7 @@ define(
 				window.gplusCallback = function ( authResult ) {
 					
 					// the auto-rendered g+ sign in btn is surrounded by an extra div which is out of place...
-					$( '#gplus_login' ).parent().css( 'top', '12px' );
+					//$( '#gplus_login' ).parent().css( 'top', '12px' );
 					//$( '#gplus_login' ).parent().attr( 'title', 'login mit google plus' ); // does not work...
 					
 					if (authResult['access_token']) {
