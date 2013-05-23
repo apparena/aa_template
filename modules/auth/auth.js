@@ -723,6 +723,10 @@ define(
 							that.log( 'registerUser >> register callback says: ' + response.success, true );
 							$( '#register_container' ).remove();
 							that.finalLogin( response );
+						} else {
+							
+							$( '#register_modal_error' ).html( response.error );
+							
 						}
 						
 					}
