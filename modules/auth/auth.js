@@ -377,65 +377,43 @@ define(
 				this.log( 'twitter_callback >> twitter login callback fetched response' );
 				this.log( response );
 				
-				try {
-					popup_window.close();
-				} catch ( e ) {
-				} finally {
+				if ( typeof( response ) == 'string' ) {
 					
-					popup_window = null;
-					
-					if ( typeof( response ) == 'string' ) {
+					if ( response == 'false' ) {
 						
-						if ( response == 'false' ) {
-							
-							this.log( 'twitter_callback >> oh my! the user canceled twitter login...' );
-							
-						} else {
-							
-							//aa.userdata = $.extend( aa.userdata, response );
-							aa.userdata = response;
-							
-							this.log( 'twitter_callback >> received string:', true );
-							this.log( response );
-							
-						}
+						this.log( 'twitter_callback >> oh my! the user canceled twitter login...' );
 						
 					} else {
 						
-						if ( typeof( response ) == 'object' ) {
-							
-							//aa.userdata = $.extend( aa.userdata, response );
-							aa.userdata = response;
-							
-							this.login( aa.userdata, 'twitter' );
-							
-	/*
-							$.ajax({
-							    url: 'https://api.twitter.com/1.1/users/show.json?screen_name=' + response.screen_name,
-							    dataType: 'jsonp',
-							    success: function ( data ) {
-							    	
-					                that.log( 'twitter_callback >> received from twitter:' );
-					                that.log( data );
-					                
-					                aa.userdata = $.extend( aa.userdata, data );
-					                
-					                that.login( aa.userdata, 'twitter' );
-					                
-							    }
-							});
-	*/
-							
-						} else {
-							
-							this.log( 'twitter_callback >> something went wrong', true );
-							this.log( response );
-							
-						}
+						//aa.userdata = $.extend( aa.userdata, response );
+						aa.userdata = response;
+						
+						this.log( 'twitter_callback >> received string:', true );
+						this.log( response );
+						
+					}
+					
+				} else {
+					
+					if ( typeof( response ) == 'object' ) {
+						
+						//aa.userdata = $.extend( aa.userdata, response );
+						aa.userdata = response;
+						
+						this.login( aa.userdata, 'twitter' );
+						
+					} else {
+						
+						this.log( 'twitter_callback >> something went wrong', true );
+						this.log( response );
 						
 					}
 					
 				}
+				
+				try {
+					popup_window.close();
+				} catch ( e ) {}
 				
 			},
 			
