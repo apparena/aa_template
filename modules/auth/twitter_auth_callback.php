@@ -53,7 +53,9 @@
 			
 // exit( 0 );
 			
-			echo '<script>window.opener.aa.auth.twitter_popup_callback(\'' . json_encode( $user ) . '\');</script>';
+			// $user only contains the id and the screen name (and the token stuff and an http response code)...
+			// $reply contains the user's data
+			echo '<script>window.opener.aa.auth.twitter_popup_callback(\'' . json_encode( $reply ) . '\');</script>';
 			
 		}
 		
