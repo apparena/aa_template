@@ -81,7 +81,10 @@ class SendMail {
 		$key = md5( $key );
 		
 		// generate activation redirect link
-		$link = dirname( __FILE__ ) . '/recovery_redirect.php?aa_inst_id=' . $this->aa_inst_id . '&activationkey=' . $key;
+		$mSelf = $_SERVER[ 'PHP_SELF' ];
+		$path = pathinfo( $mSelf );
+		$currentPath = $path[ 'basename' ];
+		$link = $currentPath . '/recovery_redirect.php?aa_inst_id=' . $this->aa_inst_id . '&activationkey=' . $key;
 		
 		// Replace variables in Email-text
 		$email_body = str_replace( "{{link}}", $link, $email_body );
