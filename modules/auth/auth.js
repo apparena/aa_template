@@ -406,6 +406,9 @@ define(
 						//aa.userdata = $.extend( aa.userdata, response );
 						aa.userdata = response;
 						
+						that.login( aa.userdata, 'twitter' );
+						
+/*
 						$.ajax({
 						    url: 'https://api.twitter.com/1.1/users/show.json?screen_name=' + response.screen_name,
 						    dataType: 'jsonp',
@@ -420,6 +423,7 @@ define(
 				                
 						    }
 						});
+*/
 						
 					} else {
 						

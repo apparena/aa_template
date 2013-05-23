@@ -106,7 +106,7 @@
 			
 			unset( $_SESSION[ 'userlogin_' . $aa_inst_id ] );
 			
-			if ( !isset( $userdata[ 'id' ] ) ) { echo json_encode( array( 'error' => 'missing facebook id' ) ); exit( 0 ); }
+			if ( !isset( $userdata[ 'id' ] ) ) { echo json_encode( array( 'error' => 'missing gplus id' ) ); exit( 0 ); }
 			
 			$savedata = array();
 			
@@ -170,7 +170,41 @@
 			
 			unset( $_SESSION[ 'userlogin_' . $aa_inst_id ] );
 			
+			if ( !isset( $userdata[ 'id' ] ) ) { echo json_encode( array( 'error' => 'missing twitter id' ) ); exit( 0 ); }
 			
+			$savedata = array();
+			
+			$savedata[ 'display_name' ] = '';
+			
+			if ( isset( $userdata[ 'screen_name' ] ) ) {
+				$savedata[ 'display_name' ] = mysql_real_escape_string( $userdata[ 'screen_name' ] );
+				unset( $userdata[ 'screen_name' ] );
+			} else {
+				if ( isset( $userdata[ 'name' ] ) ) {
+					$savedata[ 'display_name' ] = mysql_real_escape_string( $userdat[ 'name' ] );
+					unset( $userdata[ 'name' ] );
+				}
+			}
+			
+			$savedata[ 'twitter_id' ] = 0;
+			
+			if ( isset( $userdata[ 'id' ] ) ) {
+				$savedata[ 'twitter_id' ] = $userdata[ 'id' ];
+				unset( $userdata[ 'id' ] );
+				unset( $userdata[ 'id_str' ] );
+			}
+			
+			$savedata[ 'profile_image_url' ] = '';
+			
+			if ( isset( $userdata[ 'profile_image_url_https' ] ) ) {
+				$savedata[ 'profile_image_url' ] = mysql_real_escape_string( $userdata[ 'profile_image_url_https' ] );
+				unset( $userdata[ 'profile_image_url_https' ] );
+			}
+			
+			// put all the rest into the additional data field
+			$savedata[ 'data' ] = $userdata;
+			
+			saveUser( 'user_data_twitter', $savedata );
 			
 			break;
 			
@@ -367,7 +401,7 @@
 				if ( $result ) {
 					if ( mysql_num_rows( $result ) <= 0 ) {
 						
-						$query = "INSERT INTO `user_data_twitter` SET `twitter_id` = '" . $data[ 'twitter_id' ] . "', `email` = '" . $data[ 'email' ] . "', `display_name` = '" . $data[ 'display_name' ] . "', `profile_image_url` = '" . $data[ 'profile_image_url' ] . "', `data` = '" . json_encode( $data[ 'data' ] ) . "'";
+						$query = "INSERT INTO `user_data_twitter` SET `twitter_id` = '" . $data[ 'twitter_id' ] . "', `display_name` = '" . $data[ 'display_name' ] . "', `profile_image_url` = '" . $data[ 'profile_image_url' ] . "', `data` = '" . json_encode( $data[ 'data' ] ) . "'";
 						mysql_query( $query );
 						
 						$response[ 'userdata' ] = $data;

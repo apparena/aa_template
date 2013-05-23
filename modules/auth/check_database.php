@@ -49,7 +49,7 @@
 		  `display_name` varchar(64) NOT NULL COMMENT 'the users facebook name',
 		  `profile_image_url` varchar(128) NOT NULL COMMENT 'the users facebook image url',
 		  `gender` varchar(6) NOT NULL COMMENT 'the users facebook gender',
-		  `data` blob NOT NULL COMMENT 'any additional data from facebook',
+		  `data` text NOT NULL COMMENT 'any additional data from facebook',
 		  PRIMARY KEY (`fb_id`),
 		  KEY `display_name` (`display_name`),
 		  KEY `email` (`email`)
@@ -64,7 +64,7 @@
 		  `display_name` varchar(64) NOT NULL COMMENT 'the users google plus displayName',
 		  `profile_image_url` varchar(128) NOT NULL COMMENT 'the users google plus image url',
 		  `gender` varchar(6) NOT NULL COMMENT 'the users google plus gender',
-		  `data` blob NOT NULL COMMENT 'any additional data from google plus',
+		  `data` text NOT NULL COMMENT 'any additional data from google plus',
 		  PRIMARY KEY (`gplus_id`),
 		  KEY `email` (`email`),
 		  KEY `display_name` (`display_name`)
@@ -77,7 +77,7 @@
 		  `twitter_id` varchar(20) NOT NULL COMMENT 'the users twitter id',
 		  `display_name` varchar(64) NOT NULL COMMENT 'the users twitter screenName',
 		  `profile_image_url` varchar(128) NOT NULL COMMENT 'the users twitter image url',
-		  `data` blob NOT NULL COMMENT 'any additional data from the users twitter account',
+		  `data` text NOT NULL COMMENT 'any additional data from the users twitter account',
 		  PRIMARY KEY (`twitter_id`),
 		  KEY `email` (`email`),
 		  KEY `display_name` (`display_name`)

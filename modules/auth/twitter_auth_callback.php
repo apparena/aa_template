@@ -37,7 +37,7 @@
 
 		$reply = $cb->users_show( array( 'screen_name' => $username ) );
 
-print_r( $reply );
+// print_r( $reply );
 
 // echo "<br />check4<br />";
 		
@@ -51,7 +51,7 @@ print_r( $reply );
 		
 		if ( isset( $_GET[ 'popup' ] ) && $_GET[ 'popup' ] == 'true' ) {
 			
-exit( 0 );
+// exit( 0 );
 			
 			echo '<script>window.opener.aa.auth.twitter_popup_callback(\'' . json_encode( $user ) . '\');</script>';
 			
