@@ -37,3 +37,7 @@
 	mysql_query( $query );
 	
 ?>
+
+<div class="alert alert-success">
+	Dein Passwort wurde geändert. Logge dich ab sofort mit dem neuen Passwort ein.
+</div>
