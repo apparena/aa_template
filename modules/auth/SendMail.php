@@ -55,7 +55,7 @@ class SendMail {
 	 * @param array $email (subject, body) The email content templates.
 	 * @return boolean Returns if email could be sent out or not.
 	 */
-	function send_email($email=array(), $link='') {
+	function send_email($email=array(), $link='', $key='', $password='') {
 		
 		if ( strlen( $link ) <= 0 ) {
 			
@@ -79,12 +79,7 @@ class SendMail {
 			$receiver_email = $this->customer['email'];
 		else $receiver_email = "";
 		
-		// generate new password
-		$password = $this->generatePassword();
 		
-		// generate a key for activation
-		$key = $this->generatePassword();
-		$key = md5( $key );
 		
 		// Replace variables in Email-text
 		$email_body = str_replace( "{{link}}", $link, $email_body );
