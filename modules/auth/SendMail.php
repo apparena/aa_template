@@ -99,7 +99,7 @@ class SendMail {
 		$mail = new Zend_Mail('UTF-8');
 		$mail->setBodyHtml($email_body);
 		$mail->setFrom($this->customer['email'], $this->customer['name']);
-		$mail->addTo($this->user['email'], $this->user['firstname'] . ' ' . $this->user['lastname']);
+		$mail->addTo($this->user['email'], $this->user['email']/*$this->user['firstname'] . ' ' . $this->user['lastname']*/);
 		$mail->setSubject($email_subject);
 		
 		try{
