@@ -784,7 +784,7 @@ define(
 			forgot_password: function () {
 				
 				var userdata = {
-					email: $( '#email_recovery' ).val()
+					email: $.trim( $( '#email_recovery' ).val() )
 				}; // these fields have to be in the recovery template!!
 				
 				// VERY simple validation here!
