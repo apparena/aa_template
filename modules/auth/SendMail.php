@@ -156,7 +156,7 @@ class SendMail {
 			$return_msg  = "<strong>Receiver: </strong>" . var_dump($this->user);
 			$return_msg .= "<strong>Email: </strong>" . var_dump($email);
 			$return_msg .= "<strong>SMT-Settings: </strong>" . var_dump($smtp_config) . "Smtp-Host: " . $this->smtp_host;
-			return '' . $return_msg . $e->getMessage();
+			return 'exception:' . $return_msg . $e->getMessage();
 		}
 	}
 	
