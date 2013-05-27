@@ -55,7 +55,13 @@ class SendMail {
 	 * @param array $email (subject, body) The email content templates.
 	 * @return boolean Returns if email could be sent out or not.
 	 */
-	function send_email($email=array()) {
+	function send_email($email=array(), $link='') {
+		
+		if ( strlen( $link ) <= 0 ) {
+			
+			return 'missing link! need a link for the user to be forwarded (like: "https://www.app-arena.com/myapp/modules/auth/recover_password.php/recovery_redirect.php?aa_inst_id=4656&activationkey=fc43607492acab2a42ff51312e189179")';
+			
+		}
 		
 		// Get email content
 		if (array_key_exists('body', $email))
@@ -79,12 +85,6 @@ class SendMail {
 		// generate a key for activation
 		$key = $this->generatePassword();
 		$key = md5( $key );
-		
-		// generate activation redirect link
-		$mSelf = $_SERVER[ 'PHP_SELF' ];
-		$path = pathinfo( $mSelf );
-		$currentPath = $path[ 'basename' ];
-		$link = $currentPath . '/recovery_redirect.php?aa_inst_id=' . $this->aa_inst_id . '&activationkey=' . $key;
 		
 		// Replace variables in Email-text
 		$email_body = str_replace( "{{link}}", $link, $email_body );
