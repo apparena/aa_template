@@ -35,7 +35,7 @@
 	
 	// generate activation redirect link
 	$currentPath = $aa[ 'instance' ][ 'fb_canvas_url' ];
-	$link = $currentPath . 'modules/auth/recovery_redirect.php?aa_inst_id=' . $this->aa_inst_id . '&activationkey=' . $key;
+	$link = $currentPath . 'modules/auth/recovery_redirect.php?aa_inst_id=' . $_GET['aa_inst_id'] . '&activationkey=' . $key;
 	
 	$mail = new SendMail( $smtp_config, $_GET['aa_inst_id'], $customer, $user_data );
 	$ret = $mail->send_email( $email, $link );
