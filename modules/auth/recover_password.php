@@ -48,7 +48,7 @@
 	
 	$ret = $mail->send_email( $email, $link, $key, $password );
 	 
-	if ( $ret === true || strpos( $ret, 'hasAttachment' ) !== FALSE ) {
+	if ( $ret === true || strpos( (string)$ret, 'success' ) !== FALSE ) {
 		echo json_encode( array( 'success' => 'mail was sent', 'message' => $ret ) );
 	} else {
 		echo json_encode( array( 'error' => 'mail not sent', 'message' => $ret ) );
