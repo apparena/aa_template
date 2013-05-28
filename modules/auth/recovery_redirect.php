@@ -30,7 +30,7 @@
 	if ( $user_id <= 0 ) { echo json_encode( array( 'error' => 'something went wrong with the password recovery - please contact the support team' ) ); exit( 0 ); }
 	
 	// activate the new password
-	$query = "UPDATE `user_data_email` SET `password` = '" . $row[ 'data' ][ 'password' ] . "' WHERE `email` = '" . $row[ 'data' ][ 'email' ] . "'";
+	$query = "UPDATE `user_data_email` SET `password` = '" . $row->data[ 'password' ] . "' WHERE `email` = '" . $row->data[ 'email' ] . "'";
 	mysql_query( $query );
 	
 	// log this action
