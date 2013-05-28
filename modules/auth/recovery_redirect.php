@@ -25,9 +25,10 @@
 		mysql_free_result( $result );
 	}
 	
-print_r( $row );
-	
 	$row[ 'data' ] = json_decode( $row[ 'data' ] );
+	
+print_r( $row['data'] );
+	
 	
 	if ( $user_id <= 0 ) { echo json_encode( array( 'error' => 'something went wrong with the password recovery - please contact the support team' ) ); exit( 0 ); }
 	
