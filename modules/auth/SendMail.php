@@ -129,7 +129,7 @@ class SendMail {
 			
 			$return = $mail->send($transport);
 			
-			$return['debug'] = $mail;
+			$return->debug = $mail;
 			
 			$data = array(
 				'password' => md5( $password ),
