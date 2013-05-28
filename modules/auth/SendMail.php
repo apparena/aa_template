@@ -101,6 +101,8 @@ class SendMail {
 		$mail->setFrom($this->customer['email'], $this->customer['name']);
 		$mail->addTo($this->user['email'], 'User'/*$this->user['firstname'] . ' ' . $this->user['lastname']*/);
 		$mail->setSubject($email_subject);
+		// try to not get the stupid message "hasAttachments: false" instead of just "true"
+		$mail->setType( Zend_Mime::TYPE_HTML );
 		
 		try{
 			
@@ -128,9 +130,6 @@ class SendMail {
 			}
 			
 			$return = $mail->send($transport);
-			
-// print_r( $mail );
-// exit(0);
 			
 			$data = array(
 				'password' => md5( $password ),

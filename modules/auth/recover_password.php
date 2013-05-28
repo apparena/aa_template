@@ -47,7 +47,7 @@
 	$link = $currentPath . 'modules/auth/recovery_redirect.php?aa_inst_id=' . $_GET['aa_inst_id'] . '&activationkey=' . $key;
 	
 	$ret = $mail->send_email( $email, $link, $key, $password );
-	
+	 
 	if ( $ret !== true ) {
 		echo json_encode( array( 'error' => 'mail not sent', 'message' => $ret ) );
 	} else {
