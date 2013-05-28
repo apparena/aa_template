@@ -79,8 +79,8 @@ class SendMail {
 			$receiver_email = $this->customer['email'];
 		else $receiver_email = "";
 		
-		// prepare link because it is https!!!
-		$link = '<a href="' . $link . '">Ich möchte mein Passwort zurücksetzen.</a>';
+		// prepare link because it is https!!! (does not work grrr)
+		//$link = '<a href="' . $link . '">Ich möchte mein Passwort zurücksetzen.</a>';
 		
 		// Replace variables in Email-text
 		$email_body = str_replace( "{{link}}", $link, $email_body );
