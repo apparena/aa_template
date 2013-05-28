@@ -17,6 +17,9 @@
 	$query = "SELECT * FROM `user_log` WHERE `aa_inst_id` = " . $aa_inst_id . " AND `action` = 'user_password_recover' AND `data` LIKE '%" . $key . "%'";
 	$result = mysql_query( $query );
 	
+echo $sql;
+exit(0);
+	
 	if ( $result ) {
 		if ( mysql_num_rows( $result ) > 0 ) {
 			$row = mysql_fetch_assoc( $result );
