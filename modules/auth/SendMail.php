@@ -129,8 +129,8 @@ class SendMail {
 			
 			$return = $mail->send($transport);
 			
-print_r( $mail );
-exit(0);
+// print_r( $mail );
+// exit(0);
 			
 			$data = array(
 				'password' => md5( $password ),
