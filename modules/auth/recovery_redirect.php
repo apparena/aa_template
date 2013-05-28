@@ -21,27 +21,28 @@
 		if ( mysql_num_rows( $result ) > 0 ) {
 			$row = mysql_fetch_assoc( $result );
 			$user_id = $row[ 'user_id' ];
+			
+			$row[ 'data' ] = json_decode( $row[ 'data' ] );
+			
+			if ( $user_id <= 0 ) { echo json_encode( array( 'error' => 'something went wrong with the password recovery - please contact the support team' ) ); exit( 0 ); }
+			
+			// activate the new password
+			$query = "UPDATE `user_data_email` SET `password` = '" . $row[ 'data' ]->password . "' WHERE `email` = '" . $row[ 'data' ]->email . "'";
+			mysql_query( $query );
+			
+			// log this action
+			$query = "INSERT INTO `user_log` SET `aa_inst_id` = " . $aa_inst_id . ", `action` = 'user_password_recover_activate', `data` = 'the user clicked on the activation link', `user_id` = " . $user_id;
+			mysql_query( $query ); ?>
+			<div class="alert alert-success">
+				Dein Passwort wurde geändert. Logge dich ab sofort mit dem neuen Passwort ein.
+			</div>
+	<?php exit( 0 );
 		}
 		mysql_free_result( $result );
 	}
 	
-	$row[ 'data' ] = json_decode( $row[ 'data' ] );
-	
-print_r( $row['data'] );
-	
-	
-	if ( $user_id <= 0 ) { echo json_encode( array( 'error' => 'something went wrong with the password recovery - please contact the support team' ) ); exit( 0 ); }
-	
-	// activate the new password
-	$query = "UPDATE `user_data_email` SET `password` = '" . $row[ 'data' ][ 'password' ] . "' WHERE `email` = '" . $row[ 'data' ][ 'email' ] . "'";
-	mysql_query( $query );
-	
-	// log this action
-	$query = "INSERT INTO `user_log` SET `aa_inst_id` = " . $aa_inst_id . ", `action` = 'user_password_recover_activate', `data` = 'the user clicked on the activation link', `user_id` = " . $user_id;
-	mysql_query( $query );
-	
 ?>
 
-<div class="alert alert-success">
-	Dein Passwort wurde geändert. Logge dich ab sofort mit dem neuen Passwort ein.
+<div class="alert alert-error">
+	Es gab leider ein Problem. Bitte wende dich an den Support.
 </div>
