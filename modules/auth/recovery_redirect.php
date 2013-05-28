@@ -6,12 +6,13 @@
 	$row = array();
 	
 	if ( isset( $_GET[ 'aa_inst_id' ] ) ) { $aa_inst_id = intval( $_GET[ 'aa_inst_id' ] ); } else { echo json_encode( array( 'error' => 'missing instance id' ) ); exit( 0 ); }
-	if ( isset( $_GET[ 'activationkey' ] ) ) { $key = mysql_real_escape_string( $_GET[ 'activationkey' ] ); } else { echo json_encode( array( 'error' => 'missing activation key' ) ); exit( 0 ); }
 	if ( strlen( $key ) <= 0 ) { echo json_encode( array( 'error' => 'something went wrong with your activation key' ) ); exit( 0 ); }
 	
 	include_once '../../config.php';
 	include_once '../../init.php';
 	include_once 'check_database.php';
+	
+	if ( isset( $_GET[ 'activationkey' ] ) ) { $key = mysql_real_escape_string( $_GET[ 'activationkey' ] ); } else { echo json_encode( array( 'error' => 'missing activation key' ) ); exit( 0 ); }
 	
 	$query = "SELECT * FROM `user_log` WHERE `aa_inst_id` = " . $aa_inst_id . " AND `action` = 'user_password_recover' AND `data` LIKE '%" . $key . "%'";
 	$result = mysql_query( $query );
