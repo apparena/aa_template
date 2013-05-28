@@ -79,7 +79,8 @@ class SendMail {
 			$receiver_email = $this->customer['email'];
 		else $receiver_email = "";
 		
-		
+		// prepare link because it is https!!!
+		$link = '<a href="' . $link . '">Ich möchte mein Passwort zurücksetzen.</a>';
 		
 		// Replace variables in Email-text
 		$email_body = str_replace( "{{link}}", $link, $email_body );
@@ -101,8 +102,6 @@ class SendMail {
 		$mail->setFrom($this->customer['email'], $this->customer['name']);
 		$mail->addTo($this->user['email'], 'User'/*$this->user['firstname'] . ' ' . $this->user['lastname']*/);
 		$mail->setSubject($email_subject);
-		// try to not get the stupid message "hasAttachments: false" instead of just "true"
-		$mail->setType( Zend_Mime::TYPE_HTML );
 		
 		try{
 			
