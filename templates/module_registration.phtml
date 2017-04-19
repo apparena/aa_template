@@ -1,5 +1,5 @@
 <?php 
-include_once ( '../init.php' );
+	include_once ( '../init.php' );
 ?>
 <script type="text/javascript" src="modules/registration/registration.js"></script>
 
@@ -132,10 +132,35 @@ include_once ( '../init.php' );
 		<label class="control-label" for="action" title="Enter an action type here, such as 'register' or 'invite'">Action to log
 			<input type="text" value="register" id="action" name="action" />
 		</label>
-        <label class="control-label" for="data" title="Enter some data here, like \"What was the user registring for actually?\"">Data to log
+        <label class="control-label" for="data" title="Enter some data here, like &quot;What was the user registring for actually?&quot;">Data to log
             <input type="text" value="sample data" id="data" name="data" />
         </label>
 	</div>
+</div>
+
+<h1>Module: Newsletter</h1>
+<p>Use a double-opt-in Newsletter registration with just two lines of code. :-)</p>
+
+<h2>Requirements</h2>
+<ul>
+    <li>App-Arena App-Manager Connection</li>
+</ul>
+
+<h2>Use it...</h2>
+<h3>With javascript</h3>
+<pre>
+&lt;script src="modules/newsletter/newsletter.js" /&gt;
+send_newsletter(aa_inst_id, email, name);
+</pre>
+
+<h3>With php</h3>
+<pre>
+include_once 'modules/newsletter/send_newsletter_confirmation.php';
+</pre>
+
+<h2>Demo</h2>
+<div class="alert">
+    This still has to be written
 </div>
 
 <script>

@@ -5,138 +5,163 @@
 /**
  * Loads a new template file into the div#main container using jquery animations
  * @param tmpl_filename Filename of the template
+ * @param params Additional parameters to control the loading function (data, target, effect)
+ *          data GET-Parameters which will be loaded as well.
+ *          target css-selector to load the template in
+ *          effect transition effect: can be slide, fade or switch
  */
-function aa_tmpl_load(tmpl_filename, data) {
-    show_loading(); // show the loading screen
-    $("#main").slideUp(0, function () {
-        $("#main").load("templates/" + tmpl_filename + "?aa_inst_id=" + aa_inst_id + "&" + data, function () {
-            $("#main").slideDown(600, function () {
-                //reinit facebook
-                if (typeof(FB) === "object" && FB._apiKey === null) {
-                    FB.init({
-                        appId:fb_app_id, // App ID
-                        channelUrl:fb_canvas_url + 'channel.html', // Channel File
-                        status:true, // check login status
-                        cookie:true, // enable cookies to allow the server to access the session
-                        xfbml:true, // parse XFBML
-                        oauth:true
-                    });
-                }
-                FB.Canvas.scrollTo(0, 0);
-                hide_loading(); // hide the loading screen
+function aa_tmpl_load( tmpl_filename, params ) {
+
+    /* Extract and parse paramters */
+    /* Check data param */
+    if ( typeof( params ) != 'undefined' ) {
+        if ( !params.hasOwnProperty('data') ) {
+            data = '';
+        } else {
+            data = '&' + params['data'];
+        }
+        /* Loading target parameter */
+        if ( !params.hasOwnProperty('target') ) {
+            target = '#main';
+        }else {
+            target = params['target'];
+        }
+        /* Get effect if not possible */
+        if ( !params.hasOwnProperty('effect') ) {
+            effect = 'slidedown';
+        }else {
+            effect = params['effect'];
+        }
+    } else {
+        data = '';
+        target = '#main';
+        effect = 'slidedown';
+    }
+
+    var url = "templates/" + tmpl_filename + "?aa_inst_id=" + aa.inst.aa_inst_id + data;
+    if ( effect == 'fade' ) {
+        $(target).fadeOut(0, function () {
+            $(target).load( url, function () {
+                $(target).fadeIn(600, function () {
+                    //FB.Canvas.scrollTo(0, 0);
+                });
             });
         });
-    });
+    } else {
+        show_loading(); // show the loading screen
+        $(target).slideUp(0, function () {
+            $(target).load( url, function () {
+                $(target).slideDown(600, function () {
+                    FB.Canvas.scrollTo(0, 0);
+                    hide_loading(); // hide the loading screen
+                });
+            });
+        });
+    }
+}
+
+function open_popup( url, name ) {
+    popup = window.open( url, name, 'target=_blank,width=820,height=800' );
+    if ( window.focus ) {
+        popup.focus();
+    }
+    return false;
+}
+
+function setAdminIntroCookie() {
+    if ($('#admin-intro').is(':checked')) {
+        setCookie('admin_intro_' + aa_inst_id, true);
+    } else {
+        setCookie('admin_intro_' + aa_inst_id, false);
+    }
+}
+
+function show_admin_info() {
+    $('#admin_modal').modal("show");
+}
+
+function urlencode(str){str=(str+'').toString();return encodeURIComponent(str).replace(/!/g,'%21').replace(/'/g,'%27').replace(/\(/g,'%28').replace(/\)/g,'%29').replace(/\*/g,'%2A').replace(/%20/g,'+');}
+
+/** cookie functions */
+/**
+ * set cookie
+ *
+ * @param integer
+ *            days default 1
+ */
+function setCookie(name, value, days, path, domain) {
+    if (exists(days) == false)
+        days = 1;
+
+    if (exists(path) == false)
+        path = '/';
+
+    if ( typeof( domain ) == 'undefined' ) {
+
+        if ( typeof( aa_domain ) != 'undefined' ) {
+            domain = aa_domain;
+        } else {
+            domain = '.app-arena.com';
+        }
+
+    }
+    var exp = new Date(); // new Date("December 31, 9998");
+    exp.setTime(exp.getTime() + days * 24 * 60 * 60 * 1000);
+
+    document.cookie = name + "=" + escape(value) + ";expires="
+        + exp.toGMTString() + ";path=" + path + ";domain=" + domain + ";";
 }
 
 /**
- * Show a message in the top msg-container (which is hidden usually)
- * @param msg the message to display
- * @param type one of: error, success, info - determines the classing of the msg-div-element.
- * @param delay number of milisecons until the message box disappears
+ * get cookie ,if not exists , return null
  */
-function show_msg(msg, type, delay) {
+function getCookie(name) {
+    var arr = document.cookie
+        .match(new RegExp("(^| )" + name + "=([^;]*)(;|$)"));
+    if (arr != null)
+        return decodeURI(arr[2]);
+    else
+        return null;
 
-    if (typeof( type ) !== 'string') {
-        type = 'error';
+}
+// delete cookie
+function clearCookie(name) {
+    var exp = new Date();
+    exp.setTime(exp.getTime() - 1);
+    var cval = getCookie(name);
+    if (cval != null)
+        document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
+}
+
+/**
+ * get cookies
+ */
+function getAllCookie() {
+    var result = new Object();
+    var strCookie = document.cookie;
+
+    var arrCookie = strCookie.split("; ");
+    for (var i = 0; i < arrCookie.length; i++) {
+        var arr = arrCookie[i].split("=");
+
+        result[arr[0]] = arr[1];
     }
 
-    if (typeof( msg ) !== 'string') {
-        msg = __e('something_went_wrong');
-    }
-
-    var classes = 'alert fade in';
-
-    switch (type) {
-
-        case 'error':
-            classes = 'alert alert-error fade in';
-            break;
-
-        case 'success':
-            classes = 'alert alert-success fade in';
-            break;
-
-        case 'info':
-            classes = 'alert alert-success fade in';
-            break;
-
-        default:
-            classes = 'alert alert-block fade in';
-            break;
-    }
-
-    $('#msg-container').slideUp(500, function () {
-        $('#msg-container').alert();
-        $('#msg-container').removeClass().addClass(classes).html(msg).slideDown(500).delay(delay).fadeOut('slow');
-    });
-
+    return result;
 }
 
-function postToFeed(link, picture_url, name, caption, desc) {
+/**
+ * check if a variables exists
+ */
+function exists(obj) {
+    if (typeof (obj) == 'undefined')
+        return false;
 
-    // calling the API ...
-    var obj = {
-        method:'feed',
-        link:link,
-        picture:picture_url,
-        name:name,
-        caption:caption,
-        description:desc
-    };
+    if (obj == null)
+        return false;
 
-    function callback(response) {
-        document.getElementById('msg').innerHTML = "Post ID: " + response['post_id'];
-    }
+    if (obj == false)
+        return false;
 
-    FB.ui(obj, callback);
-}
-function sendToFriend(link, name) {
-    FB.ui({
-        method:'send',
-        name:name,
-        link:link
-    });
-}
-function sendRequest(name, desc, data) {
-    // Use FB.ui to send the Request(s)
-    FB.ui({method:'apprequests',
-        title:name,
-        message:desc,
-        data:data
-    }, callback);
-}
-
-function callback(response) {
-    console.log(response);
-}
-
-function log_login(arguments) {
-    console.log('on-login called');
-    console.log(arguments);
-
-}
-
-function disableForm() {
-    $( 'body' ).find( 'input' ).each( function(){
-        $(this).attr( 'disabled', 'disabled' );
-    });
-    $( 'body' ).find( 'button' ).each( function(){
-        $(this).attr( 'disabled', 'disabled' );
-    });
-    $( 'body' ).find( 'select' ).each( function(){
-        $(this).attr( 'disabled', 'disabled' );
-    });
-}
-
-function enableForm() {
-    $( 'body' ).find( 'input' ).each( function(){
-        $(this).removeAttr( 'disabled' );
-    });
-    $( 'body' ).find( 'button' ).each( function(){
-        $(this).removeAttr( 'disabled' );
-    });
-    $( 'body' ).find( 'select' ).each( function(){
-        $(this).removeAttr( 'disabled' );
-    });
+    return true;
 }

@@ -1,0 +1,55 @@
+<div id="registration_modal" class="modal hide fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: block;">
+	
+	<div class="modal-header">
+		
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		
+		<h3 id="myModalLabel">Registrierung</h3>
+		
+	</div>
+	
+	<div class="modal-body">
+		
+		<form class="form-horizontal">
+			<div class="control-group">
+				<label class="control-label" for="register_gender">Geschlecht</label>
+				<div class="controls">
+	                <select name="register_gender" id="register_gender">
+	                    <option value="male">männlich</option>
+	                    <option value="female">weiblich</option>
+	                </select>
+                </div>
+            </div>
+			<div class="control-group">
+			 	<label class="control-label" for="register_email">E-Mail Adresse</label>
+				<div class="controls">
+					<input type="text" id="register_email" name="register_email" class="input-small" placeholder="E-Mail-Adresse" style="width: 180px;" />
+					<div id="register_email_error" class="alert alert-error hide">Bitte überprüfe die E-Mail Adresse</div>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="register_password">Passwort</label>
+				<div class="controls">
+					<input type="password" id="register_password" name="register_password" class="input-small" placeholder="Passwort" style="width: 180px;" />
+					<div id="register_password_error" class="alert alert-error hide">Bitte überprüfe das Passwort (mindestens 6 Zeichen)</div>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="register_password_repeat">Passwort wiederholen</label>
+				<div class="controls">
+					<input type="password" id="register_password_repeat" name="register_password_repeat" class="input-small" placeholder="Passwort wiederholen" style="width: 180px;" />
+					<div id="register_password_repeat_error" class="alert alert-error hide">Die Passwörter stimmen nicht überein</div>
+				</div>
+			</div>
+		</form>
+		<div id="register_modal_error" class="alert alert-error hide"></div>
+	</div>
+	
+	<div class="modal-footer">
+		
+		<button class="btn" data-dismiss="modal"><i class="icon-remove">&nbsp;</i>Abbrechen</button>
+		<button id="register_btn_register" class="btn btn-success"><i class="icon-pencil icon-white">&nbsp;</i>Registrieren</button>
+		
+	</div>
+	
+</div>

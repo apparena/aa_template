@@ -1,0 +1,191 @@
+<?php 
+	
+	/**
+	 * This is a template for a menu like login look
+	 * of the login module.
+	 */
+	include_once '../../../config.php'; // the g+ app id is stored there
+	
+?>
+
+<!-- twitter bootstrap like menu element, usually surrounded by a <li>-tag -->
+<a id="auth_module_login" href="#">Login</a>
+
+<!-- the login popdown will show when the user hovers over the a tag -->
+<div id="auth_module_login_content" class="hide" style="z-index: 10; position: absolute; background-color: lightgray; border: 1px solid black; width: 210px; text-align: center; padding: 10px; cursor: auto;">
+	
+	<div>
+		<b>Login</b>
+		<hr />
+	</div>
+	<form class="form-inline">
+		<div>
+			<input type="text" id="email" name="email" class="input-small" placeholder="E-Mail-Adresse" style="width: 180px;" />
+			<div id="login_email_error" class="alert alert-error hide">Bitte überprüfe die E-Mail Adresse</div>
+		</div>
+		<div>
+			<input type="password" id="password" name="password" class="input-small" placeholder="Passwort" style="width: 180px;" />
+			<div id="login_password_error" class="alert alert-error hide">Bitte überprüfe das Passwort (mindestens 6 Zeichen)</div>
+		</div>
+		<div>
+			<button type="button" id="btn_login" name="btn_login" class="pull-right btn btn-mini">
+				Login
+			</button>
+		</div>
+	</form>
+	
+	<div id="login_btn_container">
+		
+		<div style="padding-left: 34px;">
+			oder Login mit
+		</div>
+		
+		<button id="fb_btn" class="btn btn-primary btn-mini" style="height: 31px; margin-bottom: 32px;"><i class="icon-facebook icon-white icon-large">&nbsp;</i></button>
+		<button 
+			id="gplus_login" 
+			class="g-signin" 
+			data-scope="https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/plus.login" 
+			data-requestvisibleactions="http://schemas.google.com/AddActivity" 
+			data-clientId="<?php echo $gplus_client_id; ?>" 
+			data-callback="gplusCallback" 
+			data-theme="dark" 
+			data-cookiepolicy="single_host_origin" 
+			data-width="iconOnly">
+		</button>
+		<button id="twitter_btn" class="btn btn-info btn-mini" style="height: 31px; margin-bottom: 32px;"><i class="icon-twitter icon-white icon-large" style="margin-top: 10px;">&nbsp;</i></button>
+		
+	</div>
+	
+	<hr style="margin: 0px;" />
+	
+	<div>
+		<a id="btn_register" class="btn btn-mini" href="#">Registrieren</a>
+	</div>
+	
+	<div>
+		<a id="btn_forgot_pw" class="btn btn-mini" href="#">Passwort vergessen?</a>
+	</div>
+	
+</div>
+
+<script>
+	
+	// require the auth module because we are binding a module function call to the btn_login-onclick listener...
+	// (without the auth module, a $(document).ready() function would have been enough...)
+	require( [ 'jquery', 'gapi', 'auth' ], function ( $, gapi, auth ) {
+		
+		$(document).ready( function () {
+
+			aa.gplusFirstStart = true;
+			
+			// fade in / fade out
+			$( '#auth_module_login' ).on( 'mouseover', function () {
+				
+				// the mouse is currently hovering over the <a>-login tag, so show the content...
+				if ( $( '#auth_module_login_content' ).is( ':visible' ) == false ) {
+					
+					// only fade the content in if it is not already showing
+					$( '#auth_module_login_content' ).fadeIn( 100, function () {
+						
+						$( '#email' ).focus();
+						
+					});
+					
+				}
+				
+			});
+			
+			$( '#auth_module_login' ).on( 'mouseout', function () {
+				
+				if ( $( '#auth_module_login_content' ).is( ':hover' ) == false ) {
+					
+					// the mouse pointer left the <a>-login tag, but did not move down to the content area, so fadeout...
+					$( '#auth_module_login_content' ).fadeOut( 100 );
+					
+				}
+			});
+			
+			$( '#auth_module_login_content' ).on( 'mouseout', function () {
+				
+				// check if the mouse pointer was moved upwards to the <a>-login tag, do not hide if so...
+				if ( $( '#auth_module_login_content' ).is( ':hover' ) == false && $( '#auth_module_login' ).is( ':hover' ) == false ) {
+					
+					// if the mouse is not currently hovering over the content after hovering over the <a>-login tag hide the content...
+					$( '#auth_module_login_content' ).fadeOut( 100 );
+					
+				}
+				
+			});
+			// end fade in / fade out
+			
+			// bind enter listeners to the input fields to focus the next field on enter-key
+			$( '#email' ).on( 'keyup', function ( event ) {
+				
+				var key = event.keyCode ? event.keyCode : event.which;
+				
+				if ( key == 13 ) {
+					
+					$( '#password' ).focus();
+					
+				}
+				
+			});
+			
+			// bind enter listeners to the input fields to click the button manually if enter is typed
+			$( '#password' ).on( 'keyup', function ( event ) {
+				
+				var key = event.keyCode ? event.keyCode : event.which;
+				
+				if ( key == 13 ) {
+					
+					$( '#btn_login' ).click();
+					
+				}
+				
+			});
+			
+			// the login-button function
+			$( '#btn_login' ).on( 'click', function () {
+				
+				var userData = {};
+				userData.email = $( '#email' ).val();
+				userData.password = $( '#password' ).val();
+				
+				auth.login( userData, 'email' ); // other modes are fb, gplus, twitter
+				
+			});
+			
+			// bind fb and twitter onclicks
+			$( '#fb_btn' ).on( 'click', function () {
+				
+				auth.facebook_popup();
+				
+			});
+			$( '#twitter_btn' ).on( 'click', function () {
+				
+				auth.twitter_popup();
+				
+			});
+
+			// render g+ login button manually
+			gapi.signin.go();
+
+			// init registration button
+			$( '#btn_register' ).on( 'click', function () {
+				
+				auth.register();
+				
+			});
+
+			// init password recovery button
+			$( '#btn_forgot_pw' ).on( 'click', function () {
+				
+				auth.showRecoveryModal();
+				
+			});
+			
+		});
+		
+	});
+	
+</script>
