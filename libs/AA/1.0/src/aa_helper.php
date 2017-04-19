@@ -11,14 +11,13 @@ function app_current_uri()
 
 /** translate functions **/
 /*
- *translate , may be for the future
-* use __('name')  replace 'name'
+ *translate ,but print directly
 */
 function __t()
 {
-	global $aa_translate;
-	$translate=$aa_translate->translate;
-	
+	//$translate=Frd::getGlobal("translate");
+	global $am;
+
 	$args=func_get_args();
 	$num=func_num_args();
 
@@ -28,48 +27,33 @@ function __t()
 	$str=$args[0];
 	if($num == 1)
 	{
-		return  $translate->_($str);
+		return $am->getTranslation($str);
 	}
 
 	unset($args[0]);
-	$param='"'.implode('","',$args).'"';
-
-	$str='$ret=sprintf("'.$translate->_($str).'",'.$param.');';
-	eval($str);
-
-	return  $ret;
+	return $am->getTranslation($str, $args);
 }
-/*
- *translate ,but print directly
-*/
+
 function __p()
 {
 	//$translate=Frd::getGlobal("translate");
-	global $aa_translate;
-	$translate=$aa_translate->translate;
+	global $am;
 
 	$args=func_get_args();
 	$num=func_num_args();
 
 	if($num == 0)
-	return '';
+		return '';
 
 	$str=$args[0];
 	if($num == 1)
 	{
-		echo  $translate->_($str);
-		return ;
+		echo $am->getTranslation($str);
+		return $am->getTranslation($str);
+
 	}
 
 	unset($args[0]);
-	$param='"'.implode('","',$args).'"';
-
-	$str='$ret=sprintf("'.$translate->_($str).'",'.$param.');';
-	eval($str);
-
-	echo  $ret;
+	echo $am->getTranslation($str, $args);
+	return $am->getTranslation($str, $args);
 }
-
-
-
-?>

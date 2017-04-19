@@ -1,0 +1,11 @@
+{
+  "name": "apparena/aa_fanpage",
+  "license": "MIT",
+  "type": "project",
+  "description": "App-Arena Fanpage product",
+  "require": {
+    "php": ">=5.5.9",
+    "app-arena/php-sdk": "^1.2.17"
+  },
+  "require-dev": {}
+}
